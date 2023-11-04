@@ -19,6 +19,7 @@ class Client {
     public static void main(String[] args) throws Exception {
         // establish a connection by providing host and port
         // number
+
         try (Socket socket = new Socket("localhost", 1234)) {
             OutputStream outputStream = socket.getOutputStream();
             InputStream inputStream = socket.getInputStream();
@@ -35,12 +36,12 @@ class Client {
         /*
          * Alice creates her own DH key pair with 2048-bit key size
          */
-        KeyPairGenerator aliceKpairGen = KeyPairGenerator.getInstance("DH");
-        aliceKpairGen.initialize(2048);
+        KeyPairGenerator aliceKpairGen = KeyPairGenerator.getInstance("EC");
+        aliceKpairGen.initialize(521);
         KeyPair aliceKpair = aliceKpairGen.generateKeyPair();
 
         // Alice creates and initializes her DH KeyAgreement object
-        KeyAgreement aliceKeyAgree = KeyAgreement.getInstance("DH");
+        KeyAgreement aliceKeyAgree = KeyAgreement.getInstance("ECDH");
         aliceKeyAgree.init(aliceKpair.getPrivate());
 
         // Alice encodes her public key, and sends it over to Bob.
@@ -63,7 +64,7 @@ class Client {
         byte[] bobPubKeyEnc = new byte[length];
         dataInputStream.readFully(bobPubKeyEnc);
 
-        KeyFactory aliceKeyFac = KeyFactory.getInstance("DH");
+        KeyFactory aliceKeyFac = KeyFactory.getInstance("EC");
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(bobPubKeyEnc);
         PublicKey bobPubKey = aliceKeyFac.generatePublic(x509KeySpec);
         aliceKeyAgree.doPhase(bobPubKey, true);

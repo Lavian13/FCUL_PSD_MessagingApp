@@ -2,6 +2,7 @@ import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.security.*;
+import java.security.interfaces.ECPublicKey;
 import java.security.spec.*;
 import java.util.Arrays;
 import javax.crypto.*;
@@ -85,7 +86,7 @@ class Server {
                  * in encoded format.
                  * He instantiates a DH public key from the encoded key material.
                  */
-                KeyFactory bobKeyFac = KeyFactory.getInstance("DH");
+                KeyFactory bobKeyFac = KeyFactory.getInstance("EC");
                 X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(alicePubKeyEnc);
 
                 PublicKey alicePubKey = bobKeyFac.generatePublic(x509KeySpec);
@@ -95,17 +96,17 @@ class Server {
                  * He must use the same parameters when he generates his own key
                  * pair.
                  */
-                DHParameterSpec dhParamFromAlicePubKey = ((DHPublicKey) alicePubKey).getParams();
+                ECParameterSpec dhParamFromAlicePubKey = ((ECPublicKey) alicePubKey).getParams();
 
                 // Bob creates his own DH key pair
 
-                KeyPairGenerator bobKpairGen = KeyPairGenerator.getInstance("DH");
+                KeyPairGenerator bobKpairGen = KeyPairGenerator.getInstance("EC");
                 bobKpairGen.initialize(dhParamFromAlicePubKey);
                 KeyPair bobKpair = bobKpairGen.generateKeyPair();
 
                 // Bob creates and initializes his DH KeyAgreement object
 
-                KeyAgreement bobKeyAgree = KeyAgreement.getInstance("DH");
+                KeyAgreement bobKeyAgree = KeyAgreement.getInstance("ECDH");
                 bobKeyAgree.init(bobKpair.getPrivate());
 
                 // Bob encodes his public key, and sends it over to Alice.
