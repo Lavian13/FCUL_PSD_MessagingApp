@@ -34,7 +34,10 @@ class Client {
             // Create a PrintWriter to send a message to the server
             PrintWriter writer = new PrintWriter(sslSocket.getOutputStream(), true);
             writer.println("Hello, server!");
-
+            String clientCipherSuite = sslSocket.getSession().getCipherSuite();
+            System.out.println("Client Cipher Suite: " + clientCipherSuite);
+            String clientTLSVersion = sslSocket.getSession().getProtocol();
+            System.out.println("Client TLS Version: " + clientTLSVersion);
             // Create a BufferedReader to read the server's messages
             BufferedReader reader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
             String line = reader.readLine();

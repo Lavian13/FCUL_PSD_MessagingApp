@@ -27,7 +27,6 @@ class Server {
             SSLServerSocketFactory sslServerSocketFactory = sslContext.getServerSocketFactory();
 
             SSLServerSocket sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(1234);
-
             System.out.println("Waiting for client connection...");
             SSLSocket sslSocket = (SSLSocket) sslServerSocket.accept();
 
@@ -37,7 +36,10 @@ class Server {
             BufferedReader reader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
             String line = reader.readLine();
             System.out.println("Received from client: " + line);
-
+            String serverCipherSuite = sslSocket.getSession().getCipherSuite();
+            System.out.println("Server Cipher Suite: " + serverCipherSuite);
+            String serverTLSVersion = sslSocket.getSession().getProtocol();
+            System.out.println("Server TLS Version: " + serverTLSVersion);
             // Create a PrintWriter to send a message to the client
             PrintWriter writer = new PrintWriter(sslSocket.getOutputStream(), true);
             writer.println("Hello, client!");
