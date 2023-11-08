@@ -10,22 +10,15 @@ import java.util.*;
 
 
 public class LoadFXML extends Application{
-    private HashMap<String, String> username_ip = new HashMap<>();
+    public HashMap<String, String> username_ip = new HashMap<>();
     private List<String> ips = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
-        getIPsFromServer("127.0.0.1", 3456);
+        RetrieveIPThread ip_thread = new RetrieveIPThread("127.0.0.1", 3456);
+        ip_thread.start();
     }
 
-    private static void getIPsFromServer(String ip, int port){
-        connectServer(ip,port);
-
-    }
-
-    private static void connectServer(String ip, int port){
-
-    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
