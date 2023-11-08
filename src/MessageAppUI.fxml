@@ -91,7 +91,7 @@
                         <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="200.0">
                           <items>
                               <TextField prefHeight="20.0" prefWidth="350.0" promptText="Write your message here" />
-                            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" style="-fx-background-color: #4d528c;" text="Send" textFill="WHITE" />
+                            <Button fx:id="sendButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#sendButtonPress" style="-fx-background-color: #4d528c;" text="Send" textFill="WHITE" />
                           </items>
                         </ToolBar>
                      </children>
