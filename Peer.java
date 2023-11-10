@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import javax.net.ssl.*;
 
@@ -30,8 +31,8 @@ public class Peer extends Thread  {
             serverThread.start();
 
             // Connecting to another server
-            //Thread clientThread = new Thread(new ClientThread("localhost", 9090));
-            //clientThread.start();
+            Thread clientThread = new Thread(new ClientThread("localhost", 9090));
+            clientThread.start();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,23 +88,35 @@ public class Peer extends Thread  {
 
         public void run() {
             try {
-                Socket clientSocket = new Socket(serverAddress, serverPort);
-                System.out.println("Connected to server: " + clientSocket);
+                SSLContext sslContext = SSLContext.getDefault();
+                SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+                SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket(serverAddress, serverPort);
+                sslSocket.setNeedClientAuth(true);
+                System.out.println("Connected to server!");
+                X509Certificate[] serverCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
+                if (serverCertificates.length > 0) {
+                    X509Certificate clientCertificate = serverCertificates[0]; // Assuming the client provides a certificate
+                    String subjectCN = extractSubjectCommonName(clientCertificate);
+                    System.out.println("The first name of the person's certificate -> " + subjectCN);
+                }
+
+                System.out.println("Connected to server: " + sslSocket);
+
 
                 // Set up input and output streams for communication
-                BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
+                PrintWriter writer = new PrintWriter(sslSocket.getOutputStream(), true);
 
                 // Send a message to the connected server
                 writer.println("Hello from server!");
 
-                // Handle responses or further communication with the connected server here
-
                 reader.close();
                 writer.close();
-                clientSocket.close();
+                sslSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
             }
         }
     }
