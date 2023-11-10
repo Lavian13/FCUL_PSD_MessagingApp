@@ -18,7 +18,6 @@ import java.util.Scanner;
 // Client class
 class Client {
 
-
     // driver code
     public static void main(String[] args) throws Exception {
 
@@ -30,7 +29,7 @@ class Client {
 
             SSLContext sslContext = SSLContext.getDefault();
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-            SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket("localhost", 1234);
+            SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket("localhost", 2345);
             sslSocket.setNeedClientAuth(true);
             System.out.println("Connected to server!");
             X509Certificate[] serverCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
@@ -70,5 +69,3 @@ class Client {
     }
 
 }
-
-
