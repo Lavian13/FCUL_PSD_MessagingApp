@@ -51,6 +51,7 @@ class Server {
             // Create a PrintWriter to send a message to the client
             PrintWriter writer = new PrintWriter(sslSocket.getOutputStream(), true);
             writer.println("Hello, client!");
+            writer.println("close");
         }
     }
 

@@ -110,9 +110,15 @@ public class Peer extends Thread  {
                 // Send a message to the connected server
                 writer.println("Hello from server!");
 
-                reader.close();
-                writer.close();
-                sslSocket.close();
+                while(true){
+                    if(reader.readLine().equals("close")){
+                        System.out.println("closed connection");
+                        reader.close();
+                        writer.close();
+                        sslSocket.close();
+                        break;
+                    }
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NoSuchAlgorithmException e) {
