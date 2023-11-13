@@ -1,46 +1,71 @@
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
+import javax.crypto.KeyAgreement;
 import java.io.*;
 import java.net.*;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.cert.X509Certificate;
+import java.util.*;
+import java.security.*;
+import java.security.spec.*;
+import javax.crypto.*;
+import javax.crypto.spec.*;
+import javax.crypto.interfaces.*;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+import java.util.Scanner;
 
-public class Client {
-    public static void main(String[] args) throws IOException {
+// Client class
+class Client {
 
+    // driver code
+    public static void main(String[] args) throws Exception {
 
-        URL whatismyip = new URL("http://ipecho.net/plain");
-        BufferedReader in2 = new BufferedReader(new InputStreamReader(
-                whatismyip.openStream()));
-
-        String ip = in2.readLine();
-        System.out.println(ip);
-        //String ip = "2001:8a0:6a67:ca00:b853:60cd:b13b:4d24";
         try {
+            System.setProperty("javax.net.ssl.keyStore", "client_tls/client-keystore.jks");
+            System.setProperty("javax.net.ssl.trustStore", "client_tls/client-truststore.jks");
+            System.setProperty("javax.net.ssl.trustStorePassword", "123456");
+            System.setProperty("javax.net.ssl.keyStorePassword", "123456");
 
-            //SSLSocketFactory sslSocketFactory =
-            //        (SSLSocketFactory) SSLSocketFactory.getDefault();
-            //SSLSocket socket = (SSLSocket) sslSocketFactory.createSocket("2001:8a0:6a67:ca00:b853:60cd:b13b:4d24", 12345);
+            SSLContext sslContext = SSLContext.getDefault();
+            SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+            SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket("localhost", 2345);
+            sslSocket.setNeedClientAuth(true);
+            System.out.println("Connected to server!");
+            X509Certificate[] serverCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
+            if (serverCertificates.length > 0) {
+                X509Certificate clientCertificate = serverCertificates[0]; // Assuming the client provides a certificate
+                String subjectCN = extractSubjectCommonName(clientCertificate);
+                System.out.println("The first name of the person's certificate -> " + subjectCN);
+            }
+            // Create a PrintWriter to send a message to the server
+            PrintWriter writer = new PrintWriter(sslSocket.getOutputStream(), true);
+            writer.println("Hello, server!");
+            String clientCipherSuite = sslSocket.getSession().getCipherSuite();
+            System.out.println("Client Cipher Suite: " + clientCipherSuite);
+            String clientTLSVersion = sslSocket.getSession().getProtocol();
+            System.out.println("Client TLS Version: " + clientTLSVersion);
+            // Create a BufferedReader to read the server's messages
+            BufferedReader reader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
+            String line = reader.readLine();
+            System.out.println("Received from server: " + line);
 
-            // Connect to the server using its IP address and port number
-            Socket socket = new Socket("85.240.136.254", 3456);
-
-
-            // Create input and output streams for communication
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-
-            // Send a message to the server
-            out.println("Hello, server! This is a message from the client.");
-
-            // Read and print the server's response
-            String response = in.readLine();
-            System.out.println("Server response: " + response);
-
-            // Close the streams and socket
-            in.close();
-            out.close();
-            socket.close();
-        } catch (IOException e) {
+            sslSocket.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    private static String extractSubjectCommonName(X509Certificate certificate) {
+        String subjectDN = certificate.getSubjectX500Principal().getName();
+        String[] dnComponents = subjectDN.split(",");
+        for (String component : dnComponents) {
+            if (component.trim().startsWith("CN=")) {
+                // Extract the CN value
+                return component.trim().substring(3);
+            }
+        }
+        return "Unknown";
+    }
+
 }
