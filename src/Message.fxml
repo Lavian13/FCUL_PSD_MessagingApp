@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="MessageController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="80.0" prefWidth="440.0" style="-fx-background-color: #e3e5fc;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MessageController">
+   <children>
+      <Pane layoutX="186.0" layoutY="10.0" prefHeight="60.0" prefWidth="240.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20px;">
+         <children>
+            <Label layoutX="106.0" layoutY="22.0" text="Label" />
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>
