@@ -15,8 +15,10 @@ public class LoadFXML extends Application{
 
     public static void main(String[] args) {
         launch(args);
-        RetrieveIPThread ip_thread = new RetrieveIPThread("127.0.0.1", 3456);
-        ip_thread.start();
+        //RetrieveIPThread ip_thread = new RetrieveIPThread("127.0.0.1", 3456);
+        //ip_thread.start();
+        //Peer peer = new Peer();
+        //peer.start();
     }
 
 

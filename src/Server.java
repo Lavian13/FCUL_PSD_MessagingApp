@@ -1,5 +1,9 @@
 import java.io.*;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.security.cert.X509Certificate;
+import java.util.HashMap;
+import java.util.List;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
@@ -9,6 +13,8 @@ import javax.net.ssl.SSLSocket;
 // Server class for tests
 class Server {
 
+    static HashMap<String, String> username_ip = new HashMap<>();
+    static HashMap<String, List<String>> username_attributes = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
 
@@ -33,7 +39,12 @@ class Server {
                 X509Certificate clientCertificate = clientCertificates[0]; // Assuming the client provides a certificate
                 String subjectCN = extractSubjectCommonName(clientCertificate);
                 System.out.println("The first name of the person's certificate -> " + subjectCN);
+
+                String clientIp = sslSocket.getInetAddress().getHostAddress();
+                username_ip.put(subjectCN, clientIp); //DOES SUBJECTCN MAKE SENSE.
+                //WHAT HAPPENS IF THERE IS NO CERTIFICATE; WE STILL KEEP THE CONNECTION WHY?
             }
+
             // Create a BufferedReader to read the client's messages
             BufferedReader reader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
             String line = reader.readLine();
