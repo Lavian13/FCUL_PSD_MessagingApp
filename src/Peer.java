@@ -108,6 +108,8 @@ public class Peer extends Thread  {
                 PrintWriter writer = new PrintWriter(sslSocket.getOutputStream(), true);
 
                 // Send a message to the connected server
+
+                //ao clicar em um chat mandar ao servidor mensagens individuais com username á qual o server responde com ip(de users no chat)
                 writer.println("Hello from server!");
                 while(true){
                     if(reader.readLine().equals("close")){

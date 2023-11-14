@@ -48,33 +48,40 @@ public class MainController {
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("DynamicPane.fxml"));
                 Pane contact = loader.load();
-                contact.setOnMouseClicked(event -> {
-                    //HERE DO THE CODE TO LOAD THE CHAT IN THE RIGHT SIDE OF THE PAGE
-                    contact.setStyle("-fx-background-color: red;"); // Change the color to red when clicked
-                });
 
                 DynamicController controller = loader.getController();
                 //controller.setData(columnName);
-                controller.setData("hey" + i);
+                controller.setData("username");
 
-
-                FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
-                AnchorPane message = loader2.load();
-                DynamicController controller2 = loader.getController();
-                controller2.setData("hey" + i);
-            message.setOnMouseClicked(event -> {
-                //HERE DO THE CODE TO LOAD THE CHAT IN THE RIGHT SIDE OF THE PAGE
-                message.setStyle("-fx-background-color: red;"); // Change the color to red when clicked
-            });
+                contact.setOnMouseClicked(event -> {
+                    //HERE DO THE CODE TO LOAD THE CHAT IN THE RIGHT SIDE OF THE PAGE
+                    contact.setStyle("-fx-background-color: red;");
+                    try {
+                        loadChat(controller.getData());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
 
                 // Add the dynamic pane to the parent container
                 contacts.getChildren().add(contact);
-                messages.getChildren().add(message);
+
             }
  /*       } catch (SQLException | IOException e) {
             e.printStackTrace();
         }*/
 
+    }
+
+    private void loadChat(String username) throws IOException {
+        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
+        AnchorPane message = loader2.load();
+        MessageController controller2 = loader2.getController();
+        controller2.setData("hey");
+        message.setOnMouseClicked(event -> {//TO REMOVE
+            message.setStyle("-fx-background-color: red;");
+        });
+        messages.getChildren().add(message);
     }
 }
 

@@ -17,4 +17,6 @@ public class DynamicController {
     public void setData(String data) {
         label.setText(data);
     }
+
+    public String getData(){ return label.getText();}
 }
