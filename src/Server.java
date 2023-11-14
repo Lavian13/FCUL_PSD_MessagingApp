@@ -57,6 +57,21 @@ class Server {
             PrintWriter writer = new PrintWriter(sslSocket.getOutputStream(), true);
             writer.println("Hello, client!");
             writer.println("close");
+            System.out.println(reader.readLine());
+
+            Thread myThread = new Thread(() -> {
+                for (int i = 1; i <= 5; i++) {
+                    System.out.println("Thread: " + i);
+                    try {
+                        Thread.sleep(1000); // Sleep for 1 second
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            myThread.start();
+            //THROW THREAD HANDLER OF CLIENT CONNECTION BECAUSE I DONT KNOW HOW MANY MESSAGES ARE SENT AND HOW LONG HE KEEPS THE APP OPENED TO ASK ME IPS
         }
     }
 

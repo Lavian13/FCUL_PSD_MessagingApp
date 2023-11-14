@@ -111,18 +111,24 @@ public class Peer extends Thread  {
 
                 //ao clicar em um chat mandar ao servidor mensagens individuais com username á qual o server responde com ip(de users no chat)
                 writer.println("Hello from server!");
+                Thread.sleep(2000);
+                writer.println("bye");
                 while(true){
                     if(reader.readLine().equals("close")){
                         reader.close();
                         writer.close();
                         sslSocket.close();
+                        System.out.println("closed");
                         break;
                     }
                 }
 
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
