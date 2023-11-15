@@ -86,7 +86,7 @@ public class Peer extends Thread  {
             this.serverPort = port;
         }
 
-        public void run() {
+        public void run() { // FUNCTION NOT RUN THAT ASKS FOR IP
             try {
                 SSLContext sslContext = SSLContext.getDefault();
                 SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
@@ -110,11 +110,19 @@ public class Peer extends Thread  {
                 // Send a message to the connected server
 
                 //ao clicar em um chat mandar ao servidor mensagens individuais com username á qual o server responde com ip(de users no chat)
-                writer.println("Hello from server!");
+               /* writer.println("Hello from server!");
                 Thread.sleep(2000);
-                writer.println("bye");
+                writer.println("bye");*/
+
                 while(true){
-                    if(reader.readLine().equals("close")){
+
+                    //MAYBE JUST ASK FOR EVERY IP IN THE BEGINNING BECAUSE ASKING UPON CLICK IN CHAT FORCES THIS RUNNABLE TO BE RUNNING
+                    //AND EVENTHOUGH WE COULD USE LOCK AND UNLOCK WE WOULD HAVE TO KEEP GLOBAL VARIABLES FOR THE RUNNABLE TO KNOW WHAT TO ASK
+
+                    //ONLY DOWNFALL OF ASKING EVERYTHING RIGHT AWAY IS FOR REGISTERING A NEW ATTRIBUTE IT WOULD NEED TO CREATE A NEW CONNECTION
+
+                    if(reader.readLine().equals("close")){//if it closes the app
+                        writer.println("close");
                         reader.close();
                         writer.close();
                         sslSocket.close();
@@ -127,8 +135,6 @@ public class Peer extends Thread  {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }

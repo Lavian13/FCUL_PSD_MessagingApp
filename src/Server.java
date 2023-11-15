@@ -14,6 +14,7 @@ import javax.net.ssl.SSLSocket;
 class Server {
 
     static HashMap<String, String> username_ip = new HashMap<>();
+    //static HashMap<String, X509Certificate> username_certificate = new HashMap<>();
     static HashMap<String, List<String>> username_attributes = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
@@ -43,8 +44,12 @@ class Server {
                 System.out.println("The first name of the person's certificate -> " + subjectCN);
 
                 String clientIp = sslSocket.getInetAddress().getHostAddress();
-                username_ip.put(subjectCN, clientIp); //DOES SUBJECTCN MAKE SENSE.
-                //WHAT HAPPENS IF THERE IS NO CERTIFICATE; WE STILL KEEP THE CONNECTION WHY?
+                username_ip.put(subjectCN, clientIp);
+               /* if(username_certificate.keySet().contains(subjectCN)){
+                    if(username_certificate.get(subjectCN).equals(clientCertificate)) continue;
+                    else sslSocket.close();
+                }
+                else username_certificate.put(subjectCN, clientCertificate);*/
             }
 
             // Create a BufferedReader to read the client's messages
@@ -57,14 +62,13 @@ class Server {
             System.out.println("Server TLS Version: " + serverTLSVersion);
             // Create a PrintWriter to send a message to the client
             PrintWriter writer = new PrintWriter(sslSocket.getOutputStream(), true);
-            writer.println("Hello, client!");
+            /*writer.println("Hello, client!");
             writer.println("close");
-            System.out.println(reader.readLine());
+            System.out.println(reader.readLine());*/
 
             HandleUserThread myThread = new HandleUserThread(subjectCN, reader, writer);
             myThread.start();
 
-            //THROW THREAD HANDLER OF CLIENT CONNECTION BECAUSE I DONT KNOW HOW MANY MESSAGES ARE SENT AND HOW LONG HE KEEPS THE APP OPENED TO ASK ME IPS
         }
     }
 
