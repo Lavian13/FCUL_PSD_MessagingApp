@@ -34,10 +34,12 @@ class Server {
             SSLSocket sslSocket = (SSLSocket) sslServerSocket.accept();
 
             System.out.println("Client connected!");
+            String subjectCN = null;
+
             X509Certificate[] clientCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
             if (clientCertificates.length > 0) {
                 X509Certificate clientCertificate = clientCertificates[0]; // Assuming the client provides a certificate
-                String subjectCN = extractSubjectCommonName(clientCertificate);
+                subjectCN = extractSubjectCommonName(clientCertificate);
                 System.out.println("The first name of the person's certificate -> " + subjectCN);
 
                 String clientIp = sslSocket.getInetAddress().getHostAddress();
@@ -59,18 +61,9 @@ class Server {
             writer.println("close");
             System.out.println(reader.readLine());
 
-            Thread myThread = new Thread(() -> {
-                for (int i = 1; i <= 5; i++) {
-                    System.out.println("Thread: " + i);
-                    try {
-                        Thread.sleep(1000); // Sleep for 1 second
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
+            HandleUserThread myThread = new HandleUserThread(subjectCN, reader, writer);
             myThread.start();
+
             //THROW THREAD HANDLER OF CLIENT CONNECTION BECAUSE I DONT KNOW HOW MANY MESSAGES ARE SENT AND HOW LONG HE KEEPS THE APP OPENED TO ASK ME IPS
         }
     }
@@ -85,6 +78,27 @@ class Server {
             }
         }
         return "Unknown";
+    }
+
+    public static void registerAttribute(String username, String attribute){
+        List<String> attributes = username_attributes.get(username);
+        attributes.add(attribute);
+        username_attributes.put(username, attributes);
+    }
+
+    public static String getIpFromUsername(String username){
+        return username_ip.get(username);
+    }
+
+    public static String getIpsFromAttribute(String attribute){
+        String result="";
+        for(String username : username_attributes.keySet()){
+            if(username_attributes.get(username).contains(attribute)){
+                result=result.concat(username+",");
+            }
+        }
+        result.substring(0,result.length()-1);
+        return result;
     }
 
 }
