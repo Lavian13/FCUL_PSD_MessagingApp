@@ -89,7 +89,10 @@
                      <content>
                         <VBox prefHeight="375.0" prefWidth="420.0" style="-fx-background-color: #e3e5fc;">
                            <children>
-                              <VBox fx:id="messages" prefHeight="350.0" prefWidth="440.0" />
+                              <VBox fx:id="messages" prefHeight="350.0" prefWidth="440.0">
+                                 <children>
+                                    <Label fx:id="userOnline" text="User Online" />
+                                 </children></VBox>
                               <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="200.0">
                                 <items>
                                     <TextField prefHeight="20.0" prefWidth="350.0" promptText="Write your message here" />

@@ -2,10 +2,20 @@ import java.io.*;
 import java.net.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.HashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import javax.net.ssl.*;
 
 // Server class
 public class Peer extends Thread  {
+
+    private static final Object serverLock = new Object();
+    private static boolean condition = false;
+    public static String usernameReceiver;
+    public static String ipReceiver;
+    public static String messageToServer;
+
 
     public static void main(String[] args){
         Peer peer = new Peer();
@@ -31,15 +41,33 @@ public class Peer extends Thread  {
             serverThread.start();
 
             // Connecting to another server
-            Thread clientThread = new Thread(new ClientThread("localhost", 9090));
-            clientThread.start();
+            messageToServer="port:2345";
+
+            while(true){
+
+                Thread talkToServer = new Thread(new TalkToServer("localhost", 9090, usernameReceiver));
+                talkToServer.start();
+                synchronized (serverLock) {
+                    serverLock.wait();
+                }
+                //messageToServer="request:username:" + usernameReceiver;
+
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public static void unlockServerUsername(String username){
+        messageToServer="request:username:" + username;
+        usernameReceiver=username;
+        synchronized (serverLock) {
+            serverLock.notify(); // Notify the waiting thread
+        }
 
+    }
 
 
     private static String extractSubjectCommonName(X509Certificate certificate) {
@@ -77,11 +105,11 @@ public class Peer extends Thread  {
         }
     }
 
-    class ClientThread implements Runnable {
+    class TalkToServer implements Runnable {
         private String serverAddress;
         private int serverPort;
 
-        public ClientThread(String address, int port) {
+        public TalkToServer(String address, int port, String username) {
             this.serverAddress = address;
             this.serverPort = port;
         }
@@ -114,22 +142,18 @@ public class Peer extends Thread  {
                 Thread.sleep(2000);
                 writer.println("bye");*/
 
-                while(true){
+                //while(true){
 
                     //MAYBE JUST ASK FOR EVERY IP IN THE BEGINNING BECAUSE ASKING UPON CLICK IN CHAT FORCES THIS RUNNABLE TO BE RUNNING
                     //AND EVENTHOUGH WE COULD USE LOCK AND UNLOCK WE WOULD HAVE TO KEEP GLOBAL VARIABLES FOR THE RUNNABLE TO KNOW WHAT TO ASK
 
                     //ONLY DOWNFALL OF ASKING EVERYTHING RIGHT AWAY IS FOR REGISTERING A NEW ATTRIBUTE IT WOULD NEED TO CREATE A NEW CONNECTION
 
-                    if(reader.readLine().equals("close")){//if it closes the app
-                        writer.println("close");
-                        reader.close();
-                        writer.close();
-                        sslSocket.close();
-                        System.out.println("closed");
-                        break;
-                    }
-                }
+
+                    //writer.println("request:username:" + usernameReceiver);
+
+
+                //}
 
 
             } catch (IOException e) {

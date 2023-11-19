@@ -36,6 +36,7 @@ class Server {
 
             System.out.println("Client connected!");
             String subjectCN = null;
+            String clientIp = null;
 
             X509Certificate[] clientCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
             if (clientCertificates.length > 0) {
@@ -43,8 +44,9 @@ class Server {
                 subjectCN = extractSubjectCommonName(clientCertificate);
                 System.out.println("The first name of the person's certificate -> " + subjectCN);
 
-                String clientIp = sslSocket.getInetAddress().getHostAddress();
-                username_ip.put(subjectCN, clientIp);
+                clientIp = sslSocket.getInetAddress().getHostAddress();
+                System.out.println(clientIp);
+                //username_ip.put(subjectCN, clientIp);
                /* if(username_certificate.keySet().contains(subjectCN)){
                     if(username_certificate.get(subjectCN).equals(clientCertificate)) continue;
                     else sslSocket.close();
@@ -54,8 +56,8 @@ class Server {
 
             // Create a BufferedReader to read the client's messages
             BufferedReader reader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
-            String line = reader.readLine();
-            System.out.println("Received from client: " + line);
+            //String line = reader.readLine();
+            //System.out.println("Received from client: " + line);
             String serverCipherSuite = sslSocket.getSession().getCipherSuite();
             System.out.println("Server Cipher Suite: " + serverCipherSuite);
             String serverTLSVersion = sslSocket.getSession().getProtocol();
@@ -66,7 +68,7 @@ class Server {
             writer.println("close");
             System.out.println(reader.readLine());*/
 
-            HandleUserThread myThread = new HandleUserThread(subjectCN, reader, writer);
+            HandleUserThread myThread = new HandleUserThread(subjectCN,clientIp, reader, writer);
             myThread.start();
 
         }
