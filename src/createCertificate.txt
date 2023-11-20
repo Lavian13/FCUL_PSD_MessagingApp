@@ -1,0 +1,4 @@
+
+keytool -keystore davidkeystore.jks -keyalg RSA -genkey -alias david
+
+keystorepass: davidpass

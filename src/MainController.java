@@ -63,7 +63,9 @@ public class MainController {
 
                 DynamicController controller = loader.getController();
                 //controller.setData(columnName);
-                controller.setData("David");
+                if(i%2==0)
+                    controller.setData("David");
+                else controller.setData("Luis");
 
                 contact.setOnMouseClicked(event -> {
                     //HERE DO THE CODE TO LOAD THE CHAT IN THE RIGHT SIDE OF THE PAGE

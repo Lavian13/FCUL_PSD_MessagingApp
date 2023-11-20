@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import javax.net.ssl.*;
 
 // Server class
-public class Peer extends Thread  {
+public class Peer2 extends Thread  {
 
     private static final Object serverLock = new Object();
     private static boolean condition = false;
@@ -30,15 +30,15 @@ public class Peer extends Thread  {
     @Override
     public void run() {
         try {
-            System.setProperty("javax.net.ssl.keyStore", "src/Luis_cert/luiskeystore.jks");
-            System.setProperty("javax.net.ssl.trustStore", "src/Luis_cert/luistruststore.jks");
-            System.setProperty("javax.net.ssl.keyStorePassword", "luispass");
-            System.setProperty("javax.net.ssl.trustStorePassword", "luispass");
+            System.setProperty("javax.net.ssl.keyStore", "src/David_cert/davidkeystore.jks");
+            System.setProperty("javax.net.ssl.trustStore", "src/David_cert/davidtruststore.jks");
+            System.setProperty("javax.net.ssl.keyStorePassword", "davidpass");
+            System.setProperty("javax.net.ssl.trustStorePassword", "davidpass");
 
             SSLContext sslContext = SSLContext.getDefault();
             SSLServerSocketFactory sslServerSocketFactory = sslContext.getServerSocketFactory();
 
-            SSLServerSocket sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(2345);
+            SSLServerSocket sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(2346);
             sslServerSocket.setNeedClientAuth(true);
             System.out.println("Waiting for client connection...");
 
@@ -118,32 +118,32 @@ public class Peer extends Thread  {
     }
 
 
-        public void ConnectToServer(String serverAddress, int serverPort, String username) {
-            try {
-                SSLContext sslContext = SSLContext.getDefault();
-                SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-                sslSocket = (SSLSocket) sslSocketFactory.createSocket(serverAddress, serverPort);
-                sslSocket.setNeedClientAuth(true);
-                System.out.println("Connected to server!");
-                X509Certificate[] serverCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
-                if (serverCertificates.length > 0) {
-                    X509Certificate clientCertificate = serverCertificates[0]; // Assuming the client provides a certificate
-                    String subjectCN = extractSubjectCommonName(clientCertificate);
-                    System.out.println("The first name of the person's certificate -> " + subjectCN);
-                }
-
-                System.out.println("Connected to server: " + sslSocket);
-
-                serverReader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
-                serverWriter = new PrintWriter(sslSocket.getOutputStream(), true);
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException(e);
+    public void ConnectToServer(String serverAddress, int serverPort, String username) {
+        try {
+            SSLContext sslContext = SSLContext.getDefault();
+            SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+            sslSocket = (SSLSocket) sslSocketFactory.createSocket(serverAddress, serverPort);
+            sslSocket.setNeedClientAuth(true);
+            System.out.println("Connected to server!");
+            X509Certificate[] serverCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
+            if (serverCertificates.length > 0) {
+                X509Certificate clientCertificate = serverCertificates[0]; // Assuming the client provides a certificate
+                String subjectCN = extractSubjectCommonName(clientCertificate);
+                System.out.println("The first name of the person's certificate -> " + subjectCN);
             }
+
+            System.out.println("Connected to server: " + sslSocket);
+
+            serverReader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
+            serverWriter = new PrintWriter(sslSocket.getOutputStream(), true);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
+    }
 
 
     class ClientHandler implements Runnable {
