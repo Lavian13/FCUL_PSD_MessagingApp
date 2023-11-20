@@ -20,8 +20,9 @@ import java.security.cert.X509Certificate;
 
 public class MainController {
 
-    BufferedReader reader;
-    PrintWriter writer;
+    BufferedReader reader = null;
+    PrintWriter writer = null;
+    SSLSocket sslSocket;
 
     @FXML
     private VBox contacts; // Reference to the parent container in the FXML file
@@ -34,10 +35,9 @@ public class MainController {
     @FXML
     private TextField messageField;
 
-    public void sendButtonPress(ActionEvent event){
+    public void sendButtonPress(ActionEvent event) throws IOException {
         //CODE TO SEND MESSAGE TO ACTIVEIPS IN MAINCLASS
         sendMessage(messageField.getText());
-        loadMessageUI(messageField.getText());
         messageField.clear();
         sendButton.setStyle("-fx-background-color: red;");
     }
@@ -67,6 +67,15 @@ public class MainController {
 
                 contact.setOnMouseClicked(event -> {
                     //HERE DO THE CODE TO LOAD THE CHAT IN THE RIGHT SIDE OF THE PAGE
+                    if (reader!=null && writer!=null){
+                        writer.println("close");
+                        try {
+                            sslSocket.close();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
                     try {
                         Peer.sendMessageToServerUsername(controller.getData());
                     } catch (IOException e) {
@@ -107,14 +116,14 @@ public class MainController {
     private void connectToUser(){
         try {
             if(Peer.ipReceiver==null || Peer.ipReceiver.equals("")|| Peer.ipReceiver.isEmpty() || Peer.ipReceiver.equals("null")) {
-                userOnline.setText("User doesn't exist");
+                userOnline.setText("User doesn't exist anymore");
                 return;
             }
 
             SSLContext sslContext = SSLContext.getDefault();
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
             String[] ip_port = Peer.ipReceiver.split(":");
-            SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket(ip_port[0], Integer.parseInt(ip_port[1]));
+            sslSocket = (SSLSocket) sslSocketFactory.createSocket(ip_port[0], Integer.parseInt(ip_port[1]));
             sslSocket.setNeedClientAuth(true);
             System.out.println("Connected to user!");
             X509Certificate[] serverCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
@@ -139,6 +148,8 @@ public class MainController {
             sslSocket.close();
             System.out.println("closed");*/
 
+            threadToRead();
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
@@ -147,12 +158,60 @@ public class MainController {
 
     }
 
-    private void sendMessage(String text) {
-        writer.println(text);
+
+    private void threadToRead() throws IOException {
+        Thread readingThread = new Thread(() -> {
+            try {
+                while (true) {
+                    String receivedMessage = reader.readLine();
+                    receiveMessage(receivedMessage);
+
+                    if (receivedMessage == "close") {
+                        sslSocket.close();
+                        userOnline.setText("User Offline");
+                        break; // Connection closed
+                    }
+                    System.out.println("Received: " + receivedMessage);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        readingThread.start();
+
+
     }
 
-    private void loadMessageUI(String message){
-        messageField.setText(message);
+    private void sendMessage(String text) throws IOException {
+        writer.println(text);
+        loadMessageUI(text);
+    }
+    private void receiveMessage(String text) throws IOException {
+        loadOtherMessageUI(text);
+
+    }
+
+    private void loadMessageUI(String message) throws IOException {
+        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
+        AnchorPane messagePane = loader2.load();
+        MessageController controller2 = loader2.getController();
+        controller2.setData(message);
+        messagePane.setOnMouseClicked(event -> {//TO REMOVE
+            messagePane.setStyle("-fx-background-color: red;");
+        });
+        messages.getChildren().add(messagePane);
+    }
+    private void loadOtherMessageUI(String message) throws IOException {
+        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
+        AnchorPane messagePane = loader2.load();
+        MessageController controller2 = loader2.getController();
+        controller2.setData(message);
+        controller2.setPaneRightSide();
+
+        //put message on the right side
+
+        messages.getChildren().add(messagePane);
     }
 
     private static String extractSubjectCommonName(X509Certificate certificate) {
