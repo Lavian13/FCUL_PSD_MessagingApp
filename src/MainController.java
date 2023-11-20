@@ -1,9 +1,7 @@
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
@@ -13,14 +11,12 @@ import javafx.scene.control.Label;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
-import java.sql.*;
 
 public class MainController {
 
@@ -35,10 +31,14 @@ public class MainController {
     private Button sendButton;
     @FXML
     private Label userOnline;
+    @FXML
+    private TextField messageField;
 
     public void sendButtonPress(ActionEvent event){
         //CODE TO SEND MESSAGE TO ACTIVEIPS IN MAINCLASS
-        sendMessage();
+        sendMessage(messageField.getText());
+        loadMessageUI(messageField.getText());
+        messageField.clear();
         sendButton.setStyle("-fx-background-color: red;");
     }
 
@@ -55,9 +55,6 @@ public class MainController {
             while (resultSet.next()) {*/
 
 
-
-
-
         for(int i=0; i<15;i++){
                 //String columnName = resultSet.getString("column_name");
 
@@ -70,17 +67,20 @@ public class MainController {
 
                 contact.setOnMouseClicked(event -> {
                     //HERE DO THE CODE TO LOAD THE CHAT IN THE RIGHT SIDE OF THE PAGE
-                    Peer.unlockServerUsername(controller.getData());
-                    connectToUser();//then delete the sleep
-                    contact.setStyle("-fx-background-color: red;");
                     try {
-                        Thread.sleep(100);
+                        Peer.sendMessageToServerUsername(controller.getData());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println(Peer.ipReceiver);
+                    try {
                         loadChat(controller.getData());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
                     }
+                    connectToUser();//then delete the sleep
+                    contact.setStyle("-fx-background-color: red;");
+
                 });
 
                 // Add the dynamic pane to the parent container
@@ -94,9 +94,6 @@ public class MainController {
     }
 
     private void loadChat(String username) throws IOException {
-        if(Peer.ipReceiver==null || Peer.ipReceiver.equals("")|| Peer.ipReceiver.isEmpty() || Peer.ipReceiver.equals("null")) {
-            userOnline.setText("User Offline");
-        }
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
         AnchorPane message = loader2.load();
         MessageController controller2 = loader2.getController();
@@ -109,12 +106,17 @@ public class MainController {
 
     private void connectToUser(){
         try {
+            if(Peer.ipReceiver==null || Peer.ipReceiver.equals("")|| Peer.ipReceiver.isEmpty() || Peer.ipReceiver.equals("null")) {
+                userOnline.setText("User doesn't exist");
+                return;
+            }
+
             SSLContext sslContext = SSLContext.getDefault();
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
             String[] ip_port = Peer.ipReceiver.split(":");
             SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket(ip_port[0], Integer.parseInt(ip_port[1]));
             sslSocket.setNeedClientAuth(true);
-            System.out.println("Connected to server!");
+            System.out.println("Connected to user!");
             X509Certificate[] serverCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
             if (serverCertificates.length > 0) {
                 X509Certificate clientCertificate = serverCertificates[0]; // Assuming the client provides a certificate
@@ -122,14 +124,11 @@ public class MainController {
                 System.out.println("The first name of the person's certificate -> " + subjectCN);
             }
 
-            System.out.println("Connected to server: " + sslSocket);
-
+            System.out.println("Connected to user: " + sslSocket);
 
             // Set up input and output streams for communication
             reader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
             writer = new PrintWriter(sslSocket.getOutputStream(), true);
-
-
 
             /*writer.println(messageToServer);
             ipReceiver = reader.readLine();
@@ -148,7 +147,12 @@ public class MainController {
 
     }
 
-    private void sendMessage() {
+    private void sendMessage(String text) {
+        writer.println(text);
+    }
+
+    private void loadMessageUI(String message){
+        messageField.setText(message);
     }
 
     private static String extractSubjectCommonName(X509Certificate certificate) {

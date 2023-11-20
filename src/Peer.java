@@ -3,6 +3,7 @@ import java.net.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import javax.net.ssl.*;
@@ -14,7 +15,12 @@ public class Peer extends Thread  {
     private static boolean condition = false;
     public static String usernameReceiver;
     public static String ipReceiver;
-    public static String messageToServer;
+    //public static String messageToServer;
+    private static BufferedReader serverReader;
+    private static PrintWriter serverWriter;
+    private static SSLSocket sslSocket;
+    private static List<SSLSocket> sslSocketUsers;
+
 
 
     public static void main(String[] args){
@@ -40,19 +46,18 @@ public class Peer extends Thread  {
             Thread serverThread = new Thread(new ServerThread(sslServerSocket));
             serverThread.start();
 
+            ConnectToServer("localhost", 9090, usernameReceiver);
+
             // Connecting to another server
-            messageToServer="port:2345";
-
-            while(true){
-
-                Thread talkToServer = new Thread(new TalkToServer("localhost", 9090, usernameReceiver));
-                talkToServer.start();
-                synchronized (serverLock) {
-                    serverLock.wait();
-                }
-                //messageToServer="request:username:" + usernameReceiver;
-
-            }
+            serverWriter.println("port:2345");
+            serverReader.readLine();
+            /*ipReceiver = serverReader.readLine();
+            System.out.println("Message received" + ipReceiver);
+            serverWriter.println("close");
+            serverReader.close();
+            serverWriter.close();
+            sslSocket.close();
+            System.out.println("closed");*/
 
 
         } catch (Exception e) {
@@ -60,12 +65,19 @@ public class Peer extends Thread  {
         }
     }
 
-    public static void unlockServerUsername(String username){
-        messageToServer="request:username:" + username;
+    /*public static void sendMessageToServer(String message) throws IOException {
+        serverWriter.println(message);
+        serverReader.readLine();
+        messageToServer="request:username:" + usernameReceiver;
+
+    }*/
+
+    public static void sendMessageToServerUsername(String username) throws IOException {
+        String messageToServer="request:username:" + username;
         usernameReceiver=username;
-        synchronized (serverLock) {
-            serverLock.notify(); // Notify the waiting thread
-        }
+        serverWriter.println(messageToServer);
+        String read = serverReader.readLine();
+        ipReceiver=read;
 
     }
 
@@ -105,20 +117,12 @@ public class Peer extends Thread  {
         }
     }
 
-    class TalkToServer implements Runnable {
-        private String serverAddress;
-        private int serverPort;
 
-        public TalkToServer(String address, int port, String username) {
-            this.serverAddress = address;
-            this.serverPort = port;
-        }
-
-        public void run() { // FUNCTION NOT RUN THAT ASKS FOR IP
+        public void ConnectToServer(String serverAddress, int serverPort, String username) {
             try {
                 SSLContext sslContext = SSLContext.getDefault();
                 SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-                SSLSocket sslSocket = (SSLSocket) sslSocketFactory.createSocket(serverAddress, serverPort);
+                sslSocket = (SSLSocket) sslSocketFactory.createSocket(serverAddress, serverPort);
                 sslSocket.setNeedClientAuth(true);
                 System.out.println("Connected to server!");
                 X509Certificate[] serverCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
@@ -130,30 +134,8 @@ public class Peer extends Thread  {
 
                 System.out.println("Connected to server: " + sslSocket);
 
-
-                // Set up input and output streams for communication
-                BufferedReader reader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
-                PrintWriter writer = new PrintWriter(sslSocket.getOutputStream(), true);
-
-                // Send a message to the connected server
-
-                //ao clicar em um chat mandar ao servidor mensagens individuais com username á qual o server responde com ip(de users no chat)
-               /* writer.println("Hello from server!");
-                Thread.sleep(2000);
-                writer.println("bye");*/
-
-                //while(true){
-
-                    //MAYBE JUST ASK FOR EVERY IP IN THE BEGINNING BECAUSE ASKING UPON CLICK IN CHAT FORCES THIS RUNNABLE TO BE RUNNING
-                    //AND EVENTHOUGH WE COULD USE LOCK AND UNLOCK WE WOULD HAVE TO KEEP GLOBAL VARIABLES FOR THE RUNNABLE TO KNOW WHAT TO ASK
-
-                    //ONLY DOWNFALL OF ASKING EVERYTHING RIGHT AWAY IS FOR REGISTERING A NEW ATTRIBUTE IT WOULD NEED TO CREATE A NEW CONNECTION
-
-
-                    //writer.println("request:username:" + usernameReceiver);
-
-
-                //}
+                serverReader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
+                serverWriter = new PrintWriter(sslSocket.getOutputStream(), true);
 
 
             } catch (IOException e) {
@@ -162,7 +144,7 @@ public class Peer extends Thread  {
                 throw new RuntimeException(e);
             }
         }
-    }
+
 
     class ClientHandler implements Runnable {
         private SSLSocket sslSocket;
