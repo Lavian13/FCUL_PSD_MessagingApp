@@ -14,9 +14,8 @@ public class LoadFXML2 extends Application{
     private List<String> ips = new ArrayList<>();
 
     public static void main(String[] args) {
-        //Peer2 peer = new Peer2();
-        //peer.start();
-
+        Peer peer = new Peer(2);
+        peer.start();
         launch(args);
         //RetrieveIPThread ip_thread = new RetrieveIPThread("127.0.0.1", 3456);
         //ip_thread.start();
@@ -29,7 +28,6 @@ public class LoadFXML2 extends Application{
         //FXMLLoader loader = new FXMLLoader();
         //loader.setLocation(new URL("MessageAppUI.fxml"));
         //VBox vbox = loader.<VBox>load();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MessageAppUI.fxml"));
         Parent vbox = loader.load();
 

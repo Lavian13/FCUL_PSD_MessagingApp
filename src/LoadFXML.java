@@ -14,7 +14,7 @@ public class LoadFXML extends Application{
     private List<String> ips = new ArrayList<>();
 
     public static void main(String[] args) {
-        Peer peer = new Peer();
+        Peer peer = new Peer(1);
         peer.start();
 
         launch(args);

@@ -20,25 +20,42 @@ public class Peer extends Thread  {
     private static PrintWriter serverWriter;
     private static SSLSocket sslSocket;
     private static List<SSLSocket> sslSocketUsers;
+    private int user;
 
 
 
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         Peer peer = new Peer();
         peer.start();
-    }
-    @Override
-    public void run() {
-        try {
+    }*/
+    public Peer(int user){
+        this.user=user;
+        if(user==1){
             System.setProperty("javax.net.ssl.keyStore", "src/Luis_cert/luiskeystore.jks");
             System.setProperty("javax.net.ssl.trustStore", "src/Luis_cert/luistruststore.jks");
             System.setProperty("javax.net.ssl.keyStorePassword", "luispass");
             System.setProperty("javax.net.ssl.trustStorePassword", "luispass");
+        }else if(user==2){
+            System.setProperty("javax.net.ssl.keyStore", "src/David_cert/davidkeystore.jks");
+            System.setProperty("javax.net.ssl.trustStore", "src/David_cert/davidtruststore.jks");
+            System.setProperty("javax.net.ssl.keyStorePassword", "davidpass");
+            System.setProperty("javax.net.ssl.trustStorePassword", "davidpass");
+        }
+
+    }
+
+    @Override
+    public void run() {
+        try {
+            /*System.setProperty("javax.net.ssl.keyStore", "src/Luis_cert/luiskeystore.jks");
+            System.setProperty("javax.net.ssl.trustStore", "src/Luis_cert/luistruststore.jks");
+            System.setProperty("javax.net.ssl.keyStorePassword", "luispass");
+            System.setProperty("javax.net.ssl.trustStorePassword", "luispass");*/
 
             SSLContext sslContext = SSLContext.getDefault();
             SSLServerSocketFactory sslServerSocketFactory = sslContext.getServerSocketFactory();
 
-            SSLServerSocket sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(2345);
+            SSLServerSocket sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(2344+user);
             sslServerSocket.setNeedClientAuth(true);
             System.out.println("Waiting for client connection...");
 

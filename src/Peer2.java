@@ -24,7 +24,7 @@ public class Peer2 extends Thread  {
 
 
     public static void main(String[] args){
-        Peer peer = new Peer();
+        Peer2 peer = new Peer2();
         peer.start();
     }
     @Override
