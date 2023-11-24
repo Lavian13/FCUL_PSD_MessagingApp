@@ -23,6 +23,7 @@ public class MainController {
     BufferedReader reader = null;
     PrintWriter writer = null;
     SSLSocket sslSocket;
+    public static String otherUsername;
 
     @FXML
     private VBox contacts; // Reference to the parent container in the FXML file
@@ -55,7 +56,7 @@ public class MainController {
             while (resultSet.next()) {*/
 
 
-        for(int i=0; i<15;i++){
+        for(int i=0; i<2;i++){
                 //String columnName = resultSet.getString("column_name");
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("DynamicPane.fxml"));
@@ -64,32 +65,42 @@ public class MainController {
                 DynamicController controller = loader.getController();
                 //controller.setData(columnName);
                 if(i%2==0)
-                    controller.setData("David");
-                else controller.setData("Luis");
+                    controller.setData("DavidOliveira");
+                else controller.setData("LuisViana");
 
                 contact.setOnMouseClicked(event -> {
                     //HERE DO THE CODE TO LOAD THE CHAT IN THE RIGHT SIDE OF THE PAGE
-                    if (reader!=null && writer!=null){
+                    /*if (reader!=null && writer!=null){
+                        //guardarmensagens em ficheiro encriptado
                         writer.println("close");
                         try {
                             sslSocket.close();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                    }
+                    }*/
 
-                    try {
+                    /*try {
                         Peer.sendMessageToServerUsername(controller.getData());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
-                    }
+                    }*/
+                    otherUsername=controller.getData();
                     System.out.println(Peer.ipReceiver);
                     try {
-                        loadChat(controller.getData());
+                        loadChat(otherUsername);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    connectToUser();//then delete the sleep
+                    //connectToUser();//then delete the sleep
+                    SSLSocket sslSocket = Peer.sslSocketUsers.get(otherUsername);
+                    reader = Peer.usersReaders.get(otherUsername);
+                    try {
+                        writer = new PrintWriter(sslSocket.getOutputStream(), true);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
                     contact.setStyle("-fx-background-color: red;");
 
                 });
@@ -104,6 +115,7 @@ public class MainController {
 
     }
 
+
     private void loadChat(String username) throws IOException {
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
         AnchorPane message = loader2.load();
@@ -112,15 +124,15 @@ public class MainController {
         message.setOnMouseClicked(event -> {//TO REMOVE
             message.setStyle("-fx-background-color: red;");
         });
-        messages.getChildren().add(message);
+        //messages.getChildren().add(message);
     }
 
-    private void connectToUser(){
+    /*private void connectToUser(){
         try {
             if(Peer.ipReceiver==null || Peer.ipReceiver.equals("")|| Peer.ipReceiver.isEmpty() || Peer.ipReceiver.equals("null")) {
                 userOnline.setText("User doesn't exist anymore");
                 return;
-            }
+            }else userOnline.setText("User Online");
 
             SSLContext sslContext = SSLContext.getDefault();
             SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
@@ -138,19 +150,12 @@ public class MainController {
             System.out.println("Connected to user: " + sslSocket);
 
             // Set up input and output streams for communication
-            reader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
+            //reader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
             writer = new PrintWriter(sslSocket.getOutputStream(), true);
 
-            /*writer.println(messageToServer);
-            ipReceiver = reader.readLine();
-            System.out.println("Message received" + ipReceiver);
-            writer.println("close");
-            reader.close();
-            writer.close();
-            sslSocket.close();
-            System.out.println("closed");*/
 
-            threadToRead();
+
+            //threadToRead();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -158,21 +163,25 @@ public class MainController {
             throw new RuntimeException(e);
         }
 
-    }
+    }*/
 
 
-    private void threadToRead() throws IOException {
+    /*private void threadToRead() throws IOException {
         Thread readingThread = new Thread(() -> {
             try {
-                while (true) {
-                    String receivedMessage = reader.readLine();
-                    receiveMessage(receivedMessage);
-
+                String aux = otherUsername;
+                System.out.println("Threadreading" + otherUsername);
+                while (otherUsername.equals(aux)) {
+                    System.out.println("waiting" + reader);
+                    String receivedMessage = reader.readLine();//ta a ficar aqui parado e ainda aberto
+                    System.out.println("stoppedwaiting");
                     if (receivedMessage == "close") {
-                        sslSocket.close();
                         userOnline.setText("User Offline");
+                        sslSocket.close();
                         break; // Connection closed
-                    }
+                    }else
+                    Peer.username_Messages.get(aux).add(receivedMessage);
+                    receiveMessage(receivedMessage);
                     System.out.println("Received: " + receivedMessage);
                 }
             } catch (IOException e) {
@@ -183,18 +192,19 @@ public class MainController {
         readingThread.start();
 
 
-    }
+    }*/
 
     private void sendMessage(String text) throws IOException {
         writer.println(text);
         loadMessageUI(text);
     }
-    private void receiveMessage(String text) throws IOException {
+    public void receiveMessage(String text) throws IOException {
         loadOtherMessageUI(text);
 
     }
 
     private void loadMessageUI(String message) throws IOException {
+        System.out.println("adding to ui sent message");
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
         AnchorPane messagePane = loader2.load();
         MessageController controller2 = loader2.getController();
@@ -205,6 +215,7 @@ public class MainController {
         messages.getChildren().add(messagePane);
     }
     private void loadOtherMessageUI(String message) throws IOException {
+        System.out.println("adding to ui received message");
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
         AnchorPane messagePane = loader2.load();
         MessageController controller2 = loader2.getController();

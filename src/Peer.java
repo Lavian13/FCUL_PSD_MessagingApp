@@ -2,6 +2,7 @@ import java.io.*;
 import java.net.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -18,16 +19,13 @@ public class Peer extends Thread  {
     //public static String messageToServer;
     private static BufferedReader serverReader;
     private static PrintWriter serverWriter;
-    private static SSLSocket sslSocket;
-    private static List<SSLSocket> sslSocketUsers;
+    private static SSLSocket sslSocket = null;
+    public static HashMap<String, SSLSocket> sslSocketUsers = new HashMap<>();//connections of evryone i have a chat with
+    public static HashMap<String, BufferedReader> usersReaders = new HashMap<>();
+    public static HashMap<String, List<String>> username_Messages = new HashMap<>();
     private int user;
 
 
-
-    /*public static void main(String[] args){
-        Peer peer = new Peer();
-        peer.start();
-    }*/
     public Peer(int user){
         this.user=user;
         if(user==1){
@@ -57,24 +55,59 @@ public class Peer extends Thread  {
 
             SSLServerSocket sslServerSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(2344+user);
             sslServerSocket.setNeedClientAuth(true);
-            System.out.println("Waiting for client connection...");
-
-            // Start the server
-            Thread serverThread = new Thread(new ServerThread(sslServerSocket));
-            serverThread.start();
 
             ConnectToServer("localhost", 9090, usernameReceiver);
-
-            // Connecting to another server
-            serverWriter.println("port:2345");
+            System.out.println("port:" + (2344+user));
+            serverWriter.println("port:" + (2344+user));
             serverReader.readLine();
-            /*ipReceiver = serverReader.readLine();
-            System.out.println("Message received" + ipReceiver);
-            serverWriter.println("close");
-            serverReader.close();
-            serverWriter.close();
-            sslSocket.close();
-            System.out.println("closed");*/
+
+
+            System.out.println("Waiting for client connection...");
+        //for all users i have a group chat with ask the ip to the server
+            if(user==1)
+                sendMessageToServerUsername("DavidOliveira");
+            else
+                sendMessageToServerUsername("LuisViana");
+            //if ipReceiver==null continue for
+            if (ipReceiver.split(":").length==2) {
+                try {
+                    sslSocket=null;
+                    SSLContext sslContext_ = SSLContext.getDefault();
+                    SSLSocketFactory sslSocketFactory = sslContext_.getSocketFactory();
+                    String[] ip_port = ipReceiver.split(":");
+                    System.out.println("hey" + ip_port[0] + " "+ Integer.parseInt(ip_port[1]));
+                    sslSocket = (SSLSocket) sslSocketFactory.createSocket(ip_port[0], Integer.parseInt(ip_port[1]));
+                    sslSocket.setNeedClientAuth(true);
+                    System.out.println("Connected to user!");
+                    X509Certificate[] serverCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
+                    if (serverCertificates.length > 0) {
+                        X509Certificate clientCertificate = serverCertificates[0]; // Assuming the client provides a certificate
+                        String subjectCN = extractSubjectCommonName(clientCertificate);
+                        System.out.println("The first name of the person's certificate -> " + subjectCN);
+                        sslSocketUsers.put(subjectCN, sslSocket);
+                    }
+
+                    System.out.println("Connected to user: " + sslSocket);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+
+            if (sslSocket != null) {
+                Thread clientThread = new Thread(new ClientHandler(sslSocket));
+                clientThread.start();
+            }
+
+        //endoffor
+
+
+            // Start listening to connections
+            Thread serverThread = new Thread(new ServerThread(sslServerSocket));
+            serverThread.start();
 
 
         } catch (Exception e) {
@@ -95,6 +128,7 @@ public class Peer extends Thread  {
         serverWriter.println(messageToServer);
         String read = serverReader.readLine();
         ipReceiver=read;
+        //System.out.println(usernameReceiver + " " + ipReceiver);
 
     }
 
@@ -121,6 +155,7 @@ public class Peer extends Thread  {
         public void run() {
             try {
                 while (true) {
+                    System.out.println("got here");
                     SSLSocket sslSocket = (SSLSocket) socket.accept();
                     System.out.println("New connection accepted: " + sslSocket);
 
@@ -173,6 +208,7 @@ public class Peer extends Thread  {
         public void run() {
             System.out.println("Client connected!");
             X509Certificate[] clientCertificates = new X509Certificate[0];
+            String subjectCN=null;
             try {
                 clientCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
             } catch (SSLPeerUnverifiedException e) {
@@ -180,42 +216,58 @@ public class Peer extends Thread  {
             }
             if (clientCertificates.length > 0) {
                 X509Certificate clientCertificate = clientCertificates[0]; // Assuming the client provides a certificate
-                String subjectCN = extractSubjectCommonName(clientCertificate);
+                subjectCN = extractSubjectCommonName(clientCertificate);
                 System.out.println("The first name of the person's certificate -> " + subjectCN);
+                sslSocketUsers.put(subjectCN,sslSocket);
             }
             // Create a BufferedReader to read the client's messages
             BufferedReader reader = null;
             try {
                 reader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
+                usersReaders.put(subjectCN,reader);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            String line = null;
-            try {
-                line = reader.readLine();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println("Received from client: " + line);
             String serverCipherSuite = sslSocket.getSession().getCipherSuite();
             System.out.println("Server Cipher Suite: " + serverCipherSuite);
             String serverTLSVersion = sslSocket.getSession().getProtocol();
             System.out.println("Server TLS Version: " + serverTLSVersion);
             // Create a PrintWriter to send a message to the client
-            PrintWriter writer = null;
             try {
-                writer = new PrintWriter(sslSocket.getOutputStream(), true);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            writer.println("Hello, client!");
+                while (true) {
+                    System.out.println(reader);
+                    String receivedMessage = reader.readLine();
 
-            try {
-                sslSocket.close();
+                    if (receivedMessage == "close") {
+                        sslSocket.close();
+                        break; // Connection closed
+                    }//else do a notification and write to the hashmap of messages
+                    else{
+                        if(subjectCN!=null){
+                            System.out.println(subjectCN + " username" + MainController.otherUsername);
+                            if (username_Messages.containsKey(subjectCN))
+                                username_Messages.get(subjectCN).add(receivedMessage);
+                            else {
+                                username_Messages.put(subjectCN, new ArrayList<>());
+                                username_Messages.get(subjectCN).add(receivedMessage);
+                            }
+                            /*if(subjectCN.equals(MainController.otherUsername)){
+                                changeui
+                            }*/
+                            System.out.println("Received: " + receivedMessage);
+                        }
+
+                    }
+
+                }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
+
+
+
         }
     }
+
 
 }
