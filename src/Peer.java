@@ -5,6 +5,8 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import javax.net.ssl.*;
@@ -24,6 +26,7 @@ public class Peer extends Thread  {
     public static HashMap<String, BufferedReader> usersReaders = new HashMap<>();
     public static HashMap<String, List<String>> username_Messages = new HashMap<>();
     private int user;
+    public static final BlockingQueue<Boolean> notificationQueue = new LinkedBlockingQueue<>();
 
 
     public Peer(int user){
@@ -251,6 +254,7 @@ public class Peer extends Thread  {
                                 username_Messages.put(subjectCN, new ArrayList<>());
                                 username_Messages.get(subjectCN).add(receivedMessage);
                             }
+                            notificationQueue.offer(true);
                             /*if(subjectCN.equals(MainController.otherUsername)){
                                 changeui
                             }*/

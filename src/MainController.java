@@ -1,3 +1,4 @@
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
@@ -7,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.application.Platform;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
@@ -102,6 +104,11 @@ public class MainController {
                     }
 
                     contact.setStyle("-fx-background-color: red;");
+                    try {
+                        threadToRead();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
 
                 });
 
@@ -166,33 +173,61 @@ public class MainController {
     }*/
 
 
-    /*private void threadToRead() throws IOException {
-        Thread readingThread = new Thread(() -> {
+    private void threadToRead() throws IOException {
+        Task<Void> backgroundTask = new Task<>(){
+
+            @Override
+            protected Void call() throws Exception {
+                String aux = otherUsername;
+                System.out.println("Threadreading" + otherUsername);
+                while (true) {
+                    // Wait for a notification
+                    Peer.notificationQueue.take();
+                    if(aux.equals(otherUsername)){
+                        String receivedMessage = Peer.username_Messages.get(aux).getLast();
+                        Platform.runLater(() -> {
+                            try {
+                                receiveMessage(receivedMessage);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+
+                        System.out.println("Received: " + receivedMessage);
+                    }
+                }
+            }
+        };
+        Thread backgroundThread = new Thread(backgroundTask);
+        backgroundThread.setDaemon(true);
+        backgroundThread.start();
+        /*Thread readingThread = new Thread(() -> {
             try {
                 String aux = otherUsername;
                 System.out.println("Threadreading" + otherUsername);
-                while (otherUsername.equals(aux)) {
-                    System.out.println("waiting" + reader);
-                    String receivedMessage = reader.readLine();//ta a ficar aqui parado e ainda aberto
-                    System.out.println("stoppedwaiting");
-                    if (receivedMessage == "close") {
-                        userOnline.setText("User Offline");
-                        sslSocket.close();
-                        break; // Connection closed
-                    }else
-                    Peer.username_Messages.get(aux).add(receivedMessage);
-                    receiveMessage(receivedMessage);
-                    System.out.println("Received: " + receivedMessage);
+                while (true) {
+                    // Wait for a notification
+                    Peer.notificationQueue.take();
+                    if(aux.equals(otherUsername)){
+                        String receivedMessage = Peer.username_Messages.get(aux).getLast();
+                        Platform.runLater(() ->receiveMessage(receivedMessage));
+
+                        System.out.println("Received: " + receivedMessage);
+                    }
                 }
+
+
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         });
 
-        readingThread.start();
+        readingThread.start();*/
 
 
-    }*/
+    }
 
     private void sendMessage(String text) throws IOException {
         writer.println(text);
