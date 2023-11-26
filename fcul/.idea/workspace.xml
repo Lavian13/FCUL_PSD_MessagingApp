@@ -4,45 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f6bd660d-2ec2-40ec-94fb-5324cab1233f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/dps/DownloadShares.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/dps/AppTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/FCUL_PSD_MessagingApp.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/chat.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/libraries/libs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client_secret_701643948405-t8euh54g98bi58b1q55avafd1mjh9d53.apps.googleusercontent.com.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dps/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dps/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/dps/App.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/FCUL_PSD_MessagingApp/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/FCUL_PSD_MessagingApp/.idea/FCUL_PSD_MessagingApp.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/FCUL_PSD_MessagingApp/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/FCUL_PSD_MessagingApp/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/FCUL_PSD_MessagingApp/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/FCUL_PSD_MessagingApp/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/FCUL_PSD_MessagingApp/.idea/libraries/libs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/FCUL_PSD_MessagingApp/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/FCUL_PSD_MessagingApp/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/FCUL_PSD_MessagingApp/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/FCUL_PSD_MessagingApp/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/FCUL_PSD_MessagingApp/fcul/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/FCUL_PSD_MessagingApp/fcul/src/main/java/pkgclouds/App.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../test.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tokens/StoredCredential" beforeDir="false" />
+    <list default="true" id="f6bd660d-2ec2-40ec-94fb-5324cab1233f" name="Changes" comment="First Commit">
+      <change beforePath="$PROJECT_DIR$/../client_secret_456844246425-fb44uenqorihdnse8ks8bm4n0o051j79.apps.googleusercontent.com.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,6 +36,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/GitHub/FCUL_PSD_MessagingApp",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -118,11 +82,25 @@
       <updated>1700961301072</updated>
       <workItem from="1700961302386" duration="168000" />
       <workItem from="1700961479362" duration="391000" />
-      <workItem from="1700961880213" duration="297000" />
+      <workItem from="1700961880213" duration="601000" />
     </task>
+    <task id="LOCAL-00001" summary="First Commit">
+      <option name="closed" value="true" />
+      <created>1700962309920</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1700962309920</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Já da upload para as clouds" />
+    <MESSAGE value="First Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="First Commit" />
   </component>
 </project>
