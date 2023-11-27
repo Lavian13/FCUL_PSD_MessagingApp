@@ -2,6 +2,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -38,6 +39,8 @@ public class MainController {
     private Label userOnline;
     @FXML
     private TextField messageField;
+    @FXML
+    private ToolBar toolBar;
 
     public void sendButtonPress(ActionEvent event) throws IOException {
         //CODE TO SEND MESSAGE TO ACTIVEIPS IN MAINCLASS
@@ -94,9 +97,11 @@ public class MainController {
                         //connectToUser();//then delete the sleep
                         SSLSocket sslSocket = Peer.sslSocketUsers.get(otherUsername);
                         if (sslSocket == null) {
+                            if (toolBar.isVisible()) toolBar.setVisible(false);
                             userOnline.setText("User Offline");
 
                         } else {
+                            if (!toolBar.isVisible()) toolBar.setVisible(true);
                             userOnline.setText("User Online");
                             reader = Peer.usersReaders.get(otherUsername);
                             try {
@@ -148,7 +153,6 @@ public class MainController {
                 if(i.getSent()==true) controller2.setPaneRightSide();
 
                 messages.getChildren().add(message);
-
             }
         }
 
