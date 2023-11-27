@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0d30ec2-d74e-4a3c-9d8c-cd55026dd234" name="Changes" comment="" />
+    <list default="true" id="f0d30ec2-d74e-4a3c-9d8c-cd55026dd234" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/target/classes/dps/App.class" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,7 +39,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Problems",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
@@ -75,10 +78,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UploadShares" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dps.UploadShares" />
+      <module name="fcul" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dps.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.DownloadShares" />
         <item itemvalue="Application.App" />
+        <item itemvalue="Application.UploadShares" />
       </list>
     </recent_temporary>
   </component>
@@ -91,7 +108,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701084213981</updated>
       <workItem from="1701084215106" duration="461000" />
-      <workItem from="1701084686576" duration="311000" />
+      <workItem from="1701084686576" duration="532000" />
     </task>
     <servers />
   </component>
