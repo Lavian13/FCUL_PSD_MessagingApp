@@ -255,6 +255,7 @@ public class Peer extends Thread  {
                                 username_Messages.get(subjectCN).add(receivedMessage);
                             }
                             notificationQueue.offer(true);
+
                             /*if(subjectCN.equals(MainController.otherUsername)){
                                 changeui
                             }*/

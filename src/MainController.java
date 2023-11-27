@@ -26,6 +26,7 @@ public class MainController {
     PrintWriter writer = null;
     SSLSocket sslSocket;
     public static String otherUsername;
+    private Thread threadRead;
 
     @FXML
     private VBox contacts; // Reference to the parent container in the FXML file
@@ -50,14 +51,6 @@ public class MainController {
     public void initialize() throws IOException {
         System.out.println("works");
 
-/*        try (Connection connection = DriverManager.getConnection("jdbc:mysql://hostname:port/database", "username", "password")) {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM your_table_name");
-
-            // Iterate through the result set and create panes dynamically
-            while (resultSet.next()) {*/
-
-
         for(int i=0; i<2;i++){
                 //String columnName = resultSet.getString("column_name");
 
@@ -71,7 +64,10 @@ public class MainController {
                 else controller.setData("LuisViana");
 
                 contact.setOnMouseClicked(event -> {
-                    //HERE DO THE CODE TO LOAD THE CHAT IN THE RIGHT SIDE OF THE PAGE
+                    if(!controller.getData().equals(otherUsername)) {
+
+
+                        //HERE DO THE CODE TO LOAD THE CHAT IN THE RIGHT SIDE OF THE PAGE
                     /*if (reader!=null && writer!=null){
                         //guardarmensagens em ficheiro encriptado
                         writer.println("close");
@@ -87,29 +83,36 @@ public class MainController {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }*/
-                    otherUsername=controller.getData();
-                    System.out.println(Peer.ipReceiver);
-                    try {
-                        loadChat(otherUsername);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    //connectToUser();//then delete the sleep
-                    SSLSocket sslSocket = Peer.sslSocketUsers.get(otherUsername);
-                    reader = Peer.usersReaders.get(otherUsername);
-                    try {
-                        writer = new PrintWriter(sslSocket.getOutputStream(), true);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                        messages.getChildren().clear();
+                        otherUsername = controller.getData();
+                        System.out.println(Peer.ipReceiver);
+                        try {
+                            loadChat(otherUsername);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        //connectToUser();//then delete the sleep
+                        SSLSocket sslSocket = Peer.sslSocketUsers.get(otherUsername);
+                        if (sslSocket == null) {
+                            userOnline.setText("User Offline");
 
-                    contact.setStyle("-fx-background-color: red;");
-                    try {
-                        threadToRead();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                        } else {
+                            userOnline.setText("User Online");
+                            reader = Peer.usersReaders.get(otherUsername);
+                            try {
+                                writer = new PrintWriter(sslSocket.getOutputStream(), true);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
 
+                            contact.setStyle("-fx-background-color: red;");
+                            try {
+                                threadToRead();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
                 });
 
                 // Add the dynamic pane to the parent container
@@ -124,13 +127,24 @@ public class MainController {
 
 
     private void loadChat(String username) throws IOException {
-        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
+        /*FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
         AnchorPane message = loader2.load();
         MessageController controller2 = loader2.getController();
         controller2.setData("hey");
         message.setOnMouseClicked(event -> {//TO REMOVE
             message.setStyle("-fx-background-color: red;");
-        });
+        });*/
+        if(Peer.username_Messages.size()!=0){
+            for(String i : Peer.username_Messages.get(username)){
+                FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
+                AnchorPane message = loader2.load();
+                MessageController controller2 = loader2.getController();
+                controller2.setData(i);
+                messages.getChildren().add(message);
+
+            }
+        }
+
         //messages.getChildren().add(message);
     }
 
@@ -180,10 +194,11 @@ public class MainController {
             protected Void call() throws Exception {
                 String aux = otherUsername;
                 System.out.println("Threadreading" + otherUsername);
+                Peer.notificationQueue.clear();
                 while (true) {
                     // Wait for a notification
                     Peer.notificationQueue.take();
-                    if(aux.equals(otherUsername)){
+                    if (aux.equals(otherUsername)) {
                         String receivedMessage = Peer.username_Messages.get(aux).getLast();
                         Platform.runLater(() -> {
                             try {
@@ -194,13 +209,17 @@ public class MainController {
                         });
 
                         System.out.println("Received: " + receivedMessage);
+                    } else {
+                        Peer.notificationQueue.put(true);
+                        break;
                     }
                 }
+                return null;
             }
         };
-        Thread backgroundThread = new Thread(backgroundTask);
-        backgroundThread.setDaemon(true);
-        backgroundThread.start();
+        threadRead = new Thread(backgroundTask);
+        threadRead.setDaemon(true);
+        threadRead.start();
         /*Thread readingThread = new Thread(() -> {
             try {
                 String aux = otherUsername;
@@ -247,6 +266,7 @@ public class MainController {
         messagePane.setOnMouseClicked(event -> {//TO REMOVE
             messagePane.setStyle("-fx-background-color: red;");
         });
+        controller2.setPaneRightSide();
         messages.getChildren().add(messagePane);
     }
     private void loadOtherMessageUI(String message) throws IOException {
@@ -255,7 +275,6 @@ public class MainController {
         AnchorPane messagePane = loader2.load();
         MessageController controller2 = loader2.getController();
         controller2.setData(message);
-        controller2.setPaneRightSide();
 
         //put message on the right side
 
