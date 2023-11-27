@@ -51,7 +51,7 @@
       <recent name="C:\GitHub\FCUL_PSD_MessagingApp" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.DownloadShares">
+  <component name="RunManager" selected="Application.App">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dps.App" />
       <module name="fcul" />
@@ -93,8 +93,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DownloadShares" />
         <item itemvalue="Application.App" />
+        <item itemvalue="Application.DownloadShares" />
         <item itemvalue="Application.UploadShares" />
       </list>
     </recent_temporary>
