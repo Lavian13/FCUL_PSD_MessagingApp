@@ -4,12 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="02b8f22c-1dc9-4cce-87c9-596512119adb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fcul/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/fcul/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fcul/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/fcul/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fcul/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/fcul/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fcul/tokens/StoredCredential" beforeDir="false" afterPath="$PROJECT_DIR$/fcul/tokens/StoredCredential" afterDir="false" />
+    <list default="true" id="f0d30ec2-d74e-4a3c-9d8c-cd55026dd234" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/FCUL_PSD_MessagingApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FCUL_PSD_MessagingApp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_secret_701643948405-t8euh54g98bi58b1q55avafd1mjh9d53.apps.googleusercontent.com.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/.idea/libraries/libs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/client_secret_456844246425-fb44uenqorihdnse8ks8bm4n0o051j79.apps.googleusercontent.com.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_secret_456844246425-fb44uenqorihdnse8ks8bm4n0o051j79.apps.googleusercontent.com.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/shares/share1_dropbox.txt" beforeDir="false" afterPath="$PROJECT_DIR$/shares/share1_dropbox.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/shares/share2_googledrive.txt" beforeDir="false" afterPath="$PROJECT_DIR$/shares/share2_googledrive.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/shares/share3_github.txt" beforeDir="false" afterPath="$PROJECT_DIR$/shares/share3_github.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/src/main/java/dps/DownloadShares.java" beforeDir="false" afterPath="$PROJECT_DIR$/fcul/src/main/java/dps/DownloadShares.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/src/main/java/dps/DropBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/fcul/src/main/java/dps/DropBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/src/main/java/dps/GitHub.java" beforeDir="false" afterPath="$PROJECT_DIR$/fcul/src/main/java/dps/GitHub.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/src/main/java/dps/GoogleDrive.java" beforeDir="false" afterPath="$PROJECT_DIR$/fcul/src/main/java/dps/GoogleDrive.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/tokens/StoredCredential" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FCUL_PSD_MessagingApp/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FCUL_PSD_MessagingApp/.idea/FCUL_PSD_MessagingApp.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FCUL_PSD_MessagingApp/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FCUL_PSD_MessagingApp/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FCUL_PSD_MessagingApp/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FCUL_PSD_MessagingApp/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FCUL_PSD_MessagingApp/.idea/libraries/libs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FCUL_PSD_MessagingApp/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FCUL_PSD_MessagingApp/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FCUL_PSD_MessagingApp/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FCUL_PSD_MessagingApp/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FCUL_PSD_MessagingApp/fcul/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/FCUL_PSD_MessagingApp/fcul/src/main/java/pkgclouds/App.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tokens/StoredCredential" beforeDir="false" afterPath="$PROJECT_DIR$/tokens/StoredCredential" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,33 +52,80 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 0
-}]]></component>
-  <component name="ProjectId" id="2Yh1FoygScKO82WuIniDdexXQ65" />
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2Ykz9T2c4hSntDpuOwDVeIxjQxB" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/GitHub/FCUL_PSD_MessagingApp/fcul",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Problems&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\GitHub\FCUL_PSD_MessagingApp" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.DownloadShares">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dps.App" />
+      <module name="fcul" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dps.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DownloadShares" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dps.DownloadShares" />
+      <module name="fcul" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dps.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.DownloadShares" />
+        <item itemvalue="Application.App" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="02b8f22c-1dc9-4cce-87c9-596512119adb" name="Changes" comment="" />
-      <created>1700962897279</created>
+      <changelist id="f0d30ec2-d74e-4a3c-9d8c-cd55026dd234" name="Changes" comment="" />
+      <created>1701084213981</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1700962897279</updated>
-      <workItem from="1700962898388" duration="64000" />
+      <updated>1701084213981</updated>
+      <workItem from="1701084215106" duration="461000" />
     </task>
     <servers />
   </component>

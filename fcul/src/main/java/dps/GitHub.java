@@ -35,7 +35,7 @@ public class GitHub {
         }
 
         if (content != null) {
-            System.out.println("File exists on GitHub");
+            System.out.println("Share exists on GitHub");
             // If the file exists, download it
             InputStream inputStream = content.read();
             java.io.File fileOnDisk = new java.io.File("shares/share3_github.txt");
@@ -68,9 +68,9 @@ public class GitHub {
                     .message("Share_GitHub")
                     .content(fileContent)
                     .commit();
-            System.out.println("Uploaded to GitHub");
+            System.out.println("Uploaded Share to GitHub");
         } else {
-            System.out.println("File exists in GitHub");
+            System.out.println("Share exists in GitHub");
         }
     }
 

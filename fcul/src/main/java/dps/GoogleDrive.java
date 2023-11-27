@@ -73,7 +73,7 @@ public class GoogleDrive {
             }
 
             if (fileId != null) {
-                System.out.println("File exists on Google Drive");
+                System.out.println("Share exists on Google Drive");
 
                 // If the file exists, download it
                 File file = service.files().get(fileId).execute();
@@ -142,7 +142,7 @@ public class GoogleDrive {
 
         if(fileId == null) {
             // If the file doesn't exist, upload it
-            System.out.println("Uploaded to GoogleDrive");
+            System.out.println("Uploaded Share to GoogleDrive");
             // Specify the file you want to upload
             java.io.File fileContent = new java.io.File(share);
 
@@ -159,9 +159,9 @@ public class GoogleDrive {
                     .setFields("id, name")
                     .execute();
 
-            System.out.println("File uploaded: " + uploadedFile.getName() + " (ID: " + uploadedFile.getId() + ")");
+            System.out.println("Share uploaded: " + uploadedFile.getName() + " (ID: " + uploadedFile.getId() + ")");
         } else {
-            System.out.println("File exists in GoogleDrive");
+            System.out.println("Share exists in GoogleDrive");
         }
     }
 

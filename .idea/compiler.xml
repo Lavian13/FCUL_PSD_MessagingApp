@@ -6,12 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="fcul (1)" />
-        <module name="fcul (2)" />
+        <module name="fcul" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="fcul" target="1.7" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="21" />
   </component>
 </project>

@@ -39,7 +39,7 @@ public class DownloadShares {
                 // Check if the file is a text file
                 if (file.isFile() && file.getName().toLowerCase().endsWith(".txt")) {
                     // Read and print the content of the text file
-                    System.out.println("Reading file: " + file.getName());
+                    System.out.println("Reading share: " + file.getName());
                     shares[index] = new Share(BigInteger.valueOf(index + 1),readTextFileAsBigInteger(file));
                     index++;
                     System.out.println("----------------------");

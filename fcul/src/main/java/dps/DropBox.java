@@ -30,7 +30,7 @@ public class DropBox {
 
             // If the file exists, metadata will be returned
             if (metadata instanceof FileMetadata) {
-                System.out.println("File exists on Dropbox.");
+                System.out.println("Share exists on Dropbox.");
 
                 // Download the file
                 try (OutputStream outputStream = new FileOutputStream("shares/share1_dropbox.txt")) {
@@ -39,14 +39,14 @@ public class DropBox {
                     System.err.println("ERROR: Download from Dropbox failed!");
                     throw new RuntimeException(ex);
                 }
-                System.out.println("Downloaded file from Dropbox!");
+                System.out.println("Downloaded share from Dropbox!");
             } else {
-                System.out.println("File does not exist on Dropbox.");
+                System.out.println("Share does not exist on Dropbox.");
             }
         } catch (GetMetadataErrorException e) {
             // If the file doesn't exist, Dropbox API returns an error
             if (e.errorValue.isPath() && e.errorValue.getPathValue().isNotFound()) {
-                System.out.println("File does not exist on Dropbox.");
+                System.out.println("Share does not exist on Dropbox.");
             } else {
                 // Handle other errors
                 e.printStackTrace();
@@ -63,15 +63,15 @@ public class DropBox {
 
             // If the file exists, metadata will be returned
             if (metadata instanceof FileMetadata) {
-                System.out.println("File exists on Dropbox.");
+                System.out.println("Share exists on Dropbox.");
 
             } else {
-                System.out.println("File does not exist on Dropbox.");
+                System.out.println("Share does not exist on Dropbox.");
             }
         } catch (GetMetadataErrorException e) {
             // If the file doesn't exist, Dropbox API returns an error
             if (e.errorValue.isPath() && e.errorValue.getPathValue().isNotFound()) {
-                System.out.println("File does not exist on Dropbox.");
+                System.out.println("Share does not exist on Dropbox.");
 
                 // Upload the file
                 try (InputStream in = new FileInputStream(share)) {
@@ -80,7 +80,7 @@ public class DropBox {
                     System.err.println("ERROR: Upload to Dropbox failed!");
                     throw new RuntimeException(ex);
                 }
-                System.out.println("Uploaded file to Dropbox!");
+                System.out.println("Uploaded Share to Dropbox!");
             } else {
                 // Handle other errors
                 e.printStackTrace();
