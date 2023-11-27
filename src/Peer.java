@@ -27,6 +27,7 @@ public class Peer extends Thread  {
     public static HashMap<String, List<String>> username_Messages = new HashMap<>();
     private int user;
     public static final BlockingQueue<Boolean> notificationQueue = new LinkedBlockingQueue<>();
+    public static HashMap<String, List<Message>> messages = new HashMap<>();
 
 
     public Peer(int user){
@@ -67,10 +68,12 @@ public class Peer extends Thread  {
 
             System.out.println("Waiting for client connection...");
         //for all users i have a group chat with ask the ip to the server
+            String otherUsername="";
             if(user==1)
-                sendMessageToServerUsername("DavidOliveira");
+                otherUsername = "DavidOliveira";
             else
-                sendMessageToServerUsername("LuisViana");
+                otherUsername="LuisViana";
+            sendMessageToServerUsername(otherUsername);
             //if ipReceiver==null continue for
             if (ipReceiver.split(":").length==2) {
                 try {
@@ -104,6 +107,8 @@ public class Peer extends Thread  {
                 Thread clientThread = new Thread(new ClientHandler(sslSocket));
                 clientThread.start();
             }
+
+            messages.put(otherUsername, new ArrayList<>());
 
         //endoffor
 
@@ -248,12 +253,13 @@ public class Peer extends Thread  {
                     else{
                         if(subjectCN!=null){
                             System.out.println(subjectCN + " username" + MainController.otherUsername);
-                            if (username_Messages.containsKey(subjectCN))
+                            /*if (username_Messages.containsKey(subjectCN))
                                 username_Messages.get(subjectCN).add(receivedMessage);
                             else {
                                 username_Messages.put(subjectCN, new ArrayList<>());
                                 username_Messages.get(subjectCN).add(receivedMessage);
-                            }
+                            }*/
+                            messages.get(subjectCN).add(new Message(false,subjectCN, receivedMessage)); //get wont be subjectCN
                             notificationQueue.offer(true);
 
                             /*if(subjectCN.equals(MainController.otherUsername)){

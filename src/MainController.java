@@ -134,12 +134,19 @@ public class MainController {
         message.setOnMouseClicked(event -> {//TO REMOVE
             message.setStyle("-fx-background-color: red;");
         });*/
-        if(Peer.username_Messages.size()!=0){
-            for(String i : Peer.username_Messages.get(username)){
+        //if(Peer.username_Messages.size()!=0){
+        if(Peer.messages.containsKey(username)){
+            //for(String i : Peer.username_Messages.get(username)){
+            for(Message i : Peer.messages.get(username)){
+                String content = i.getContent();
+
                 FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
                 AnchorPane message = loader2.load();
                 MessageController controller2 = loader2.getController();
-                controller2.setData(i);
+                controller2.setData(content);
+
+                if(i.getSent()==true) controller2.setPaneRightSide();
+
                 messages.getChildren().add(message);
 
             }
@@ -199,7 +206,8 @@ public class MainController {
                     // Wait for a notification
                     Peer.notificationQueue.take();
                     if (aux.equals(otherUsername)) {
-                        String receivedMessage = Peer.username_Messages.get(aux).getLast();
+                        //String receivedMessage = Peer.username_Messages.get(aux).getLast();
+                        String receivedMessage = Peer.messages.get(aux).getLast().getContent();
                         Platform.runLater(() -> {
                             try {
                                 receiveMessage(receivedMessage);
@@ -250,6 +258,7 @@ public class MainController {
 
     private void sendMessage(String text) throws IOException {
         writer.println(text);
+        Peer.messages.get(otherUsername).add(new Message(true, otherUsername, text));
         loadMessageUI(text);
     }
     public void receiveMessage(String text) throws IOException {
