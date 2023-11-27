@@ -44,21 +44,21 @@ public class UploadShares {
             if(share.getShareholder().equals(BigInteger.valueOf(1))) {
                 // Write the BigInteger to a text file
                 try (PrintWriter writer = new PrintWriter("share_dropbox.txt", "UTF-8")) {
-                    writer.println(share.getShare().toString());
+                    writer.println("1," + share.getShare().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else if (share.getShareholder().equals(BigInteger.valueOf(2))) {
                 // Write the BigInteger to a text file
                 try (PrintWriter writer = new PrintWriter("share_googledrive.txt", "UTF-8")) {
-                    writer.println(share.getShare().toString());
+                    writer.println("2," + share.getShare().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else if (share.getShareholder().equals(BigInteger.valueOf(3))) {
                 // Write the BigInteger to a text file
                 try (PrintWriter writer = new PrintWriter("share_github.txt", "UTF-8")) {
-                    writer.println(share.getShare().toString());
+                    writer.println("3," + share.getShare().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

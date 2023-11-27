@@ -33,7 +33,7 @@ public class DropBox {
                 System.out.println("Share exists on Dropbox.");
 
                 // Download the file
-                try (OutputStream outputStream = new FileOutputStream("shares/share1_dropbox.txt")) {
+                try (OutputStream outputStream = new FileOutputStream("shares/share_dropbox.txt")) {
                     client.files().downloadBuilder("/Share/share_dropbox.txt").download(outputStream);
                 } catch (Exception ex) {
                     System.err.println("ERROR: Download from Dropbox failed!");

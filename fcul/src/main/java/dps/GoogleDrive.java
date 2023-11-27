@@ -78,7 +78,7 @@ public class GoogleDrive {
                 // If the file exists, download it
                 File file = service.files().get(fileId).execute();
 
-                java.io.File fileOnDisk = new java.io.File("shares/share2_googledrive.txt");
+                java.io.File fileOnDisk = new java.io.File("shares/share_googledrive.txt");
 
                 try (OutputStream outputStream = new FileOutputStream(fileOnDisk)) {
                     // Export Google Docs files to 'text/plain' MIME type

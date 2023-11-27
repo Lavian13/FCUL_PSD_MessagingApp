@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="f0d30ec2-d74e-4a3c-9d8c-cd55026dd234" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fcul/target/classes/dps/App.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/src/main/java/dps/DownloadShares.java" beforeDir="false" afterPath="$PROJECT_DIR$/fcul/src/main/java/dps/DownloadShares.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/src/main/java/dps/DropBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/fcul/src/main/java/dps/DropBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/src/main/java/dps/GitHub.java" beforeDir="false" afterPath="$PROJECT_DIR$/fcul/src/main/java/dps/GitHub.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/src/main/java/dps/GoogleDrive.java" beforeDir="false" afterPath="$PROJECT_DIR$/fcul/src/main/java/dps/GoogleDrive.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fcul/src/main/java/dps/UploadShares.java" beforeDir="false" afterPath="$PROJECT_DIR$/fcul/src/main/java/dps/UploadShares.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shares/share1_dropbox.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +56,7 @@
       <recent name="C:\GitHub\FCUL_PSD_MessagingApp" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.App">
+  <component name="RunManager" selected="Application.DownloadShares">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dps.App" />
       <module name="fcul" />
@@ -93,9 +98,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.App" />
         <item itemvalue="Application.DownloadShares" />
         <item itemvalue="Application.UploadShares" />
+        <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
   </component>
@@ -108,7 +113,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701084213981</updated>
       <workItem from="1701084215106" duration="461000" />
-      <workItem from="1701084686576" duration="532000" />
+      <workItem from="1701084686576" duration="1896000" />
     </task>
     <servers />
   </component>

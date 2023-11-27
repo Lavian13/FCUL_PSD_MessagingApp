@@ -38,7 +38,7 @@ public class GitHub {
             System.out.println("Share exists on GitHub");
             // If the file exists, download it
             InputStream inputStream = content.read();
-            java.io.File fileOnDisk = new java.io.File("shares/share3_github.txt");
+            java.io.File fileOnDisk = new java.io.File("shares/share_github.txt");
             try (FileOutputStream fileOutputStream = new FileOutputStream(fileOnDisk)) {
                 byte[] buffer = new byte[1024];
                 int bytesRead;

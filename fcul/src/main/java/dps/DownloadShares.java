@@ -40,8 +40,7 @@ public class DownloadShares {
                 if (file.isFile() && file.getName().toLowerCase().endsWith(".txt")) {
                     // Read and print the content of the text file
                     System.out.println("Reading share: " + file.getName());
-                    shares[index] = new Share(BigInteger.valueOf(index + 1),readTextFileAsBigInteger(file));
-                    index++;
+                    shares[index++] = readTextFileAsShare(file);
                     System.out.println("----------------------");
                 }
             }
@@ -82,20 +81,34 @@ public class DownloadShares {
         }
         return hexString.toString();
     }
-    private static BigInteger readTextFileAsBigInteger(File file) {
+    private static Share readTextFileAsShare(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line = reader.readLine().trim();
+            String line = reader.readLine();
             if (line != null) {
-                System.out.println(line);
-                // Parse the content as a BigInteger
-                return new BigInteger(line);
+                // Split the line using a comma
+                String[] parts = line.split(",");
+
+                // Ensure there are two parts (shareholder and share)
+                if (parts.length == 2) {
+                    BigInteger shareholder = new BigInteger(parts[0].trim());
+                    BigInteger share = new BigInteger(parts[1].trim());
+
+                    System.out.println("Shareholder: " + shareholder);
+                    System.out.println("Share: " + share);
+
+                    // Create and return a new Share object
+                    return new Share(shareholder, share);
+                } else {
+                    System.err.println("Invalid format in file: " + file.getName());
+                }
             }
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
-        // Return zero if there was an issue reading or parsing the content
-        return BigInteger.ZERO;
+        // Return null if there was an issue reading or parsing the content
+        return null;
     }
+
 
     /**
      * This method combines shares, using Lagrange polynomials, to recover the secret.
