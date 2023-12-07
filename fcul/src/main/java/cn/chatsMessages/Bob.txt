@@ -1,1 +1,3 @@
-{"sent":false,"content":"sup alice","otherUsername":["Bob"]}{"sent":true,"content":"ola bob","otherUsername":["Bob"]}
+false,ola alice,[Bob]
+true,ola bob,[Bob]
+false,ola alice,[Bob]

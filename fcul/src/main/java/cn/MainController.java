@@ -1,5 +1,6 @@
 package cn;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -136,11 +137,18 @@ public class MainController {
     private void loadChat(String chatname) throws IOException {
         for (File f : Peer.listOfFiles){
             if (f.getName().contains(chatname)){
-                if (f.getName().split("_")[1].equals(chatName+".txt")){
-
+                try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        // Read each line as a JSON object and convert it to a Java object
+                        System.out.println(line);
+                        /*if(!message.getSent()) receiveMessage(message.getContent());
+                        else*/ loadMessageUI(line);
+                        //System.out.println("Name: " + message.getName() + ", Age: " + message.getAge());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            }else{
-
             }
         }
         /*FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));

@@ -38,4 +38,7 @@ public class Message {
     public void setOtherUsername(List<String> otherUsername) {
         this.otherUsernames = otherUsername;
     }
+    public String toString(){
+        return this.sent+","+ this.content + ","+this.otherUsernames;
+    }
 }

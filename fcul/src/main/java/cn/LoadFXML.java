@@ -12,6 +12,7 @@ import javafx.stage.WindowEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.*;
 
@@ -52,9 +53,8 @@ public class LoadFXML extends Application{
             File file = new File("src/main/java/cn/chatsMessages/" + chatName + ".txt");
             System.out.println("SIZE" + Peer.messages.get(chatName).size());
             for (Message message : Peer.messages.get(chatName)){
-                try (FileWriter fileWriter = new FileWriter(file, true)) {
-                    // The 'true' parameter in the FileWriter constructor enables append mode
-                    objectMapper.writeValue(fileWriter, message);
+                try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
+                    writer.println(message.toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
