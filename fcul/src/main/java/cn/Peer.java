@@ -24,14 +24,14 @@ public class Peer extends Thread  {
     public static HashMap<String, SSLSocket> sslSocketUsers = new HashMap<>();//connections of evryone i have a chat with
     public static HashMap<String, List<SSLSocket>> sslSocketAttribute = new HashMap<>();
     public static HashMap<String, BufferedReader> usersReaders = new HashMap<>();
-    private final String userName;
+    public static String userName;
     public static final BlockingQueue<Boolean> notificationQueue = new LinkedBlockingQueue<>();
     public static HashMap<String, List<Message>> messages = new HashMap<>();
     public static List<File> listOfFiles = new ArrayList<>();
 
 
     public Peer(String userName){
-        this.userName=userName;
+        Peer.userName =userName;
         /*if(user==1){
             System.setProperty("javax.net.ssl.keyStore", "src/main/java/cn/Luis_cert/luiskeystore.jks");
             System.setProperty("javax.net.ssl.trustStore", "src/main/java/cn/Luis_cert/luistruststore.jks");
@@ -53,7 +53,7 @@ public class Peer extends Thread  {
     @Override
     public void run() {
         try {
-            File folder = new File("chatsMessages");
+            File folder = new File("chatsMessages/"+userName);
             File[] files = folder.listFiles();
             assert files != null;
             for (File file : files) {
@@ -106,7 +106,6 @@ public class Peer extends Thread  {
                         System.out.println("hey" + ip_port[0] + " " + Integer.parseInt(ip_port[1]));
                         sslSocket = (SSLSocket) sslSocketFactory.createSocket(ip_port[0], Integer.parseInt(ip_port[1]));
                         sslSocket.setNeedClientAuth(true);
-                        System.out.println("Connected to user!");
                         X509Certificate[] serverCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
                         if (serverCertificates.length > 0) {
                             X509Certificate clientCertificate = serverCertificates[0]; // Assuming the client provides a certificate
@@ -115,14 +114,14 @@ public class Peer extends Thread  {
                             sslSocketUsers.put(subjectCN, sslSocket);
                         }
 
-                        System.out.println("Connected to user: " + sslSocket);
+                        System.out.println("Connected to "+subjectCN+": " + sslSocket);
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (NoSuchAlgorithmException e) {
                         throw new RuntimeException(e);
                     }
-                    messages.put(subjectCN, new ArrayList<>());
+                    //messages.put(subjectCN, new ArrayList<>());
 
                 }
 
@@ -147,14 +146,17 @@ public class Peer extends Thread  {
     private void sendMessageToServerAttribute(String attribute) throws IOException {
         String messageToServer="request:attribute:" + attribute;
         System.out.println(messageToServer);
+        messages.put(attribute,new ArrayList<>());
         //usernameReceiver=username;
         serverWriter.println(messageToServer);
         String read = serverReader.readLine();
         groupUsers.put(attribute, new ArrayList<>());
         if(read.isEmpty())return;
         for (String user : read.split(",")){
-            groupUsers.get(attribute).add(user);
-            sendMessageToServerUsername(user);
+            if(!user.equals(userName)){
+                groupUsers.get(attribute).add(user);
+                sendMessageToServerUsername(user);
+            }
         }
     }
 
@@ -284,7 +286,7 @@ public class Peer extends Thread  {
                     System.out.println(reader);
                     String receivedMessage = reader.readLine();
 
-                    if (receivedMessage == "close") {
+                    if (receivedMessage.equals("close")) {
                         sslSocket.close();
                         break; // Connection closed
                     }//else do a notification and write to the hashmap of messages
@@ -297,13 +299,15 @@ public class Peer extends Thread  {
                                 username_Messages.put(subjectCN, new ArrayList<>());
                                 username_Messages.get(subjectCN).add(receivedMessage);
                             }*/
-                            messages.get(subjectCN).add(new Message(false,List.of(subjectCN), receivedMessage)); //get wont be subjectCN
-                            notificationQueue.offer(true);
+                            if (receivedMessage.contains(",")){
 
-                            /*if(subjectCN.equals(MainController.otherUsername)){
-                                changeui
-                            }*/
-                            System.out.println("Received: " + receivedMessage);
+                                messages.get(receivedMessage.split(",")[0]).add(new Message(false,List.of(subjectCN), receivedMessage.split(",")[1])); //get wont be subjectCN
+                                notificationQueue.offer(true);
+                                System.out.println("Received: " + receivedMessage);
+
+
+                            }
+
                         }
 
                     }

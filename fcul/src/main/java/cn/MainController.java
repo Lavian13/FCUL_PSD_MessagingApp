@@ -82,6 +82,7 @@ public class MainController {
                         throw new RuntimeException(e);
                     }*/
                         messages.getChildren().clear();
+                        writers.clear();
                         chatName = controller.getData();
                         //System.out.println(Peer.ipReceiver);
                         try {
@@ -95,12 +96,16 @@ public class MainController {
                         }else{
                             usernames.add(chatName);
                         }
+                        for (String username : usernames) {
+                            System.out.println(username);
+                        }
+                        System.out.println(Peer.groupUsers.get(chatName));
                         for (String user : usernames){
                             SSLSocket sslSocket = Peer.sslSocketUsers.get(user);
                             if (sslSocket == null) {
                                 if (toolBar.isVisible()) toolBar.setVisible(false);
                                 userOnline.setText("User Offline");
-
+                                System.out.println(user);
                             } else {
                                 if (!toolBar.isVisible()) toolBar.setVisible(true);
                                 userOnline.setText("User Online");
@@ -151,7 +156,7 @@ public class MainController {
                     e.printStackTrace();
                 }*/
                 try {
-                    for (String message: DownloadShares.decryptMessages("chatsMessages/" + f.getName())){
+                    for (String message: DownloadShares.decryptMessages("chatsMessages/" + Peer.userName +"/"+ f.getName())){
                         String[] messageAttributes = message.split(",");
                         if(messageAttributes[0].equals("false")) receiveMessage(messageAttributes[1]);
                         else loadMessageUI(messageAttributes[1]);
@@ -291,7 +296,7 @@ public class MainController {
     private void sendMessage(String text) throws IOException {
         System.out.println("Writers" + writers.size());
         for (PrintWriter writer : writers){
-            writer.println(text);
+            writer.println(chatName + "," + text);
         }
         //System.out.println("Message sent to:" + Peer.groupUsers.get(chatName));
         if(Peer.groupUsers.get(chatName)==null)

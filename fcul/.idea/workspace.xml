@@ -5,63 +5,59 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1cb4553a-007f-441c-8477-25e52c1998a6" name="Changes" comment="writing and reading from file non encrypted working">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/David_cert/david.cer" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/David_cert/davidkeystore.jks" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/David_cert/davidtruststore.jks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Alice.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Alice.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Bob.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Bob.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Charlie.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Charlie.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Dave.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Dave.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Group_Movies.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Group_Movies.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Group_Sports.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Group_Sports.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/DownloadShares.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/DownloadShares.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/DropBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/DropBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/GitHub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/GitHub.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/LoadFXML.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/LoadFXML.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/LoadFXML2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/LoadFXML2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Luis_cert/luis.cer" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Luis_cert/luiskeystore.jks" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Luis_cert/luistruststore.jks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/HandleUserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/HandleUserThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/LoadFXML.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/LoadFXMLBob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/LoadFXML2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/LoadFXMLAlice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/Peer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/Peer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Alice/Alice.crt" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Alice/Alice.crt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Alice/Alicekeystore.jks" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Alice/Alicekeystore.jks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Alice/Alicetruststore.jks" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Alice/Alicetruststore.jks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Bob/Bob.crt" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Bob/Bob.crt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Bob/Bobkeystore.jks" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Bob/Bobkeystore.jks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Bob/Bobtruststore.jks" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Bob/Bobtruststore.jks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Charlie/Charlie.crt" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Charlie/Charlie.crt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Charlie/Charliekeystore.jks" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Charlie/Charliekeystore.jks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Charlie/Charlietruststore.jks" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Charlie/Charlietruststore.jks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Dave/Dave.crt" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Dave/Dave.crt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Dave/Davekeystore.jks" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Dave/Davekeystore.jks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Dave/Davetruststore.jks" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Dave/Davetruststore.jks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Server/Server.crt" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Server/Server.crt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Server/Serverkeystore.jks" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Server/Serverkeystore.jks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/certs/Server/Servertruststore.jks" beforeDir="false" afterPath="$PROJECT_DIR$/certs/Server/Servertruststore.jks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/chatsMessages/Alice.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/chatsMessages/Bob.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/chatsMessages/Charlie.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/chatsMessages/Dave.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/chatsMessages/Group_Movies.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/chatsMessages/Group_Sports.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/client_tls/client-keystore.jks" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/client_tls/client-truststore.jks" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/client_tls/client.crt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/createCertificate.txt" beforeDir="false" afterPath="$PROJECT_DIR$/createCertificate.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/server_tls/server-keystore.jks" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/server_tls/server-truststore.jks" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/server_tls/server.crt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cn/Message.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cn/Message.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tokens/StoredCredential" beforeDir="false" afterPath="$PROJECT_DIR$/tokens/StoredCredential" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="Attributebased_Encryption" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Lavian13&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="bf38e9f2-0041-4bd5-8b13-6ccea411373c" />
+        <option name="url" value="https://github.com/lcava-iscte/FCUL_PSD_MessagingApp.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -73,75 +69,85 @@
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
-  <component name="ProjectId" id="2ZD8G9frOluUdECiHSPbzTA2lC6" />
+  <component name="ProjectId" id="2ZELwibBe9VANj2l11LUytMTK2l" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.HelloApplication.executor": "Run",
-    "Application.LoadFXML.executor": "Run",
-    "Application.LoadFXML2.executor": "Run",
-    "Application.cn.HelloApplication.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "FinalBranch",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/lcvia/IdeaProjects/FCUL_PSD_MessagingApp/fcul",
+    "jdk.selected.JAVA_MODULE": "21",
+    "last_opened_file_path": "C:/Users/lcvia/IdeaProjects/FCUL_PSD_MessagingApp/fcul/chatsMessages/Dave",
     "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Global Libraries",
-    "project.structure.proportion": "0.15234375",
-    "project.structure.side.proportion": "0.2",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.26297578",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\lcvia\IdeaProjects\FCUL_PSD_MessagingApp\fcul" />
-      <recent name="C:\Users\lcvia\IdeaProjects\FCUL_PSD_MessagingApp\fcul\src\main\java\cn" />
-      <recent name="C:\Users\lcvia\IdeaProjects\FCUL_PSD_MessagingApp\fcul\src\main\java\cn\certs" />
+      <recent name="C:\Users\lcvia\IdeaProjects\FCUL_PSD_MessagingApp\fcul\chatsMessages\Dave" />
+      <recent name="C:\Users\lcvia\IdeaProjects\FCUL_PSD_MessagingApp\fcul\chatsMessages\Charlie" />
+      <recent name="C:\Users\lcvia\IdeaProjects\FCUL_PSD_MessagingApp\fcul\chatsMessages\Bob" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\lcvia\IdeaProjects\FCUL_PSD_MessagingApp\fcul" />
-      <recent name="C:\Users\lcvia\IdeaProjects\FCUL_PSD_MessagingApp\fcul\src\main\java\cn\chatsMessages" />
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="cn" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.LoadFXML2">
-    <configuration name="DownloadShares" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.DownloadShares" />
-      <module name="fcul" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cn.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="LoadFXML" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.LoadFXML" />
-      <module name="fcul" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cn.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.LoadFXMLCharlie">
     <configuration name="LoadFXML2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="cn.LoadFXML2" />
+      <module name="fcul" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoadFXMLAlice" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.LoadFXMLAlice" />
+      <module name="fcul" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoadFXMLBob" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.LoadFXMLBob" />
+      <module name="fcul" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoadFXMLCharlie" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.LoadFXMLCharlie" />
       <module name="fcul" />
       <extension name="coverage">
         <pattern>
@@ -166,58 +172,30 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UploadShares" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.UploadShares" />
-      <module name="fcul" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="cn.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LoadFXML2" />
+        <item itemvalue="Application.LoadFXMLCharlie" />
+        <item itemvalue="Application.LoadFXMLBob" />
+        <item itemvalue="Application.LoadFXMLAlice" />
         <item itemvalue="Application.Server" />
-        <item itemvalue="Application.LoadFXML" />
-        <item itemvalue="Application.UploadShares" />
-        <item itemvalue="Application.DownloadShares" />
+        <item itemvalue="Application.LoadFXML2" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-21.0.1-openjdk-21.0.1-3183f394aec4-7d648f2c" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="1cb4553a-007f-441c-8477-25e52c1998a6" name="Changes" comment="" />
-      <created>1701945191130</created>
+      <changelist id="1cb4553a-007f-441c-8477-25e52c1998a6" name="Changes" comment="writing and reading from file non encrypted working" />
+      <created>1701982533750</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1701945191130</updated>
-      <workItem from="1701945192378" duration="99000" />
-      <workItem from="1701945299726" duration="158000" />
-      <workItem from="1701945466302" duration="180000" />
-      <workItem from="1701945655172" duration="1500000" />
-      <workItem from="1701947920460" duration="29041000" />
+      <updated>1701982533750</updated>
+      <workItem from="1701982535147" duration="205000" />
+      <workItem from="1701982747843" duration="6458000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="message and writing to file successful" />
-    <MESSAGE value="writing and reading from file non encrypted working" />
-    <option name="LAST_COMMIT_MESSAGE" value="writing and reading from file non encrypted working" />
   </component>
 </project>

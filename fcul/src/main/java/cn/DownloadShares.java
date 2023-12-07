@@ -82,10 +82,10 @@ public class DownloadShares {
         DropBox db = new DropBox();
         GoogleDrive gd = new GoogleDrive();
         System.out.println(fileName);
-        GitHub gh = new GitHub();
+        //GitHub gh = new GitHub();
         db.GetShare("share_dropbox.txt");
         gd.GetShare("share_googledrive.txt");
-        gh.GetShare("share_github.txt");
+        //gh.GetShare("share_github.txt");
 
         // Specify the folder path
         String folderPath = "shares";

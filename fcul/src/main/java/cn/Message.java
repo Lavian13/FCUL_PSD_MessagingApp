@@ -9,6 +9,7 @@ public class Message {
     private String content;
 
 
+
     public Message(Boolean sent, List<String> otherUsernames, String content){
         this.sent=sent;
         this.otherUsernames=otherUsernames;

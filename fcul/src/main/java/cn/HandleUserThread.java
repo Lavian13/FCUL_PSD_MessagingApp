@@ -25,7 +25,10 @@ public class HandleUserThread extends Thread {
                 if(read.equals("close")) break;
                 String[] splited= read.replace(" ","").split(":");
                 if(splited[0].equals("register")){
-                    if(splited[1].equals("attribute")) Server.registerAttribute(username, splited[2]);
+                    if(splited[1].equals("attribute")) {
+                        Server.registerAttribute(username, splited[2]);
+                        writer.println("ok");
+                    }
 
                 }
                 if(splited[0].equals("port")){

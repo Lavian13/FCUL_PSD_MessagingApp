@@ -5,6 +5,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.net.ssl.*;
@@ -72,6 +73,15 @@ class Server {
             writer.println("close");
             System.out.println(reader.readLine());*/
 
+            registerAttribute("Alice","Movies");
+            registerAttribute("Bob","Movies");
+            registerAttribute("Charlie","Movies");
+            registerAttribute("Alice","Sports");
+            registerAttribute("Bob","Sports");
+            registerAttribute("Dave","Sports");
+
+
+
             HandleUserThread myThread = new HandleUserThread(subjectCN,clientIp, reader, writer);
             myThread.start();
 
@@ -91,9 +101,15 @@ class Server {
     }
 
     public static void registerAttribute(String username, String attribute){
-        List<String> attributes = username_attributes.get(username);
+        if(username_attributes.containsKey(username)){
+            username_attributes.get(username).add(attribute);
+        }else{
+            username_attributes.put(username, new ArrayList<>());
+            username_attributes.get(username).add(attribute);
+        }
+        /*List<String> attributes = username_attributes.get(username);
         attributes.add(attribute);
-        username_attributes.put(username, attributes);
+        username_attributes.put(username, attributes);*/
     }
 
     public static String getIpFromUsername(String username){
