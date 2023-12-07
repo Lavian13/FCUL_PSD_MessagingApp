@@ -1,27 +1,24 @@
+package cn;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
-public class MessageController {
+public class DynamicController {
 
     @FXML
     private Label label; // Example component in the dynamic pane
-    @FXML
-    private Pane messagePane;
 
     @FXML
     public void initialize() throws IOException {
 
     }
 
+    // Method to set data in the dynamic pane components
     public void setData(String data) {
         label.setText(data);
     }
 
-    public void setPaneRightSide(){
-        messagePane.setTranslateX(160);
-    }
-
+    public String getData(){ return label.getText();}
 }

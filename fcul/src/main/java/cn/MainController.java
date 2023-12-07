@@ -1,3 +1,5 @@
+package cn;
+
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

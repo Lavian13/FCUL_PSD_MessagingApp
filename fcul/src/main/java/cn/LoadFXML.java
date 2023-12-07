@@ -1,3 +1,5 @@
+package cn;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,13 +11,13 @@ import java.net.URL;
 import java.util.*;
 
 
-public class LoadFXML2 extends Application{
+public class LoadFXML extends Application{
     public HashMap<String, String> username_ip = new HashMap<>();
     private List<String> ips = new ArrayList<>();
 
     public static void main(String[] args) {
 
-        Peer peer = new Peer(2);
+        Peer peer = new Peer(1);
         peer.start();
         launch(args);
         //RetrieveIPThread ip_thread = new RetrieveIPThread("127.0.0.1", 3456);
@@ -29,6 +31,7 @@ public class LoadFXML2 extends Application{
         //FXMLLoader loader = new FXMLLoader();
         //loader.setLocation(new URL("MessageAppUI.fxml"));
         //VBox vbox = loader.<VBox>load();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MessageAppUI.fxml"));
         Parent vbox = loader.load();
 

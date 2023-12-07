@@ -1,3 +1,5 @@
+package cn;
+
 public class Message {
 
     private Boolean sent;
