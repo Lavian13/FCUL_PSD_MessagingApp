@@ -3,13 +3,11 @@ package cn;
 import java.io.*;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.List;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLServerSocket;
-import javax.net.ssl.SSLServerSocketFactory;
-import javax.net.ssl.SSLSocket;
+import javax.net.ssl.*;
 
 
 // Server class for tests
@@ -22,8 +20,8 @@ class Server {
     public static void main(String[] args) throws Exception {
 
 
-        System.setProperty("javax.net.ssl.keyStore", "src/server_tls/server-keystore.jks");
-        System.setProperty("javax.net.ssl.trustStore", "src/server_tls/server-truststore.jks");
+        System.setProperty("javax.net.ssl.keyStore", "src/main/java/cn/certs/Server/Serverkeystore.jks");
+        System.setProperty("javax.net.ssl.trustStore", "src/main/java/cn/certs/Server/Servertruststore.jks");
         System.setProperty("javax.net.ssl.keyStorePassword", "123456");
         System.setProperty("javax.net.ssl.trustStorePassword", "123456");
 
@@ -35,6 +33,10 @@ class Server {
         System.out.println("Waiting for client connection...");
         while (true) {
             SSLSocket sslSocket = (SSLSocket) sslServerSocket.accept();
+
+            /*SSLSession session = sslSocket.getSession();
+            Certificate[] peerCertificates = session.getPeerCertificates();
+            System.out.println(peerCertificates.length + " " + peerCertificates[0] + ","+ peerCertificates);*/
 
             System.out.println("Client connected!");
             String subjectCN = null;
@@ -95,6 +97,7 @@ class Server {
     }
 
     public static String getIpFromUsername(String username){
+        if(username_ip.get(username)==null) return "";
         return username_ip.get(username);
     }
 
@@ -105,6 +108,7 @@ class Server {
                 result=result.concat(username+",");
             }
         }
+        if(result.isEmpty()) return result;
         result.substring(0,result.length()-1);
         return result;
     }

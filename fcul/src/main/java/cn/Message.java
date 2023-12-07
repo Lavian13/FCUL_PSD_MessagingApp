@@ -1,14 +1,17 @@
 package cn;
 
+import java.util.List;
+
 public class Message {
 
     private Boolean sent;
-    private String otherUsername;
+    private List<String> otherUsernames;
     private String content;
 
-    public Message(Boolean sent, String otherUsername, String content){
+
+    public Message(Boolean sent, List<String> otherUsernames, String content){
         this.sent=sent;
-        this.otherUsername=otherUsername;
+        this.otherUsernames=otherUsernames;
         this.content=content;
 
     }
@@ -28,11 +31,11 @@ public class Message {
         this.content = content;
     }
 
-    public String getOtherUsername() {
-        return otherUsername;
+    public List<String> getOtherUsername() {
+        return otherUsernames;
     }
 
-    public void setOtherUsername(String otherUsername) {
-        this.otherUsername = otherUsername;
+    public void setOtherUsername(List<String> otherUsername) {
+        this.otherUsernames = otherUsername;
     }
 }

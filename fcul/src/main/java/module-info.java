@@ -23,6 +23,7 @@ module cn {
     requires google.api.client;
     requires com.google.api.client;
     requires google.api.services.drive.v3.rev197;
+    requires com.fasterxml.jackson.databind;
 
     opens cn to javafx.fxml;
     exports cn;

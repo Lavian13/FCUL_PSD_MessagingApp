@@ -13,24 +13,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.application.Platform;
 
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.security.NoSuchAlgorithmException;
+import java.io.*;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainController {
 
-    BufferedReader reader = null;
-    PrintWriter writer = null;
+    List<PrintWriter> writers = new ArrayList<>();
     SSLSocket sslSocket;
-    public static String otherUsername;
+    public static String chatName;
     private Thread threadRead;
-
     @FXML
     private VBox contacts; // Reference to the parent container in the FXML file
     @FXML
@@ -45,31 +39,29 @@ public class MainController {
     private ToolBar toolBar;
 
     public void sendButtonPress(ActionEvent event) throws IOException {
-        //CODE TO SEND MESSAGE TO ACTIVEIPS IN MAINCLASS
         sendMessage(messageField.getText());
         messageField.clear();
-        sendButton.setStyle("-fx-background-color: red;");
+        //sendButton.setStyle("-fx-background-color: red;");
     }
 
 
     @FXML
-    public void initialize() throws IOException {
+    public void initialize() throws IOException, InterruptedException {
         System.out.println("works");
 
-        for(int i=0; i<2;i++){
-                //String columnName = resultSet.getString("column_name");
+        Thread.sleep(400);
+        for(File file : Peer.listOfFiles){
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("DynamicPane.fxml"));
                 Pane contact = loader.load();
 
                 DynamicController controller = loader.getController();
-                //controller.setData(columnName);
-                if(i%2==0)
-                    controller.setData("DavidOliveira");
-                else controller.setData("LuisViana");
+                if (file.getName().contains("_"))
+                    controller.setData(file.getName().split("_")[1].split("\\.")[0]);
+                else controller.setData(file.getName().split("\\.")[0]);
 
                 contact.setOnMouseClicked(event -> {
-                    if(!controller.getData().equals(otherUsername)) {
+                    if(!controller.getData().equals(chatName)) {
 
 
                         //HERE DO THE CODE TO LOAD THE CHAT IN THE RIGHT SIDE OF THE PAGE
@@ -89,36 +81,44 @@ public class MainController {
                         throw new RuntimeException(e);
                     }*/
                         messages.getChildren().clear();
-                        otherUsername = controller.getData();
-                        System.out.println(Peer.ipReceiver);
+                        chatName = controller.getData();
+                        //System.out.println(Peer.ipReceiver);
                         try {
-                            loadChat(otherUsername);
+                            loadChat(chatName);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                        //connectToUser();//then delete the sleep
-                        SSLSocket sslSocket = Peer.sslSocketUsers.get(otherUsername);
-                        if (sslSocket == null) {
-                            if (toolBar.isVisible()) toolBar.setVisible(false);
-                            userOnline.setText("User Offline");
-
-                        } else {
-                            if (!toolBar.isVisible()) toolBar.setVisible(true);
-                            userOnline.setText("User Online");
-                            reader = Peer.usersReaders.get(otherUsername);
-                            try {
-                                writer = new PrintWriter(sslSocket.getOutputStream(), true);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-
-                            contact.setStyle("-fx-background-color: red;");
-                            try {
-                                threadToRead();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                        List<String> usernames=new ArrayList<>();
+                        if (Peer.groupUsers.containsKey(chatName)){
+                            usernames.addAll(Peer.groupUsers.get(chatName));
+                        }else{
+                            usernames.add(chatName);
                         }
+                        for (String user : usernames){
+                            SSLSocket sslSocket = Peer.sslSocketUsers.get(user);
+                            if (sslSocket == null) {
+                                if (toolBar.isVisible()) toolBar.setVisible(false);
+                                userOnline.setText("User Offline");
+
+                            } else {
+                                if (!toolBar.isVisible()) toolBar.setVisible(true);
+                                userOnline.setText("User Online");
+                                try {
+                                    writers.add(new PrintWriter(sslSocket.getOutputStream(), true));
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+
+                                contact.setStyle("-fx-background-color: red;");
+                                try {
+                                    threadToRead();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+
+                        }
+
                     }
                 });
 
@@ -133,7 +133,16 @@ public class MainController {
     }
 
 
-    private void loadChat(String username) throws IOException {
+    private void loadChat(String chatname) throws IOException {
+        for (File f : Peer.listOfFiles){
+            if (f.getName().contains(chatname)){
+                if (f.getName().split("_")[1].equals(chatName+".txt")){
+
+                }
+            }else{
+
+            }
+        }
         /*FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
         AnchorPane message = loader2.load();
         MessageController controller2 = loader2.getController();
@@ -142,9 +151,9 @@ public class MainController {
             message.setStyle("-fx-background-color: red;");
         });*/
         //if(Peer.username_Messages.size()!=0){
-        if(Peer.messages.containsKey(username)){
+        if(Peer.messages.containsKey(chatname)){
             //for(String i : Peer.username_Messages.get(username)){
-            for(Message i : Peer.messages.get(username)){
+            for(Message i : Peer.messages.get(chatname)){
                 String content = i.getContent();
 
                 FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
@@ -152,7 +161,7 @@ public class MainController {
                 MessageController controller2 = loader2.getController();
                 controller2.setData(content);
 
-                if(i.getSent()==true) controller2.setPaneRightSide();
+                if(i.getSent()) controller2.setPaneRightSide();
 
                 messages.getChildren().add(message);
             }
@@ -205,14 +214,13 @@ public class MainController {
 
             @Override
             protected Void call() throws Exception {
-                String aux = otherUsername;
-                System.out.println("Threadreading" + otherUsername);
+                String aux = chatName;
+                System.out.println("Threadreading" + chatName);
                 Peer.notificationQueue.clear();
                 while (true) {
                     // Wait for a notification
                     Peer.notificationQueue.take();
-                    if (aux.equals(otherUsername)) {
-                        //String receivedMessage = Peer.username_Messages.get(aux).getLast();
+                    if (aux.equals(chatName)) {
                         String receivedMessage = Peer.messages.get(aux).getLast().getContent();
                         Platform.runLater(() -> {
                             try {
@@ -263,8 +271,14 @@ public class MainController {
     }
 
     private void sendMessage(String text) throws IOException {
-        writer.println(text);
-        Peer.messages.get(otherUsername).add(new Message(true, otherUsername, text));
+        for (PrintWriter writer : writers){
+            writer.println(text);
+        }
+        System.out.println("Message sent to:" + Peer.groupUsers.get(chatName));
+        if(Peer.groupUsers.get(chatName)==null)
+            Peer.messages.get(chatName).add(new Message(true, List.of(chatName), text));
+        else Peer.messages.get(chatName).add(new Message(true, Peer.groupUsers.get(chatName), text));
+
         loadMessageUI(text);
     }
     public void receiveMessage(String text) throws IOException {
