@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1cb4553a-007f-441c-8477-25e52c1998a6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../StorageMessages/Alice_messages.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../baz.enc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client_secret_456844246425-fb44uenqorihdnse8ks8bm4n0o051j79.apps.googleusercontent.com.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../libs/CloudCrypto.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../libs/jpbc-api-2.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../libs/jpbc-crypto-2.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../libs/jpbc-plaf-2.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shares/share_github.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shares/share_googledrive.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/David_cert/david.cer" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/David_cert/davidkeystore.jks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/David_cert/davidtruststore.jks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/DynamicController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/DynamicPane.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/HandleUserThread.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/LoadFXML.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/LoadFXML2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Luis_cert/luis.cer" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Luis_cert/luiskeystore.jks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Luis_cert/luistruststore.jks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/MainController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Message.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Message.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/MessageAppUI.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/MessageController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Peer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Peer2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Server.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/client_tls/client-keystore.jks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/client_tls/client-truststore.jks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/client_tls/client.crt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/createCertificate.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/server_tls/server-keystore.jks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/server_tls/server-truststore.jks" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/server_tls/server.crt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tokens/StoredCredential" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2ZD8G9frOluUdECiHSPbzTA2lC6" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.HelloApplication.executor": "Run",
+    "Application.LoadFXML.executor": "Run",
+    "Application.LoadFXML2.executor": "Run",
+    "Application.cn.HelloApplication.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Global Libraries",
+    "project.structure.proportion": "0.15234375",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.LoadFXML2">
+    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dps.fcul.HelloApplication" />
+      <module name="fcul" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dps.fcul.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoadFXML" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.LoadFXML" />
+      <module name="fcul" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoadFXML2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.LoadFXML2" />
+      <module name="fcul" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="cn.HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.HelloApplication" />
+      <module name="fcul" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="cn.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.LoadFXML2" />
+        <item itemvalue="Application.LoadFXML" />
+        <item itemvalue="Application.cn.HelloApplication" />
+        <item itemvalue="Application.HelloApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-3183f394aec4-7d648f2c" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1cb4553a-007f-441c-8477-25e52c1998a6" name="Changes" comment="" />
+      <created>1701945191130</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1701945191130</updated>
+      <workItem from="1701945192378" duration="99000" />
+      <workItem from="1701945299726" duration="158000" />
+      <workItem from="1701945466302" duration="180000" />
+      <workItem from="1701945655172" duration="1500000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
