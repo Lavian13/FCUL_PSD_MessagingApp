@@ -21,10 +21,11 @@ import java.util.*;
 public class LoadFXML2 extends Application{
     public HashMap<String, String> username_ip = new HashMap<>();
     private List<String> ips = new ArrayList<>();
+    private static String username = "Alice";
 
     public static void main(String[] args) {
 
-        Peer peer = new Peer("Alice");
+        Peer peer = new Peer(username);
         peer.start();
         launch(args);
         //RetrieveIPThread ip_thread = new RetrieveIPThread("127.0.0.1", 3456);
@@ -45,20 +46,29 @@ public class LoadFXML2 extends Application{
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
+        primaryStage.setTitle(username);
 
     }
 
     private void closeWindowEvent(WindowEvent windowEvent) {
         ObjectMapper objectMapper = new ObjectMapper();
         for (String chatName : Peer.messages.keySet()){
-            File file = new File("src/main/java/cn/chatsMessages/" + chatName + ".txt");
+            //File file = new File("chatsMessages/" + chatName + ".txt");
+            String fileName= "chatsMessages/" + chatName + ".txt";
+            List<String> messages = new ArrayList<>();
             System.out.println("SIZE" + Peer.messages.get(chatName).size());
             for (Message message : Peer.messages.get(chatName)){
-                try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
+                messages.add(message.toString());
+                /*try (PrintWriter writer = new PrintWriter(new FileWriter(file,true))) {
                     writer.println(message.toString());
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
+            }
+            try {
+                DownloadShares.encryptMessage(fileName,messages);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
     }

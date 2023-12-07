@@ -43,8 +43,8 @@ public class Peer extends Thread  {
             System.setProperty("javax.net.ssl.keyStorePassword", "davidpass");
             System.setProperty("javax.net.ssl.trustStorePassword", "davidpass");
         }*/
-        System.setProperty("javax.net.ssl.keyStore", "src/main/java/cn/certs/"+userName+"/"+userName+"keystore.jks");
-        System.setProperty("javax.net.ssl.trustStore", "src/main/java/cn/certs/"+userName+"/"+userName+"truststore.jks");
+        System.setProperty("javax.net.ssl.keyStore", "certs/"+userName+"/"+userName+"keystore.jks");
+        System.setProperty("javax.net.ssl.trustStore", "certs/"+userName+"/"+userName+"truststore.jks");
         System.setProperty("javax.net.ssl.keyStorePassword", "123456");
         System.setProperty("javax.net.ssl.trustStorePassword", "123456");
 
@@ -53,7 +53,7 @@ public class Peer extends Thread  {
     @Override
     public void run() {
         try {
-            File folder = new File("src/main/java/cn/chatsMessages");
+            File folder = new File("chatsMessages");
             File[] files = folder.listFiles();
             assert files != null;
             for (File file : files) {
@@ -146,6 +146,7 @@ public class Peer extends Thread  {
 
     private void sendMessageToServerAttribute(String attribute) throws IOException {
         String messageToServer="request:attribute:" + attribute;
+        System.out.println(messageToServer);
         //usernameReceiver=username;
         serverWriter.println(messageToServer);
         String read = serverReader.readLine();
@@ -166,6 +167,7 @@ public class Peer extends Thread  {
 
     public static void sendMessageToServerUsername(String username) throws IOException {
         String messageToServer="request:username:" + username;
+        System.out.println(messageToServer);
         usernameReceiver=username;
         serverWriter.println(messageToServer);
         String read = serverReader.readLine();

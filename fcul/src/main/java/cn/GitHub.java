@@ -17,7 +17,8 @@ public class GitHub {
 
     public GitHub() throws IOException {
         // Create a GitHub object
-        github = new GitHubBuilder().withOAuthToken("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").build();
+        //github = new GitHubBuilder().withOAuthToken("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").build();
+        github = new GitHubBuilder().withPassword("fcul_dpsproject@outlook.com", "9d9ULFo^S6X*nHJyNSkv").build();
 
         // Get the repository
         repository = github.getRepository("fculpsdproject/shares");

@@ -1,3 +1,0 @@
-false,ola alice,[Bob]
-true,ola bob,[Bob]
-false,ola alice,[Bob]

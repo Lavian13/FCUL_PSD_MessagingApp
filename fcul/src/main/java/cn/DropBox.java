@@ -18,7 +18,7 @@ public class DropBox {
     private DbxRequestConfig config;
     private DbxClientV2 client;
     public DropBox() {
-        accessToken = "sl.BqmM9JWeRrWJ_hpVnE3RWvheeoTyhv4I0vfHlhVh3XnAQ8MOUYWu29IZiO43tkJLMYkFXJR-CyPxKaLc7qKPf_2wCVh-62KTADFt1NOjhNuYJRA0ZhYcj4r5kLuoWWuumHM_djOSTCWKjn_rkzb3-HA";
+        accessToken = "sl.BrTlqlV0D2ANwtWoWiJX5DjJOj8Lb4OGpUO8BsFSlNHk5Rp8nWHdtgoEA6QZ1hhdx-yyx6ymyctg3Vlotjj8Ks4pAjdMoxmgQIwHBYf1eD3pbz2dcH2xbm85z9U89KTTmd4Rv-byrdQZLVddPoFZ49g";
         config = DbxRequestConfig.newBuilder("dropbox/java-tutorial").build();
         client = new DbxClientV2(config, accessToken);
     }

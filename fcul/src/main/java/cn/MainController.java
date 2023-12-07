@@ -137,17 +137,27 @@ public class MainController {
     private void loadChat(String chatname) throws IOException {
         for (File f : Peer.listOfFiles){
             if (f.getName().contains(chatname)){
-                try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
+                /*try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         // Read each line as a JSON object and convert it to a Java object
                         System.out.println(line);
-                        /*if(!message.getSent()) receiveMessage(message.getContent());
-                        else*/ loadMessageUI(line);
+                        String[] messageAttributes = line.split(",");
+                        if(messageAttributes[0].equals("false")) receiveMessage(messageAttributes[1]);
+                        else loadMessageUI(messageAttributes[1]);
                         //System.out.println("Name: " + message.getName() + ", Age: " + message.getAge());
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                }*/
+                try {
+                    for (String message: DownloadShares.decryptMessages("chatsMessages/" + f.getName())){
+                        String[] messageAttributes = message.split(",");
+                        if(messageAttributes[0].equals("false")) receiveMessage(messageAttributes[1]);
+                        else loadMessageUI(messageAttributes[1]);
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
             }
         }
@@ -279,10 +289,11 @@ public class MainController {
     }
 
     private void sendMessage(String text) throws IOException {
+        System.out.println("Writers" + writers.size());
         for (PrintWriter writer : writers){
             writer.println(text);
         }
-        System.out.println("Message sent to:" + Peer.groupUsers.get(chatName));
+        //System.out.println("Message sent to:" + Peer.groupUsers.get(chatName));
         if(Peer.groupUsers.get(chatName)==null)
             Peer.messages.get(chatName).add(new Message(true, List.of(chatName), text));
         else Peer.messages.get(chatName).add(new Message(true, Peer.groupUsers.get(chatName), text));
@@ -295,19 +306,16 @@ public class MainController {
     }
 
     private void loadMessageUI(String message) throws IOException {
-        System.out.println("adding to ui sent message");
+        //System.out.println("adding to ui sent message");
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
         AnchorPane messagePane = loader2.load();
         MessageController controller2 = loader2.getController();
         controller2.setData(message);
-        messagePane.setOnMouseClicked(event -> {//TO REMOVE
-            messagePane.setStyle("-fx-background-color: red;");
-        });
         controller2.setPaneRightSide();
         messages.getChildren().add(messagePane);
     }
     private void loadOtherMessageUI(String message) throws IOException {
-        System.out.println("adding to ui received message");
+        //System.out.println("adding to ui received message");
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("Message.fxml"));
         AnchorPane messagePane = loader2.load();
         MessageController controller2 = loader2.getController();

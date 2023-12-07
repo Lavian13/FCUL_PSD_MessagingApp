@@ -3,6 +3,7 @@ package cn;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
@@ -11,7 +12,7 @@ public class MessageController {
     @FXML
     private Label label; // Example component in the dynamic pane
     @FXML
-    private Pane messagePane;
+    private VBox messagePane;
 
     @FXML
     public void initialize() throws IOException {
@@ -23,7 +24,7 @@ public class MessageController {
     }
 
     public void setPaneRightSide(){
-        messagePane.setTranslateX(160);
+        messagePane.setTranslateX(120);
     }
 
 }

@@ -20,8 +20,8 @@ class Server {
     public static void main(String[] args) throws Exception {
 
 
-        System.setProperty("javax.net.ssl.keyStore", "src/main/java/cn/certs/Server/Serverkeystore.jks");
-        System.setProperty("javax.net.ssl.trustStore", "src/main/java/cn/certs/Server/Servertruststore.jks");
+        System.setProperty("javax.net.ssl.keyStore", "certs/Server/Serverkeystore.jks");
+        System.setProperty("javax.net.ssl.trustStore", "certs/Server/Servertruststore.jks");
         System.setProperty("javax.net.ssl.keyStorePassword", "123456");
         System.setProperty("javax.net.ssl.trustStorePassword", "123456");
 
