@@ -40,6 +40,15 @@ public class FileEncrypterDecrypter {
         List<String> tmp = new ArrayList<>();
 
         File yourFile = new File(fileName);
+        if (!yourFile.exists()){
+            int lastSlash = fileName.lastIndexOf("/");
+            if (lastSlash != -1) {
+                String replacedString = fileName.substring(0, lastSlash) +
+                        "/Group_" +
+                        fileName.substring(lastSlash + 1);
+                yourFile = new File(replacedString);
+            }
+        }
         yourFile.createNewFile();
         try (FileInputStream fileIn = new FileInputStream(fileName)) {
             byte[] fileIv = new byte[16];

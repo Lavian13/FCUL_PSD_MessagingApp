@@ -45,7 +45,7 @@ public class LoadFXMLBob extends Application{
     private void closeWindowEvent(WindowEvent windowEvent) {
         ObjectMapper objectMapper = new ObjectMapper();
         for (String chatName : Peer.messages.keySet()){
-            String fileName= "chatsMessages/" + chatName + ".txt";
+            String fileName= "chatsMessages/" +username +"/"+ chatName + ".txt";
             List<String> messages = new ArrayList<>();
             for (Message message : Peer.messages.get(chatName)){
                 messages.add(message.toString());

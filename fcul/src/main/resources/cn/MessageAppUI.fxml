@@ -80,30 +80,31 @@
       <children>
             <HBox layoutX="-1.0" prefHeight="375.0" prefWidth="640.0">
                <children>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background: #4d528c;">
+                  <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background: #4d528c;">
                      <content>
-                        <VBox fx:id="contacts" prefWidth="180.0" style="-fx-background-color: #4d528c;" />
+                        <VBox fx:id="contacts" prefWidth="200.0" style="-fx-background-color: #4d528c;" />
                      </content>
                   </ScrollPane>
-                  <ScrollPane prefHeight="200.0" prefWidth="440.0">
-                     <content>
-                        <VBox prefHeight="375.0" prefWidth="420.0" style="-fx-background-color: #e3e5fc;">
-                           <children>
-                              <VBox prefHeight="350.0" prefWidth="440.0">
+                  <VBox prefHeight="200.0" prefWidth="480.0">
+                     <children>
+                        <Label fx:id="userOnline" alignment="CENTER" prefHeight="20.0" prefWidth="460.0" />
+                        <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="320.0" prefHeight="200.0" prefWidth="440.0">
+                           <content>
+                              <VBox prefHeight="375.0" prefWidth="420.0" style="-fx-background-color: #e3e5fc;">
                                  <children>
-                                    <Label fx:id="userOnline" />
                                     <VBox fx:id="messages" prefHeight="320.0" prefWidth="440.0" />
-                                 </children></VBox>
-                              <ToolBar fx:id="toolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="200.0" visible="false">
-                                <items>
-                                    <TextField fx:id="messageField" prefHeight="20.0" prefWidth="350.0" promptText="Write your message here" />
-                                  <Button fx:id="sendButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#sendButtonPress" style="-fx-background-color: #4d528c;" text="Send" textFill="WHITE" />
-                                </items>
-                              </ToolBar>
-                           </children>
-                        </VBox>
-                     </content>
-                  </ScrollPane>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                        <ToolBar fx:id="toolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="200.0">
+                          <items>
+                              <TextField fx:id="messageField" prefHeight="20.0" prefWidth="350.0" promptText="Write your message here" />
+                            <Button fx:id="sendButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#sendButtonPress" style="-fx-background-color: #4d528c;" text="Send" textFill="WHITE" />
+                          </items>
+                        </ToolBar>
+                     </children>
+                  </VBox>
                </children>
             </HBox>
       </children>

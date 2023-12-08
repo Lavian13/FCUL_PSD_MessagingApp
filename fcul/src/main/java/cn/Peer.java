@@ -27,6 +27,7 @@ public class Peer extends Thread  {
     public static String userName;
     public static final BlockingQueue<Boolean> notificationQueue = new LinkedBlockingQueue<>();
     public static HashMap<String, List<Message>> messages = new HashMap<>();
+    public static Message lastMessageReceived;
     public static List<File> listOfFiles = new ArrayList<>();
 
 
@@ -84,7 +85,8 @@ public class Peer extends Thread  {
                 if (fileName.contains("_")){
                     name = fileName.split("_")[1];
                 }else name = fileName;
-
+                messages.put(fileName,new ArrayList<>());
+                System.out.println("messages:"+fileName);
 
                 if (fileName.split("_")[0].equals("Group")) {
                     sendMessageToServerAttribute(name);
@@ -146,7 +148,7 @@ public class Peer extends Thread  {
     private void sendMessageToServerAttribute(String attribute) throws IOException {
         String messageToServer="request:attribute:" + attribute;
         System.out.println(messageToServer);
-        messages.put(attribute,new ArrayList<>());
+        //messages.put(attribute,new ArrayList<>());
         //usernameReceiver=username;
         serverWriter.println(messageToServer);
         String read = serverReader.readLine();
@@ -267,7 +269,7 @@ public class Peer extends Thread  {
                 System.out.println("The first name of the person's certificate -> " + subjectCN);
                 sslSocketUsers.put(subjectCN,sslSocket); //N É SÓ ISTO
             }
-            messages.put(subjectCN, new ArrayList<>());
+            //messages.put(subjectCN, new ArrayList<>());
             // Create a BufferedReader to read the client's messages
             BufferedReader reader = null;
             try {
@@ -283,11 +285,10 @@ public class Peer extends Thread  {
             // Create a PrintWriter to send a message to the client
             try {
                 while (true) {
-                    System.out.println(reader);
                     String receivedMessage = reader.readLine();
 
                     if (receivedMessage.equals("close")) {
-                        sslSocket.close();
+                        sslSocket.close();//maybe check on sslsocketusers
                         break; // Connection closed
                     }//else do a notification and write to the hashmap of messages
                     else{
@@ -300,13 +301,21 @@ public class Peer extends Thread  {
                                 username_Messages.get(subjectCN).add(receivedMessage);
                             }*/
                             if (receivedMessage.contains(",")){
-
-                                messages.get(receivedMessage.split(",")[0]).add(new Message(false,List.of(subjectCN), receivedMessage.split(",")[1])); //get wont be subjectCN
+                                System.out.println(receivedMessage);
+                                System.out.println(messages.keySet().toString());
+                                System.out.println(messages.get(receivedMessage.split(",")[0]));
+                                Message m = new Message(false, receivedMessage.split(",")[0],subjectCN, receivedMessage.split(",")[1]);
+                                messages.get(receivedMessage.split(",")[0]).add(m); //get wont be subjectCN
+                                lastMessageReceived=m;
                                 notificationQueue.offer(true);
                                 System.out.println("Received: " + receivedMessage);
-
-
-                            }
+                            }/*else{
+                                Message m =new Message(false, receivedMessage.split(",")[0],subjectCN, receivedMessage.split(",")[1]);
+                                messages.get(subjectCN).add(m); //get wont be subjectCN
+                                lastMessageReceived=m;
+                                notificationQueue.offer(true);
+                                System.out.println("Received: " + receivedMessage);
+                            }*/
 
                         }
 

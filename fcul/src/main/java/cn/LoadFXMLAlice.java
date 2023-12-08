@@ -48,7 +48,7 @@ public class LoadFXMLAlice extends Application{
         ObjectMapper objectMapper = new ObjectMapper();
         for (String chatName : Peer.messages.keySet()){
             //File file = new File("chatsMessages/" + chatName + ".txt");
-            String fileName= "chatsMessages/" + chatName + ".txt";
+            String fileName= "chatsMessages/" +username +"/"+ chatName + ".txt";
             List<String> messages = new ArrayList<>();
             System.out.println("SIZE" + Peer.messages.get(chatName).size());
             for (Message message : Peer.messages.get(chatName)){

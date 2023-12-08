@@ -16,9 +16,9 @@ public class DownloadShares {
     private static final String CIPHER = "AES/CBC/PKCS5Padding";
     private static final byte[] IV = new byte[16]; // TODO: Use a random IV and store it for decryption
     String[] messages = {"test1", "test2", "test3"};
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
         encryptMessage("chatsMessages/Bob.txt", List.of("elllaahhh"));
-    }
+    }*/
 
     public static void encryptMessage(String fileName, List<String> messages) throws Exception {
         DropBox db = new DropBox();
