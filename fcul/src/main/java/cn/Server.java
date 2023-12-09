@@ -5,9 +5,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import javax.net.ssl.*;
 
 
@@ -17,6 +15,12 @@ class Server {
     static HashMap<String, String> username_ip = new HashMap<>();
     //static HashMap<String, X509Certificate> username_certificate = new HashMap<>();
     static HashMap<String, List<String>> username_attributes = new HashMap<>();
+    static HashMap<String,Integer> attribute_id = new HashMap<>();
+    static HashMap<String,int[][]> attribute_accesspolicy = new HashMap<>();
+    static HashMap<String,String[]> attribute_rhos = new HashMap<>();
+    static HashMap<String,String> attribute_accesspolicystring = new HashMap<>();
+
+
 
     public static void main(String[] args) throws Exception {
 
@@ -79,6 +83,20 @@ class Server {
             registerAttribute("Alice","Sports");
             registerAttribute("Bob","Sports");
             registerAttribute("Dave","Sports");
+            attribute_id.put("Movies",new Random().nextInt(50));
+            attribute_id.put("Sports",new Random().nextInt(50));
+            /*App.defineAccessPolicyString("40 and (200 or 430 or 30)");
+            attribute_accesspolicy.put("Movies",App.accessPolicy);
+            System.out.println("policy1:" + Arrays.deepToString(App.accessPolicy));
+            System.out.println("rhos1:" + Arrays.toString(App.rhos));
+            attribute_rhos.put("Movies", App.rhos);
+            //App.defineAccessPolicyString("20 and (200 or 430 or 30)");
+            attribute_accesspolicy.put("Sports",App.accessPolicy);
+            System.out.println("policy2:" + Arrays.deepToString(App.accessPolicy));
+            System.out.println("rhos2:" + Arrays.toString(App.rhos));
+            attribute_rhos.put("Sports", App.rhos);*/
+            attribute_accesspolicystring.put("Movies", "40 and (200 or 430 or 30)");
+
 
 
 
@@ -125,8 +143,39 @@ class Server {
             }
         }
         if(result.isEmpty()) return result;
-        result.substring(0,result.length()-1);
+        result=result.substring(0,result.length()-1);
         return result;
+    }
+
+    public static boolean hasAttribute(String user, String attribute){
+        System.out.println(username_attributes.keySet() + ",user," + user + ",attribute," + attribute);
+        if(username_attributes.containsKey(user)){
+            System.out.println("contains key" + attribute + " user " + user);
+            return username_attributes.get(user).contains(attribute);
+        }
+
+        return false;
+    }
+    public static int[][] policyForAttribute(String attribute){
+        if(attribute_accesspolicy.containsKey(attribute)){
+            return attribute_accesspolicy.get(attribute);
+        }
+        return null;
+
+    }
+    public static String[] rhosForAttribute(String attribute){
+        if(attribute_rhos.containsKey(attribute)){
+            return attribute_rhos.get(attribute);
+        }
+        return null;
+
+    }
+    public static String accessStringForAttribute(String attribute){
+        if(attribute_accesspolicystring.containsKey(attribute)){
+            return attribute_accesspolicystring.get(attribute);
+        }
+        return null;
+
     }
 
 }

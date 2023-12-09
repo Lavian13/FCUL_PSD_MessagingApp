@@ -1,5 +1,10 @@
 package cn;
 
+import cn.edu.buaa.crypto.access.parser.PolicySyntaxException;
+import cn.edu.buaa.crypto.algebra.serparams.PairingCipherSerParameter;
+import cn.edu.buaa.crypto.algebra.serparams.PairingKeySerParameter;
+import org.bouncycastle.crypto.InvalidCipherTextException;
+
 import java.io.*;
 import java.net.*;
 import java.security.NoSuchAlgorithmException;
@@ -29,6 +34,8 @@ public class Peer extends Thread  {
     public static HashMap<String, List<Message>> messages = new HashMap<>();
     public static Message lastMessageReceived;
     public static List<File> listOfFiles = new ArrayList<>();
+    public static HashMap<int[][], String[]> listOfAccessPolicies = new HashMap<>();
+    public static HashMap<String, String> group_accessstring = new HashMap<>();
 
 
     public Peer(String userName){
@@ -48,6 +55,14 @@ public class Peer extends Thread  {
         System.setProperty("javax.net.ssl.trustStore", "certs/"+userName+"/"+userName+"truststore.jks");
         System.setProperty("javax.net.ssl.keyStorePassword", "123456");
         System.setProperty("javax.net.ssl.trustStorePassword", "123456");
+
+
+        try {
+            App.keyGen();
+        } catch (IOException | ClassNotFoundException | PolicySyntaxException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 
@@ -152,6 +167,7 @@ public class Peer extends Thread  {
         //usernameReceiver=username;
         serverWriter.println(messageToServer);
         String read = serverReader.readLine();
+        System.out.println("fromserverattribute:"+read);
         groupUsers.put(attribute, new ArrayList<>());
         if(read.isEmpty())return;
         for (String user : read.split(",")){
@@ -160,6 +176,17 @@ public class Peer extends Thread  {
                 sendMessageToServerUsername(user);
             }
         }
+
+        String messageToServer2="request:policy:" + attribute;
+        serverWriter.println(messageToServer2);
+        /*String read2 = serverReader.readLine();
+        String read3 = serverReader.readLine();
+        listOfAccessPolicies.put(stringToMatrix(read2), stringToArray(read3));
+        System.out.println("policy:"+read2);
+        System.out.println("rhos:"+read3);*/
+        String read2 = serverReader.readLine();
+        group_accessstring.put("Group_"+attribute,read2);
+        System.out.println("policystring:"+read2);
     }
 
     /*public static void sendMessageToServer(String message) throws IOException {
@@ -269,8 +296,7 @@ public class Peer extends Thread  {
                 System.out.println("The first name of the person's certificate -> " + subjectCN);
                 sslSocketUsers.put(subjectCN,sslSocket); //N É SÓ ISTO
             }
-            //messages.put(subjectCN, new ArrayList<>());
-            // Create a BufferedReader to read the client's messages
+
             BufferedReader reader = null;
             try {
                 reader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
@@ -287,11 +313,7 @@ public class Peer extends Thread  {
                 while (true) {
                     String receivedMessage = reader.readLine();
 
-                    if (receivedMessage.equals("close")) {
-                        sslSocket.close();//maybe check on sslsocketusers
-                        break; // Connection closed
-                    }//else do a notification and write to the hashmap of messages
-                    else{
+                    if (!receivedMessage.equals("close")){
                         if(subjectCN!=null){
                             //System.out.println(subjectCN + " username" + MainController.otherUsername);
                             /*if (username_Messages.containsKey(subjectCN))
@@ -301,14 +323,38 @@ public class Peer extends Thread  {
                                 username_Messages.get(subjectCN).add(receivedMessage);
                             }*/
                             if (receivedMessage.contains(",")){
-                                System.out.println(receivedMessage);
-                                System.out.println(messages.keySet().toString());
-                                System.out.println(messages.get(receivedMessage.split(",")[0]));
-                                Message m = new Message(false, receivedMessage.split(",")[0],subjectCN, receivedMessage.split(",")[1]);
-                                messages.get(receivedMessage.split(",")[0]).add(m); //get wont be subjectCN
-                                lastMessageReceived=m;
-                                notificationQueue.offer(true);
-                                System.out.println("Received: " + receivedMessage);
+                                String[] sections = receivedMessage.split(",");
+                                if(!sections[0].contains("Group")){
+                                    System.out.println(receivedMessage);
+                                    System.out.println(messages.keySet().toString());
+                                    System.out.println(messages.get(receivedMessage.split(",")[0]));
+                                    Message m = new Message(false, receivedMessage.split(",")[0],subjectCN, receivedMessage.split(",")[1]);
+                                    messages.get(receivedMessage.split(",")[0]).add(m); //get wont be subjectCN
+                                    lastMessageReceived=m;
+                                    notificationQueue.offer(true);
+                                    System.out.println("Received: " + receivedMessage);
+                                }else{
+                                    String encryptedMessage = sections[1];
+                                    String decryptedMessage="teste";
+                                    System.out.println(encryptedMessage);
+                                    System.out.println("secretkey"+App.secretKey.getParameters().toString());
+                                    System.out.println("accessstring"+group_accessstring.get(sections[0]));
+                                    //for (int[][] key :listOfAccessPolicies.keySet()){
+                                        //System.out.println(Arrays.deepToString(key) + ":" + Arrays.toString(listOfAccessPolicies.get(key)));
+
+                                        decryptedMessage = App.decryptString(encryptedMessage,App.secretKey, group_accessstring.get(sections[0]));
+                                        //decryptedMessage = App.decryptString(encryptedMessage,App.keyGen(), key, listOfAccessPolicies.get(key));
+                                        //if(decryptedMessage!= null) break;
+                                    //}
+                                    //String decryptedMessage = App.decryptString(encryptedMessage,App.keyGen());
+                                    Message m = new Message(false, receivedMessage.split(",")[0],subjectCN, decryptedMessage);
+                                    messages.get(receivedMessage.split(",")[0]).add(m); //get wont be subjectCN
+                                    lastMessageReceived=m;
+                                    notificationQueue.offer(true);
+                                    System.out.println("ReceivedGroup: " + decryptedMessage);
+
+                                }
+
                             }/*else{
                                 Message m =new Message(false, receivedMessage.split(",")[0],subjectCN, receivedMessage.split(",")[1]);
                                 messages.get(subjectCN).add(m); //get wont be subjectCN
@@ -319,16 +365,45 @@ public class Peer extends Thread  {
 
                         }
 
+                    }else{
+                        sslSocket.close();//maybe check on sslsocketusers
+                        break; // Connection closed
                     }
 
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (InvalidCipherTextException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (PolicySyntaxException e) {
+                throw new RuntimeException(e);
             }
 
 
-
         }
+    }
+
+    private String[] stringToArray(String m){
+        String str2 = m.trim();
+        String[] arraystr = str2.split(",");
+        return arraystr;
+    }
+
+    private int[][] stringToMatrix(String m){
+        String[] rows = m.split(";");
+        int[][] matrix = new int[rows.length][];
+
+        for (int i = 0; i < rows.length; i++) {
+            String[] elements = rows[i].split(",");
+            matrix[i] = new int[elements.length];
+            for (int j = 0; j < elements.length; j++) {
+                matrix[i][j] = Integer.parseInt(elements[j]);
+            }
+        }
+        return matrix;
+
     }
 
 

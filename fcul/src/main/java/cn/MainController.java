@@ -1,22 +1,21 @@
 package cn;
 
+import cn.edu.buaa.crypto.access.parser.PolicySyntaxException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.animation.PauseTransition;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.application.Platform;
 import javafx.stage.Popup;
 import javafx.util.Duration;
+import org.bouncycastle.crypto.InvalidCipherTextException;
 import org.controlsfx.control.Notifications;
 
 import javax.net.ssl.SSLSocket;
@@ -45,8 +44,10 @@ public class MainController {
     private TextField messageField;
     @FXML
     private ToolBar toolBar;
+    @FXML
+    private ScrollPane messageScroll;
 
-    public void sendButtonPress(ActionEvent event) throws IOException {
+    public void sendButtonPress(ActionEvent event) throws IOException, InvalidCipherTextException, PolicySyntaxException, ClassNotFoundException {
         sendMessage(messageField.getText());
         messageField.clear();
         //sendButton.setStyle("-fx-background-color: red;");
@@ -130,10 +131,10 @@ public class MainController {
                             }else sslSockets.add(sslSocket);
                         }
                         if (oneUserOffline){
-                            if (toolBar.isVisible()) toolBar.setVisible(false);
+                            if (!toolBar.isDisable()) toolBar.setDisable(true);
                             userOnline.setText("Chat is Offline");
                         } else {
-                            if (!toolBar.isVisible()) toolBar.setVisible(true);
+                            if (toolBar.isDisable()) toolBar.setDisable(false);
                             userOnline.setText("Chat is Online");
                             for (SSLSocket s :sslSockets){
                                 try {
@@ -274,12 +275,12 @@ public class MainController {
                         System.out.println("Mensagem recebida de null" + Peer.lastMessageReceived.getFileName());
                         notiMessage(Peer.lastMessageReceived.getFileName());
                     }
-                    if(aux==null&&chatName!=null){
+                    else if(aux==null&&chatName!=null){
                         Peer.notificationQueue.put(true);
                         System.out.println("onbreaknull");
                         break;
                     }
-                    if (aux.equals(chatName)) {
+                    else if (aux.equals(chatName)) {
                         if(Peer.lastMessageReceived.getFileName().equals(filename) && !Peer.lastMessageReceived.getSent()){
                             String receivedMessage = Peer.lastMessageReceived.getContent();
                             Platform.runLater(() -> {
@@ -351,7 +352,7 @@ public class MainController {
         }
     }
 
-    private void sendMessage(String text) throws IOException {
+    private void sendMessage(String text) throws IOException, PolicySyntaxException, ClassNotFoundException, InvalidCipherTextException {
         System.out.println("Writers" + writers.size());
         //System.out.println("Message sent to:" + Peer.groupUsers.get(chatName));
         if(Peer.groupUsers.get(chatName)==null){
@@ -362,7 +363,9 @@ public class MainController {
             }
         }
         else {
+            App.defineAccessPolicyString("40 and (200 or 430 or 30)");
             Peer.messages.get(filename).add(new Message(true, filename, Peer.userName, text));
+            text= App.encryptString(text, Peer.group_accessstring.get(filename));
             for (PrintWriter writer : writers){
                 writer.println(filename + "," + text);
             }
@@ -383,6 +386,7 @@ public class MainController {
         controller2.setData(message);
         controller2.setPaneRightSide();
         messages.getChildren().add(messagePane);
+        //messageScroll.setVvalue(1.0);
     }
     private void loadOtherMessageUI(String message) throws IOException {
         //System.out.println("adding to ui received message");
@@ -391,9 +395,12 @@ public class MainController {
         MessageController controller2 = loader2.getController();
         controller2.setData(message);
 
+
         //put message on the right side
 
         messages.getChildren().add(messagePane);
+        //messageScroll.setVvalue(1.0);
+
     }
 
     private static String extractSubjectCommonName(X509Certificate certificate) {
