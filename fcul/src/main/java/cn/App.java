@@ -119,15 +119,14 @@ public class App {
         masterKey = (PairingKeySerParameter) anMasterKey;
     }
 
-    public static void keyGen() throws IOException, ClassNotFoundException, PolicySyntaxException {
-        defineAccessPolicyString("40 and (200 or 430 or 30)");
-        setup();
+    public static PairingKeySerParameter keyGen() throws IOException, ClassNotFoundException, PolicySyntaxException {
         //secretKey = KPABEGPSW06aEngine.getInstance().keyGen(publicKey, masterKey, accessPolicy, rhos);
         secretKey = CPABEBSW07Engine.getInstance().keyGen(publicKey,masterKey,attributes);
         byte[] byteArraySecretKey = SerCipherParameter(secretKey);
         CipherParameters anSecretKey = deserCipherParameters(byteArraySecretKey);
         System.out.println(secretKey.equals(anSecretKey));
         secretKey = (PairingKeySerParameter) anSecretKey;
+        return secretKey;
     }
 
     public static PairingCipherSerParameter encrypt(Element message) throws IOException, ClassNotFoundException {
@@ -150,6 +149,9 @@ public class App {
         //PairingCipherSerParameter ciphertextTest = KPABEGPSW06aEngine.getInstance().encryption(publicKey, attributes, elementTest);
 
         Element elementTest = pairing.getGT().newElementFromBytes(message.getBytes(StandardCharsets.UTF_8));
+        System.out.println("Elementenc: " + elementTest);
+        System.out.println("publickey: " + publicKey);
+        System.out.println("accessstrin: " + accessString);
         PairingCipherSerParameter ciphertextTest = CPABEBSW07Engine.getInstance().encryption(publicKey, accessString, elementTest);
         byte[] byteArrayCiphertextTest = SerCipherParameter(ciphertextTest);
         String str = Base64.getEncoder().encodeToString(byteArrayCiphertextTest);
@@ -169,7 +171,7 @@ public class App {
 
 
     }
-    public static String decryptString(String str, PairingKeySerParameter secretKey,String accessString) throws InvalidCipherTextException, IOException, ClassNotFoundException, PolicySyntaxException {
+    public static String decryptString(String str, PairingKeySerParameter secretkey,String accessString) throws InvalidCipherTextException, IOException, ClassNotFoundException, PolicySyntaxException {
         /*byte[] receivedBytes = Base64.getDecoder().decode(str);
         PairingCipherSerParameter TestCiphertext = (PairingCipherSerParameter) deserCipherParameters(receivedBytes);
         Element TestMessage = CPABEBSW07Engine.getInstance().decryption(publicKey, secretKey, policy, rhos, TestCiphertext);
@@ -179,10 +181,18 @@ public class App {
         System.out.println(decryptedReceived);
         return decryptedReceived;*/
 
+        System.out.println("Message to decrypt: " + str);
+
         byte[] receivedBytes = Base64.getDecoder().decode(str);
+        System.out.println("Message to decrypt bytes: " + Arrays.toString(receivedBytes));
         PairingCipherSerParameter TestCiphertext = (PairingCipherSerParameter) deserCipherParameters(receivedBytes);
-        Element TestMessage = CPABEBSW07Engine.getInstance().decryption(publicKey, secretKey, accessString, TestCiphertext);
+        System.out.println("publickey: " + publicKey);
+        System.out.println("secret: " + secretKey);
+        System.out.println("accessstrin: " + accessString);
+        Element TestMessage = CPABEBSW07Engine.getInstance().decryption(publicKey, secretkey, accessString, TestCiphertext);
+        System.out.println("Elementde: " + TestMessage);
         String decryptedReceived = new String(TestMessage.toBytes(), StandardCharsets.UTF_8);
+        System.out.println("Decrypted Message: " + decryptedReceived);
         decryptedReceived=decryptedReceived.replace("\0", "").trim();
         System.out.println("Decrypted Message: " + decryptedReceived.replace("\0", "").trim());
         return decryptedReceived;

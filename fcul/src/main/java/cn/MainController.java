@@ -1,6 +1,7 @@
 package cn;
 
 import cn.edu.buaa.crypto.access.parser.PolicySyntaxException;
+import cn.edu.buaa.crypto.algebra.serparams.PairingCipherSerParameter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.animation.PauseTransition;
 import javafx.concurrent.Task;
@@ -22,7 +23,10 @@ import javax.net.ssl.SSLSocket;
 import java.io.*;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+
+import static cn.App.deserCipherParameters;
 
 public class MainController {
 
@@ -365,7 +369,11 @@ public class MainController {
         else {
             App.defineAccessPolicyString("40 and (200 or 430 or 30)");
             Peer.messages.get(filename).add(new Message(true, filename, Peer.userName, text));
+            System.out.println("Mesnsagem escrita"+text);
             text= App.encryptString(text, Peer.group_accessstring.get(filename));
+            System.out.println("Encrypted"+text);
+            System.out.println("decrypted"+App.decryptString(text,Peer.secretKey, Peer.group_accessstring.get(filename)));
+
             for (PrintWriter writer : writers){
                 writer.println(filename + "," + text);
             }

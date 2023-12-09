@@ -1,5 +1,7 @@
 package cn;
 
+import cn.edu.buaa.crypto.algebra.serparams.PairingKeySerParameter;
+
 import java.io.*;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -19,10 +21,23 @@ class Server {
     static HashMap<String,int[][]> attribute_accesspolicy = new HashMap<>();
     static HashMap<String,String[]> attribute_rhos = new HashMap<>();
     static HashMap<String,String> attribute_accesspolicystring = new HashMap<>();
+    static PairingKeySerParameter secretKey;
+    static String linesent;
+
 
 
 
     public static void main(String[] args) throws Exception {
+
+        App.defineAccessPolicyString("40 and (200 or 430 or 30)");
+        App.setup();
+        secretKey= App.keyGen();
+        String text = "Teste";
+        text= App.encryptString(text, "40 and (200 or 430 or 30)");
+        System.out.println("Encrypted"+text);
+        String aux = HandleUserThread.serializeSecretKey(secretKey);
+        secretKey=HandleUserThread.deserializeSecretKey(aux);
+        System.out.println("decrypted"+App.decryptString(text,secretKey, "40 and (200 or 430 or 30)"));
 
 
         System.setProperty("javax.net.ssl.keyStore", "certs/Server/Serverkeystore.jks");
@@ -177,5 +192,7 @@ class Server {
         return null;
 
     }
+
+
 
 }

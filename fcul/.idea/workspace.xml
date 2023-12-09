@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1cb4553a-007f-441c-8477-25e52c1998a6" name="Changes" comment="everything and anything (javafx crucial changes, group and normal chat working 100%, missing attribute)">
+    <list default="true" id="1cb4553a-007f-441c-8477-25e52c1998a6" name="Changes" comment="dencryption of attribute based missing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/HandleUserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/HandleUserThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/Peer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/Peer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cn/MessageAppUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cn/MessageAppUI.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tokens/StoredCredential" beforeDir="false" afterPath="$PROJECT_DIR$/tokens/StoredCredential" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -99,7 +98,7 @@
       <recent name="cn" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.LoadFXMLCharlie">
+  <component name="RunManager" selected="Application.LoadFXMLAlice">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="cn.App" />
       <module name="fcul" />
@@ -167,10 +166,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LoadFXMLCharlie" />
-        <item itemvalue="Application.LoadFXMLBob" />
         <item itemvalue="Application.LoadFXMLAlice" />
         <item itemvalue="Application.Server" />
+        <item itemvalue="Application.LoadFXMLCharlie" />
+        <item itemvalue="Application.LoadFXMLBob" />
         <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
@@ -184,7 +183,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701982533750</updated>
       <workItem from="1701982535147" duration="205000" />
-      <workItem from="1701982747843" duration="55533000" />
+      <workItem from="1701982747843" duration="61031000" />
     </task>
     <task id="LOCAL-00001" summary="group message looks ok">
       <option name="closed" value="true" />
@@ -210,7 +209,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702067731086</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="dencryption of attribute based missing">
+      <option name="closed" value="true" />
+      <created>1702137529794</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1702137529794</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -220,6 +227,7 @@
     <MESSAGE value="group message looks ok" />
     <MESSAGE value="more user mains and more message files" />
     <MESSAGE value="everything and anything (javafx crucial changes, group and normal chat working 100%, missing attribute)" />
-    <option name="LAST_COMMIT_MESSAGE" value="everything and anything (javafx crucial changes, group and normal chat working 100%, missing attribute)" />
+    <MESSAGE value="dencryption of attribute based missing" />
+    <option name="LAST_COMMIT_MESSAGE" value="dencryption of attribute based missing" />
   </component>
 </project>

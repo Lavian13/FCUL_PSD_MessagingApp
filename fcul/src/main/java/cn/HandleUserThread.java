@@ -1,8 +1,9 @@
 package cn;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import cn.edu.buaa.crypto.algebra.serparams.PairingKeySerParameter;
+
+import java.io.*;
+import java.util.Base64;
 
 public class HandleUserThread extends Thread {
 
@@ -35,7 +36,11 @@ public class HandleUserThread extends Thread {
                 if(splited[0].equals("port")){
                     Server.username_ip.put(username, clientIp.concat(":"+splited[1]));
                     System.out.println(clientIp.concat(":"+splited[1]));
-                    writer.println("ok");
+                    System.out.println("Secretkey:" + Server.secretKey);
+                    System.out.println("Secretkey serializes:" +serializeSecretKey(Server.secretKey));
+                    Server.linesent=serializeSecretKey(Server.secretKey);
+                    writer.println(serializeSecretKey(Server.secretKey));
+
 
                 }
 
@@ -102,5 +107,24 @@ public class HandleUserThread extends Thread {
 
     }
 
+
+    public static String serializeSecretKey(PairingKeySerParameter secretKey) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+        objectOutputStream.writeObject(secretKey);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        objectOutputStream.close();
+        byteArrayOutputStream.close();
+        return Base64.getEncoder().encodeToString(byteArray);
+    }
+    public static PairingKeySerParameter deserializeSecretKey(String serializedSecretKey) throws IOException, ClassNotFoundException {
+        byte[] byteArray = Base64.getDecoder().decode(serializedSecretKey);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
+        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+        PairingKeySerParameter secretKey = (PairingKeySerParameter) objectInputStream.readObject();
+        objectInputStream.close();
+        byteArrayInputStream.close();
+        return secretKey;
+    }
 
 }

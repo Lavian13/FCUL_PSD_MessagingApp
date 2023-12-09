@@ -36,6 +36,7 @@ public class Peer extends Thread  {
     public static List<File> listOfFiles = new ArrayList<>();
     public static HashMap<int[][], String[]> listOfAccessPolicies = new HashMap<>();
     public static HashMap<String, String> group_accessstring = new HashMap<>();
+    public static PairingKeySerParameter secretKey;
 
 
     public Peer(String userName){
@@ -56,12 +57,6 @@ public class Peer extends Thread  {
         System.setProperty("javax.net.ssl.keyStorePassword", "123456");
         System.setProperty("javax.net.ssl.trustStorePassword", "123456");
 
-
-        try {
-            App.keyGen();
-        } catch (IOException | ClassNotFoundException | PolicySyntaxException e) {
-            throw new RuntimeException(e);
-        }
 
 
     }
@@ -87,7 +82,11 @@ public class Peer extends Thread  {
             ConnectToServer("localhost", 9090, usernameReceiver);
             System.out.println("port:" + (2344+userName.length()));
             serverWriter.println("port:" + (2344+userName.length()));
-            serverReader.readLine();
+            String line= serverReader.readLine();
+            System.out.println("line read:" + line);
+            secretKey = deserializeSecretKey(line);
+            System.out.println("Secretkey:" + secretKey);
+            System.out.println("line read:" + line);
 
 
             System.out.println("Waiting for client connection...");
@@ -337,12 +336,12 @@ public class Peer extends Thread  {
                                     String encryptedMessage = sections[1];
                                     String decryptedMessage="teste";
                                     System.out.println(encryptedMessage);
-                                    System.out.println("secretkey"+App.secretKey.getParameters().toString());
+                                    System.out.println("secretkey"+secretKey);
                                     System.out.println("accessstring"+group_accessstring.get(sections[0]));
                                     //for (int[][] key :listOfAccessPolicies.keySet()){
                                         //System.out.println(Arrays.deepToString(key) + ":" + Arrays.toString(listOfAccessPolicies.get(key)));
 
-                                        decryptedMessage = App.decryptString(encryptedMessage,App.secretKey, group_accessstring.get(sections[0]));
+                                        decryptedMessage = App.decryptString(encryptedMessage,secretKey, group_accessstring.get(sections[0]));
                                         //decryptedMessage = App.decryptString(encryptedMessage,App.keyGen(), key, listOfAccessPolicies.get(key));
                                         //if(decryptedMessage!= null) break;
                                     //}
@@ -404,6 +403,16 @@ public class Peer extends Thread  {
         }
         return matrix;
 
+    }
+
+    public static PairingKeySerParameter deserializeSecretKey(String serializedSecretKey) throws IOException, ClassNotFoundException {
+        byte[] byteArray = Base64.getDecoder().decode(serializedSecretKey);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
+        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+        PairingKeySerParameter secretKey = (PairingKeySerParameter) objectInputStream.readObject();
+        objectInputStream.close();
+        byteArrayInputStream.close();
+        return secretKey;
     }
 
 
