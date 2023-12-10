@@ -22,6 +22,7 @@ class Server {
     static HashMap<String,String[]> attribute_rhos = new HashMap<>();
     static HashMap<String,String> attribute_accesspolicystring = new HashMap<>();
     static PairingKeySerParameter secretKey;
+    static PairingKeySerParameter publicKey;
     static String linesent;
 
 
@@ -30,13 +31,14 @@ class Server {
     public static void main(String[] args) throws Exception {
 
         App.defineAccessPolicyString("40 and (200 or 430 or 30)");
-        App.setup();
+        publicKey=App.setup();
         secretKey= App.keyGen();
         String text = "Teste";
         text= App.encryptString(text, "40 and (200 or 430 or 30)");
         System.out.println("Encrypted"+text);
         String aux = HandleUserThread.serializeSecretKey(secretKey);
         secretKey=HandleUserThread.deserializeSecretKey(aux);
+        System.out.println("SecretkeyServer"+secretKey);
         System.out.println("decrypted"+App.decryptString(text,secretKey, "40 and (200 or 430 or 30)"));
 
 
@@ -98,8 +100,8 @@ class Server {
             registerAttribute("Alice","Sports");
             registerAttribute("Bob","Sports");
             registerAttribute("Dave","Sports");
-            attribute_id.put("Movies",new Random().nextInt(50));
-            attribute_id.put("Sports",new Random().nextInt(50));
+            //attribute_id.put("Movies",new Random().nextInt(50));
+            //attribute_id.put("Sports",new Random().nextInt(50));
             /*App.defineAccessPolicyString("40 and (200 or 430 or 30)");
             attribute_accesspolicy.put("Movies",App.accessPolicy);
             System.out.println("policy1:" + Arrays.deepToString(App.accessPolicy));
@@ -113,9 +115,10 @@ class Server {
             attribute_accesspolicystring.put("Movies", "40 and (200 or 430 or 30)");
 
 
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(sslSocket.getOutputStream());
 
 
-            HandleUserThread myThread = new HandleUserThread(subjectCN,clientIp, reader, writer);
+            HandleUserThread myThread = new HandleUserThread(subjectCN,clientIp, reader, writer,objectOutputStream);
             myThread.start();
 
         }

@@ -2,6 +2,7 @@ package cn;
 
 import cn.edu.buaa.crypto.algebra.serparams.PairingKeySerParameter;
 
+import javax.crypto.SecretKey;
 import java.io.*;
 import java.util.Base64;
 
@@ -11,12 +12,14 @@ public class HandleUserThread extends Thread {
     String clientIp;
     BufferedReader reader;
     PrintWriter writer;
+    ObjectOutputStream ob;
 
-    public HandleUserThread(String username, String clientIp, BufferedReader reader, PrintWriter writer){
+    public HandleUserThread(String username, String clientIp, BufferedReader reader, PrintWriter writer, ObjectOutputStream obj){
         this.username = username;
         this.reader=reader;
         this.writer=writer;
         this.clientIp = clientIp;
+        ob=obj;
     }
 
     public void run() {
@@ -37,9 +40,12 @@ public class HandleUserThread extends Thread {
                     Server.username_ip.put(username, clientIp.concat(":"+splited[1]));
                     System.out.println(clientIp.concat(":"+splited[1]));
                     System.out.println("Secretkey:" + Server.secretKey);
+                    System.out.println("Secretkey param:" +Server.secretKey.getParameters());
                     System.out.println("Secretkey serializes:" +serializeSecretKey(Server.secretKey));
                     Server.linesent=serializeSecretKey(Server.secretKey);
-                    writer.println(serializeSecretKey(Server.secretKey));
+                    ob.writeObject(Server.secretKey);
+                    ob.writeObject(Server.publicKey);
+                    //writer.println(serializeSecretKey(Server.secretKey));
 
 
                 }

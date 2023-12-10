@@ -370,9 +370,10 @@ public class MainController {
             App.defineAccessPolicyString("40 and (200 or 430 or 30)");
             Peer.messages.get(filename).add(new Message(true, filename, Peer.userName, text));
             System.out.println("Mesnsagem escrita"+text);
-            text= App.encryptString(text, Peer.group_accessstring.get(filename));
+            text= App.encryptStringPublic(text, Peer.group_accessstring.get(filename),Peer.publicKey);
             System.out.println("Encrypted"+text);
-            System.out.println("decrypted"+App.decryptString(text,Peer.secretKey, Peer.group_accessstring.get(filename)));
+            System.out.println("Secretkeydecr"+Peer.secretKey.getParameters());
+            System.out.println("decrypted"+App.decryptStringPublic(text,Peer.secretKey, Peer.group_accessstring.get(filename),Peer.publicKey));
 
             for (PrintWriter writer : writers){
                 writer.println(filename + "," + text);

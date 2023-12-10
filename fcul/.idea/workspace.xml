@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1cb4553a-007f-441c-8477-25e52c1998a6" name="Changes" comment="dencryption of attribute based missing">
+    <list default="true" id="1cb4553a-007f-441c-8477-25e52c1998a6" name="Changes" comment="dencryption of attribute based still wrong">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/HandleUserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/HandleUserThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/Peer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/Peer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cn/MessageAppUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cn/MessageAppUI.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tokens/StoredCredential" beforeDir="false" afterPath="$PROJECT_DIR$/tokens/StoredCredential" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +74,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "FinalBranch",
     "jdk.selected.JAVA_MODULE": "21",
-    "last_opened_file_path": "C:/Users/lcvia/IdeaProjects/FCUL_PSD_MessagingApp/fcul/chatsMessages/Dave",
+    "last_opened_file_path": "C:/Users/lcvia/IdeaProjects/FCUL_PSD_MessagingApp/fcul/src/main/java/cn/edu/buaa/crypto/encryption/abe/kpabe",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -86,6 +87,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\lcvia\IdeaProjects\FCUL_PSD_MessagingApp\fcul\src\main\java\cn\edu\buaa\crypto\encryption\abe\kpabe" />
       <recent name="C:\Users\lcvia\IdeaProjects\FCUL_PSD_MessagingApp\fcul\chatsMessages\Dave" />
       <recent name="C:\Users\lcvia\IdeaProjects\FCUL_PSD_MessagingApp\fcul\chatsMessages\Charlie" />
       <recent name="C:\Users\lcvia\IdeaProjects\FCUL_PSD_MessagingApp\fcul\chatsMessages\Bob" />
@@ -98,7 +100,7 @@
       <recent name="cn" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.LoadFXMLAlice">
+  <component name="RunManager" selected="Application.LoadFXMLCharlie">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="cn.App" />
       <module name="fcul" />
@@ -166,10 +168,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LoadFXMLAlice" />
-        <item itemvalue="Application.Server" />
         <item itemvalue="Application.LoadFXMLCharlie" />
         <item itemvalue="Application.LoadFXMLBob" />
+        <item itemvalue="Application.LoadFXMLAlice" />
+        <item itemvalue="Application.Server" />
         <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
@@ -183,7 +185,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701982533750</updated>
       <workItem from="1701982535147" duration="205000" />
-      <workItem from="1701982747843" duration="61031000" />
+      <workItem from="1701982747843" duration="75115000" />
     </task>
     <task id="LOCAL-00001" summary="group message looks ok">
       <option name="closed" value="true" />
@@ -217,7 +219,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702137529794</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="dencryption of attribute based still wrong">
+      <option name="closed" value="true" />
+      <created>1702143297305</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1702143297305</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,6 +238,7 @@
     <MESSAGE value="more user mains and more message files" />
     <MESSAGE value="everything and anything (javafx crucial changes, group and normal chat working 100%, missing attribute)" />
     <MESSAGE value="dencryption of attribute based missing" />
-    <option name="LAST_COMMIT_MESSAGE" value="dencryption of attribute based missing" />
+    <MESSAGE value="dencryption of attribute based still wrong" />
+    <option name="LAST_COMMIT_MESSAGE" value="dencryption of attribute based still wrong" />
   </component>
 </project>

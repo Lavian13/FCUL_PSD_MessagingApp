@@ -28,7 +28,7 @@ import java.util.Base64;
  */
 public class App {
 
-    static String pairingParameters = "src/main/java/cn/edu/buaa/crypto/encryption/abe/kpabe/a1_2_128.properties";
+    static String pairingParameters = "src/main/java/cn/edu/buaa/crypto/encryption/abe/kpabe/a_80_256.properties";
     static String accessPolicyString; //= "40 and (200 or 430 or 30)";
     static final String[] attributes = new String[]{"40", "200"};
     static int[][] accessPolicy;
@@ -104,7 +104,7 @@ public class App {
         rhos = ParserUtils.GenerateRhos(accessPolicyString);
     }
 
-    public static void setup() throws IOException, ClassNotFoundException {
+    public static PairingKeySerParameter setup() throws IOException, ClassNotFoundException {
 
         byte[] byteArrayPublicKey = SerCipherParameter(publicKey);
         CipherParameters anPublicKey = deserCipherParameters(byteArrayPublicKey);
@@ -117,6 +117,7 @@ public class App {
         CipherParameters anMasterKey = deserCipherParameters(byteArrayMasterKey);
         System.out.println(masterKey.equals(anMasterKey));
         masterKey = (PairingKeySerParameter) anMasterKey;
+        return publicKey;
     }
 
     public static PairingKeySerParameter keyGen() throws IOException, ClassNotFoundException, PolicySyntaxException {
@@ -141,7 +142,6 @@ public class App {
 
     }
     public static String encryptString(String message, String accessString) throws IOException, ClassNotFoundException, PolicySyntaxException {
-
         System.out.println("Mensagem antes de encriptar" + message);
         System.out.println("access antes de encriptar" + Arrays.deepToString(accessPolicy));
         System.out.println("rhos antes de encriptar" + Arrays.toString(rhos));
@@ -150,7 +150,24 @@ public class App {
 
         Element elementTest = pairing.getGT().newElementFromBytes(message.getBytes(StandardCharsets.UTF_8));
         System.out.println("Elementenc: " + elementTest);
-        System.out.println("publickey: " + publicKey);
+        System.out.println("publickey: " + publicKey.getParameters());
+        System.out.println("accessstrin: " + accessString);
+        PairingCipherSerParameter ciphertextTest = CPABEBSW07Engine.getInstance().encryption(publicKey, accessString, elementTest);
+        byte[] byteArrayCiphertextTest = SerCipherParameter(ciphertextTest);
+        String str = Base64.getEncoder().encodeToString(byteArrayCiphertextTest);
+        System.out.println(str);
+        return str;
+    }
+    public static String encryptStringPublic(String message, String accessString, PairingKeySerParameter publicKey) throws IOException, ClassNotFoundException, PolicySyntaxException {
+        System.out.println("Mensagem antes de encriptar" + message);
+        System.out.println("access antes de encriptar" + Arrays.deepToString(accessPolicy));
+        System.out.println("rhos antes de encriptar" + Arrays.toString(rhos));
+        //String messageTest = "Test";
+        //PairingCipherSerParameter ciphertextTest = KPABEGPSW06aEngine.getInstance().encryption(publicKey, attributes, elementTest);
+
+        Element elementTest = pairing.getGT().newElementFromBytes(message.getBytes(StandardCharsets.UTF_8));
+        System.out.println("Elementenc: " + elementTest);
+        System.out.println("publickey: " + publicKey.getParameters());
         System.out.println("accessstrin: " + accessString);
         PairingCipherSerParameter ciphertextTest = CPABEBSW07Engine.getInstance().encryption(publicKey, accessString, elementTest);
         byte[] byteArrayCiphertextTest = SerCipherParameter(ciphertextTest);
@@ -186,8 +203,34 @@ public class App {
         byte[] receivedBytes = Base64.getDecoder().decode(str);
         System.out.println("Message to decrypt bytes: " + Arrays.toString(receivedBytes));
         PairingCipherSerParameter TestCiphertext = (PairingCipherSerParameter) deserCipherParameters(receivedBytes);
-        System.out.println("publickey: " + publicKey);
-        System.out.println("secret: " + secretKey);
+        System.out.println("publickey: " + publicKey.getParameters());
+        //System.out.println("secret: " + secretKey);
+        System.out.println("accessstrin: " + accessString);
+        Element TestMessage = CPABEBSW07Engine.getInstance().decryption(publicKey, secretkey, accessString, TestCiphertext);
+        System.out.println("Elementde: " + TestMessage);
+        String decryptedReceived = new String(TestMessage.toBytes(), StandardCharsets.UTF_8);
+        System.out.println("Decrypted Message: " + decryptedReceived);
+        decryptedReceived=decryptedReceived.replace("\0", "").trim();
+        System.out.println("Decrypted Message: " + decryptedReceived.replace("\0", "").trim());
+        return decryptedReceived;
+    }
+    public static String decryptStringPublic(String str, PairingKeySerParameter secretkey,String accessString, PairingKeySerParameter publicKey) throws InvalidCipherTextException, IOException, ClassNotFoundException, PolicySyntaxException {
+        /*byte[] receivedBytes = Base64.getDecoder().decode(str);
+        PairingCipherSerParameter TestCiphertext = (PairingCipherSerParameter) deserCipherParameters(receivedBytes);
+        Element TestMessage = CPABEBSW07Engine.getInstance().decryption(publicKey, secretKey, policy, rhos, TestCiphertext);
+
+        String decryptedReceived = new String(TestMessage.toBytes(), StandardCharsets.UTF_8);
+        decryptedReceived=decryptedReceived.replace("\0", "").trim();
+        System.out.println(decryptedReceived);
+        return decryptedReceived;*/
+
+        System.out.println("Message to decrypt: " + str);
+
+        byte[] receivedBytes = Base64.getDecoder().decode(str);
+        System.out.println("Message to decrypt bytes: " + Arrays.toString(receivedBytes));
+        PairingCipherSerParameter TestCiphertext = (PairingCipherSerParameter) deserCipherParameters(receivedBytes);
+        System.out.println("publickey: " + publicKey.getParameters());
+        //System.out.println("secret: " + secretKey);
         System.out.println("accessstrin: " + accessString);
         Element TestMessage = CPABEBSW07Engine.getInstance().decryption(publicKey, secretkey, accessString, TestCiphertext);
         System.out.println("Elementde: " + TestMessage);

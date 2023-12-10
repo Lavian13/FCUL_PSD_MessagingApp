@@ -25,6 +25,7 @@ public class Peer extends Thread  {
     //public static String messageToServer;
     private static BufferedReader serverReader;
     private static PrintWriter serverWriter;
+    private static ObjectInputStream serverInput;
     private static SSLSocket sslSocket = null;
     public static HashMap<String, SSLSocket> sslSocketUsers = new HashMap<>();//connections of evryone i have a chat with
     public static HashMap<String, List<SSLSocket>> sslSocketAttribute = new HashMap<>();
@@ -37,6 +38,7 @@ public class Peer extends Thread  {
     public static HashMap<int[][], String[]> listOfAccessPolicies = new HashMap<>();
     public static HashMap<String, String> group_accessstring = new HashMap<>();
     public static PairingKeySerParameter secretKey;
+    public static PairingKeySerParameter publicKey;
 
 
     public Peer(String userName){
@@ -82,11 +84,15 @@ public class Peer extends Thread  {
             ConnectToServer("localhost", 9090, usernameReceiver);
             System.out.println("port:" + (2344+userName.length()));
             serverWriter.println("port:" + (2344+userName.length()));
-            String line= serverReader.readLine();
-            System.out.println("line read:" + line);
-            secretKey = deserializeSecretKey(line);
+            //String line= serverReader.readLine();
+            Object ob = serverInput.readObject();
+            secretKey= (PairingKeySerParameter) ob;
+            publicKey = (PairingKeySerParameter)serverInput.readObject();
+            System.out.println(secretKey.getParameters());
+            //System.out.println("line read:" + line);
+            //secretKey = deserializeSecretKey();
             System.out.println("Secretkey:" + secretKey);
-            System.out.println("line read:" + line);
+            System.out.println("Secretkey param:" +secretKey.getParameters());
 
 
             System.out.println("Waiting for client connection...");
@@ -263,6 +269,7 @@ public class Peer extends Thread  {
 
                 serverReader = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
                 serverWriter = new PrintWriter(sslSocket.getOutputStream(), true);
+                serverInput = new ObjectInputStream(sslSocket.getInputStream());
 
 
             } catch (IOException e) {
@@ -341,7 +348,7 @@ public class Peer extends Thread  {
                                     //for (int[][] key :listOfAccessPolicies.keySet()){
                                         //System.out.println(Arrays.deepToString(key) + ":" + Arrays.toString(listOfAccessPolicies.get(key)));
 
-                                        decryptedMessage = App.decryptString(encryptedMessage,secretKey, group_accessstring.get(sections[0]));
+                                        decryptedMessage = App.decryptStringPublic(encryptedMessage,secretKey, group_accessstring.get(sections[0]), publicKey);
                                         //decryptedMessage = App.decryptString(encryptedMessage,App.keyGen(), key, listOfAccessPolicies.get(key));
                                         //if(decryptedMessage!= null) break;
                                     //}
