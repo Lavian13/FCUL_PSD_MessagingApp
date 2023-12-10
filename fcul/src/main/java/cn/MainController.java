@@ -119,7 +119,8 @@ public class MainController {
                         }
                         List<String> usernames=new ArrayList<>();
                         if (Peer.groupUsers.containsKey(chatName)){
-                            usernames.addAll(Peer.groupUsers.get(chatName));
+                            //usernames.addAll(Peer.groupUsers.get(chatName));
+                            usernames.addAll(Peer.usersReaders.keySet());
                         }else{
                             usernames.add(filename);
                         }
@@ -370,13 +371,13 @@ public class MainController {
             App.defineAccessPolicyString("40 and (200 or 430 or 30)");
             Peer.messages.get(filename).add(new Message(true, filename, Peer.userName, text));
             System.out.println("Mesnsagem escrita"+text);
-            text= App.encryptStringPublic(text, Peer.group_accessstring.get(filename),Peer.publicKey);
-            System.out.println("Encrypted"+text);
+            String enctext= App.encryptStringPublic(text, Peer.group_accessstring.get(filename),Peer.attribute_publickey.get(chatName));
+            System.out.println("Encrypted"+enctext);
             System.out.println("Secretkeydecr"+Peer.secretKey.getParameters());
-            System.out.println("decrypted"+App.decryptStringPublic(text,Peer.secretKey, Peer.group_accessstring.get(filename),Peer.publicKey));
+            System.out.println("decrypted"+App.decryptStringPublic(enctext,Peer.secretKey, Peer.group_accessstring.get(filename),Peer.attribute_publickey.get(chatName)));
 
             for (PrintWriter writer : writers){
-                writer.println(filename + "," + text);
+                writer.println(filename + "," + enctext);
             }
         }
 

@@ -77,7 +77,7 @@ public class App {
 
 
         //KeyGen and serialization
-        keyGen();
+        //keyGen();
 
         String encrypted = encryptString("teste",accessPolicyString);
         //encryptString("ola", accessPolicyString);
@@ -120,7 +120,7 @@ public class App {
         return publicKey;
     }
 
-    public static PairingKeySerParameter keyGen() throws IOException, ClassNotFoundException, PolicySyntaxException {
+    public static PairingKeySerParameter keyGen(String[] attributes) throws IOException, ClassNotFoundException, PolicySyntaxException {
         //secretKey = KPABEGPSW06aEngine.getInstance().keyGen(publicKey, masterKey, accessPolicy, rhos);
         secretKey = CPABEBSW07Engine.getInstance().keyGen(publicKey,masterKey,attributes);
         byte[] byteArraySecretKey = SerCipherParameter(secretKey);

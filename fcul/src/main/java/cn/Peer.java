@@ -38,7 +38,8 @@ public class Peer extends Thread  {
     public static HashMap<int[][], String[]> listOfAccessPolicies = new HashMap<>();
     public static HashMap<String, String> group_accessstring = new HashMap<>();
     public static PairingKeySerParameter secretKey;
-    public static PairingKeySerParameter publicKey;
+    //public static PairingKeySerParameter publicKey;
+    public static HashMap<String, PairingKeySerParameter> attribute_publickey = new HashMap<>();
 
 
     public Peer(String userName){
@@ -87,7 +88,7 @@ public class Peer extends Thread  {
             //String line= serverReader.readLine();
             Object ob = serverInput.readObject();
             secretKey= (PairingKeySerParameter) ob;
-            publicKey = (PairingKeySerParameter)serverInput.readObject();
+            attribute_publickey = (HashMap<String, PairingKeySerParameter>) serverInput.readObject();
             System.out.println(secretKey.getParameters());
             //System.out.println("line read:" + line);
             //secretKey = deserializeSecretKey();
@@ -348,7 +349,7 @@ public class Peer extends Thread  {
                                     //for (int[][] key :listOfAccessPolicies.keySet()){
                                         //System.out.println(Arrays.deepToString(key) + ":" + Arrays.toString(listOfAccessPolicies.get(key)));
 
-                                        decryptedMessage = App.decryptStringPublic(encryptedMessage,secretKey, group_accessstring.get(sections[0]), publicKey);
+                                        decryptedMessage = App.decryptStringPublic(encryptedMessage,secretKey, group_accessstring.get(sections[0]), attribute_publickey.get(sections[0].split("_")[1]));
                                         //decryptedMessage = App.decryptString(encryptedMessage,App.keyGen(), key, listOfAccessPolicies.get(key));
                                         //if(decryptedMessage!= null) break;
                                     //}

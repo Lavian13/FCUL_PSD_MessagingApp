@@ -1,5 +1,6 @@
 package cn;
 
+import cn.edu.buaa.crypto.access.parser.PolicySyntaxException;
 import cn.edu.buaa.crypto.algebra.serparams.PairingKeySerParameter;
 
 import java.io.*;
@@ -21,6 +22,7 @@ class Server {
     static HashMap<String,int[][]> attribute_accesspolicy = new HashMap<>();
     static HashMap<String,String[]> attribute_rhos = new HashMap<>();
     static HashMap<String,String> attribute_accesspolicystring = new HashMap<>();
+    static HashMap<String, PairingKeySerParameter> attribute_publickey = new HashMap<>();
     static PairingKeySerParameter secretKey;
     static PairingKeySerParameter publicKey;
     static String linesent;
@@ -29,17 +31,43 @@ class Server {
 
 
     public static void main(String[] args) throws Exception {
+        registerAttribute("Alice","Movies");
+        registerAttribute("Bob","Movies");
+        registerAttribute("Charlie","Movies");
+        registerAttribute("Alice","Sports");
+        registerAttribute("Bob","Sports");
+        registerAttribute("Dave","Sports");
+        String str= "Movies and (";
+        String str2 = "Sports and (";
+        for (String username : username_attributes.keySet()){
+            if(username_attributes.get(username).contains("Movies")){
+                str=str.concat(username + " or ");
+            }
+            if(username_attributes.get(username).contains("Sports")){
+                str2=str2.concat(username + " or ");
+            }
+        }
+        str = str.substring(0,str.length()-4) + ")";
+        str2=str2.substring(0,str.length()-4) + ")";
+        System.out.println(str);
+        attribute_accesspolicystring.put("Movies", str);
+        attribute_accesspolicystring.put("Sports", str2);
 
-        App.defineAccessPolicyString("40 and (200 or 430 or 30)");
-        publicKey=App.setup();
-        secretKey= App.keyGen();
+        for (String attribute : attribute_accesspolicystring.keySet()){
+            System.out.println(attribute_accesspolicystring.get(attribute));
+            App.defineAccessPolicyString(attribute_accesspolicystring.get(attribute));
+            publicKey=App.setup();
+            attribute_publickey.put(attribute, publicKey);
+        }
+        /*String [] attributes= new String[]{"40", "120"};
+        secretKey= App.keyGen(attributes);
         String text = "Teste";
-        text= App.encryptString(text, "40 and (200 or 430 or 30)");
+        text= App.encryptString(text, str);
         System.out.println("Encrypted"+text);
         String aux = HandleUserThread.serializeSecretKey(secretKey);
         secretKey=HandleUserThread.deserializeSecretKey(aux);
-        System.out.println("SecretkeyServer"+secretKey);
-        System.out.println("decrypted"+App.decryptString(text,secretKey, "40 and (200 or 430 or 30)"));
+        System.out.println("SecretkeyServer"+secretKey);*/
+        //System.out.println("decrypted"+App.decryptString(text,secretKey, "40 and (200 or 430 or 30)"));
 
 
         System.setProperty("javax.net.ssl.keyStore", "certs/Server/Serverkeystore.jks");
@@ -94,12 +122,7 @@ class Server {
             writer.println("close");
             System.out.println(reader.readLine());*/
 
-            registerAttribute("Alice","Movies");
-            registerAttribute("Bob","Movies");
-            registerAttribute("Charlie","Movies");
-            registerAttribute("Alice","Sports");
-            registerAttribute("Bob","Sports");
-            registerAttribute("Dave","Sports");
+
             //attribute_id.put("Movies",new Random().nextInt(50));
             //attribute_id.put("Sports",new Random().nextInt(50));
             /*App.defineAccessPolicyString("40 and (200 or 430 or 30)");
@@ -112,7 +135,7 @@ class Server {
             System.out.println("policy2:" + Arrays.deepToString(App.accessPolicy));
             System.out.println("rhos2:" + Arrays.toString(App.rhos));
             attribute_rhos.put("Sports", App.rhos);*/
-            attribute_accesspolicystring.put("Movies", "40 and (200 or 430 or 30)");
+
 
 
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(sslSocket.getOutputStream());
@@ -193,6 +216,21 @@ class Server {
             return attribute_accesspolicystring.get(attribute);
         }
         return null;
+
+    }
+    public static PairingKeySerParameter generateSecretKey(String username){
+        List<String> attributes = username_attributes.get(username);
+        attributes.add(username);
+        System.out.println(Arrays.toString(attributes.toArray(new String[0])));
+        try {
+            return App.keyGen(attributes.toArray(new String[0]));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (PolicySyntaxException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

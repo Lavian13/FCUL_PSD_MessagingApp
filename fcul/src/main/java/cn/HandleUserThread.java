@@ -39,12 +39,13 @@ public class HandleUserThread extends Thread {
                 if(splited[0].equals("port")){
                     Server.username_ip.put(username, clientIp.concat(":"+splited[1]));
                     System.out.println(clientIp.concat(":"+splited[1]));
-                    System.out.println("Secretkey:" + Server.secretKey);
+                    /*System.out.println("Secretkey:" + Server.secretKey);
                     System.out.println("Secretkey param:" +Server.secretKey.getParameters());
-                    System.out.println("Secretkey serializes:" +serializeSecretKey(Server.secretKey));
-                    Server.linesent=serializeSecretKey(Server.secretKey);
-                    ob.writeObject(Server.secretKey);
-                    ob.writeObject(Server.publicKey);
+                    System.out.println("Secretkey serializes:" +serializeSecretKey(Server.secretKey));*/
+                    //Server.linesent=serializeSecretKey(Server.secretKey);
+                    PairingKeySerParameter secretKey = Server.generateSecretKey(username);
+                    ob.writeObject(secretKey);
+                    ob.writeObject(Server.attribute_publickey);
                     //writer.println(serializeSecretKey(Server.secretKey));
 
 
