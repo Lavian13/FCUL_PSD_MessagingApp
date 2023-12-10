@@ -23,7 +23,7 @@ public class Peer extends Thread  {
     public static Set<String> ipsReceived = new HashSet<>();
     public static HashMap<String, List<String>> groupUsers = new HashMap<>();
     private static BufferedReader serverReader;
-    private static PrintWriter serverWriter;
+    public static PrintWriter serverWriter;
     private static ObjectInputStream serverInput;
     private static SSLSocket sslSocket = null;
     public static HashMap<String, SSLSocket> sslSocketUsers = new HashMap<>();
@@ -84,6 +84,8 @@ public class Peer extends Thread  {
                 }
 
             }
+            serverWriter.println("close");
+            sslSocket.close();
             for (String str : ipsReceived){
                 if (str.split(":").length == 2) {
                     String subjectCN="";
@@ -104,6 +106,8 @@ public class Peer extends Thread  {
 
                         System.out.println("Connected to "+subjectCN+": " + sslSocket);
 
+                    } catch (ConnectException e){
+                        System.out.println("User is offline");
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (NoSuchAlgorithmException e) {
@@ -283,18 +287,17 @@ public class Peer extends Thread  {
                             }
                         }
 
-                    }/*else{
-                        System.out.println(receivedMessage);
+                    }else{
+                        System.out.println("close");
                         for (Map.Entry<String, SSLSocket> entry : sslSocketUsers.entrySet()) {
                             if (entry.getValue().equals(sslSocket)) {
                                 sslSocketUsers.remove(entry.getKey());
                                 break; // Exit loop after the first occurrence is removed
                             }
                         }
-                        System.out.println("got here");
                         sslSocket.close();
                         break;
-                    }*/
+                    }
 
                 }
             } catch (IOException e) {

@@ -8,6 +8,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import javax.net.ssl.SSLSocket;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.security.GeneralSecurityException;
 import java.util.*;
 
 
@@ -44,6 +49,8 @@ public class LoadFXMLBob extends Application{
 
     private void closeWindowEvent(WindowEvent windowEvent) {
         ObjectMapper objectMapper = new ObjectMapper();
+        BigInteger recoveredSecret = DownloadShares.getSecret();
+
         for (String chatName : Peer.messages.keySet()){
             String fileName= "chatsMessages/" +username +"/"+ chatName + ".txt";
             List<String> messages = new ArrayList<>();
@@ -51,10 +58,35 @@ public class LoadFXMLBob extends Application{
                 messages.add(message.toString());
             }
             try {
-                DownloadShares.encryptMessage(fileName,messages);
+                DownloadShares.encryptMessage(fileName,messages, recoveredSecret);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
+
+        try {
+            UploadShares.uploadEncryptedMessages(username);
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        PrintWriter writer;
+        for (String s : Peer.sslSocketUsers.keySet()){
+            SSLSocket socket = Peer.sslSocketUsers.get(s);
+            try {
+                writer = new PrintWriter(socket.getOutputStream(), true);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            writer.println("close");
+            try {
+                socket.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        System.exit(0);
     }
 }

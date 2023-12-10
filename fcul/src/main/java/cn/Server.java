@@ -43,12 +43,12 @@ class Server {
         }
         str = str.substring(0,str.length()-4) + ")";
         str2=str2.substring(0,str.length()-4) + ")";
-        System.out.println(str);
+        //System.out.println(str);
         attribute_accesspolicystring.put("Movies", str);
         attribute_accesspolicystring.put("Sports", str2);
 
         for (String attribute : attribute_accesspolicystring.keySet()){
-            System.out.println(attribute_accesspolicystring.get(attribute));
+            //System.out.println(attribute_accesspolicystring.get(attribute));
             App.defineAccessPolicyString(attribute_accesspolicystring.get(attribute));
             publicKey=App.setup();
             attribute_publickey.put(attribute, publicKey);
@@ -92,7 +92,7 @@ class Server {
 
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(sslSocket.getOutputStream());
 
-            HandleUserThread myThread = new HandleUserThread(subjectCN,clientIp, reader, writer,objectOutputStream);
+            HandleUserThread myThread = new HandleUserThread(subjectCN,clientIp, reader, writer,objectOutputStream, sslSocket);
             myThread.start();
         }
     }

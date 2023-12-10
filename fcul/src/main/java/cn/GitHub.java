@@ -35,7 +35,7 @@ public class GitHub {
         }
 
         if (content != null) {
-            System.out.println("Share exists on GitHub");
+            //System.out.println("Share exists on GitHub");
             // If the file exists, download it
             InputStream inputStream = content.read();
             java.io.File fileOnDisk = new java.io.File("shares/share_github.txt");
@@ -70,9 +70,34 @@ public class GitHub {
                     .commit();
             System.out.println("Uploaded Share to GitHub");
         } else {
+            //System.out.println("Share exists in GitHub");
+        }
+    }
+
+    public void UploadFile(String file) throws IOException {
+        // Check if the file exists
+        GHContent content = null;
+        try {
+            content = repository.getFileContent(file);
+        } catch (IOException e) {
+            // If the file doesn't exist, an exception will be thrown
+            // You can handle this exception as necessary
+        }
+        // If the file doesn't exist, upload it
+        if(content == null) {
+            Path path = Paths.get(file);
+            byte[] fileContent = Files.readAllBytes(path);
+            repository.createContent()
+                    .path(file)
+                    .message("Share_GitHub")
+                    .content(fileContent)
+                    .commit();
+            System.out.println("Uploaded Share to GitHub");
+        } else {
             System.out.println("Share exists in GitHub");
         }
     }
+
 
 }
 

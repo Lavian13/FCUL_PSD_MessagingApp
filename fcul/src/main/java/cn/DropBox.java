@@ -30,7 +30,7 @@ public class DropBox {
 
             // If the file exists, metadata will be returned
             if (metadata instanceof FileMetadata) {
-                System.out.println("Share exists on Dropbox.");
+                //System.out.println("Share exists on Dropbox.");
 
                 // Download the file
                 try (OutputStream outputStream = new FileOutputStream("shares/share_dropbox.txt")) {
@@ -76,6 +76,40 @@ public class DropBox {
                 // Upload the file
                 try (InputStream in = new FileInputStream(share)) {
                     client.files().uploadBuilder("/Share/" + share).uploadAndFinish(in);
+                } catch (Exception ex) {
+                    System.err.println("ERROR: Upload to Dropbox failed!");
+                    throw new RuntimeException(ex);
+                }
+                System.out.println("Uploaded Share to Dropbox!");
+            } else {
+                // Handle other errors
+                e.printStackTrace();
+            }
+        } catch (DbxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void UploadFile(String file) {
+        try {
+            // Get metadata for the file
+            Metadata metadata = client.files().getMetadata("/Share/" + file);
+
+            // If the file exists, metadata will be returned
+            if (metadata instanceof FileMetadata) {
+                System.out.println("Share exists on Dropbox.");
+
+            } else {
+                System.out.println("Share does not exist on Dropbox.");
+            }
+        } catch (GetMetadataErrorException e) {
+            // If the file doesn't exist, Dropbox API returns an error
+            if (e.errorValue.isPath() && e.errorValue.getPathValue().isNotFound()) {
+                System.out.println("Share does not exist on Dropbox.");
+
+                // Upload the file
+                try (InputStream in = new FileInputStream(file)) {
+                    client.files().uploadBuilder("/Share/" + file).uploadAndFinish(in);
                 } catch (Exception ex) {
                     System.err.println("ERROR: Upload to Dropbox failed!");
                     throw new RuntimeException(ex);

@@ -10,11 +10,14 @@ import javafx.stage.WindowEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
+import javax.net.ssl.SSLSocket;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.net.URL;
+import java.security.GeneralSecurityException;
 import java.util.*;
 
 
@@ -52,11 +55,13 @@ public class LoadFXMLCharlie extends Application{
 
     private void closeWindowEvent(WindowEvent windowEvent) {
         ObjectMapper objectMapper = new ObjectMapper();
+        BigInteger recoveredSecret = DownloadShares.getSecret();
+
         for (String chatName : Peer.messages.keySet()){
             //File file = new File("chatsMessages/" + chatName + ".txt");
             String fileName= "chatsMessages/" +username +"/"+ chatName + ".txt";
             List<String> messages = new ArrayList<>();
-            System.out.println("SIZE" + Peer.messages.get(chatName).size());
+            //System.out.println("SIZE" + Peer.messages.get(chatName).size());
             for (Message message : Peer.messages.get(chatName)){
                 messages.add(message.toString());
                 /*try (PrintWriter writer = new PrintWriter(new FileWriter(file,true))) {
@@ -66,10 +71,35 @@ public class LoadFXMLCharlie extends Application{
                 }*/
             }
             try {
-                DownloadShares.encryptMessage(fileName,messages);
+                DownloadShares.encryptMessage(fileName,messages, recoveredSecret);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
+
+        try {
+            UploadShares.uploadEncryptedMessages(username);
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        PrintWriter writer;
+        for (String s : Peer.sslSocketUsers.keySet()){
+            SSLSocket socket = Peer.sslSocketUsers.get(s);
+            try {
+                writer = new PrintWriter(socket.getOutputStream(), true);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            writer.println("close");
+            try {
+                socket.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        System.exit(0);
     }
 }

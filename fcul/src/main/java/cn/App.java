@@ -77,13 +77,13 @@ public class App {
         byte[] byteArrayPublicKey = SerCipherParameter(publicKey);
         CipherParameters anPublicKey = deserCipherParameters(byteArrayPublicKey);
 
-        System.out.println(publicKey.equals(anPublicKey));
+        //System.out.println(publicKey.equals(anPublicKey));
         publicKey = (PairingKeySerParameter) anPublicKey;
 
         masterKey = keyPair.getPrivate();
         byte[] byteArrayMasterKey = SerCipherParameter(masterKey);
         CipherParameters anMasterKey = deserCipherParameters(byteArrayMasterKey);
-        System.out.println(masterKey.equals(anMasterKey));
+        //System.out.println(masterKey.equals(anMasterKey));
         masterKey = (PairingKeySerParameter) anMasterKey;
         return publicKey;
     }
@@ -98,13 +98,13 @@ public class App {
 
 
     public static String encryptStringPublic(String message, String accessString, PairingKeySerParameter publicKey) throws IOException, ClassNotFoundException, PolicySyntaxException {
-        System.out.println("Menssage before encryption" + message);
+        System.out.println("Message before encryption" + message);
 
         Element elementTest = pairing.getGT().newElementFromBytes(message.getBytes(StandardCharsets.UTF_8));
         PairingCipherSerParameter ciphertextTest = CPABEBSW07Engine.getInstance().encryption(publicKey, accessString, elementTest);
         byte[] byteArrayCiphertextTest = SerCipherParameter(ciphertextTest);
         String str = Base64.getEncoder().encodeToString(byteArrayCiphertextTest);
-        System.out.println("Menssage after encryption" + str);
+        System.out.println("Message after encryption" + str);
         return str;
     }
 

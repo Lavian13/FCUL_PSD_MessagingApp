@@ -10,6 +10,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class UploadShares {
 
@@ -23,7 +26,7 @@ public class UploadShares {
 
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         SecureRandom secureRandom = new SecureRandom();
-        secureRandom.setSeed(new byte[] {0x07, 0x08,0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,0x03,0x08,0x0E,0x04,0x09, 0x0D, 0x05, 0x0A, 0x03, 0x08, 0x01, 0x0A, 0x09});
+        //secureRandom.setSeed(new byte[] {0x07, 0x08,0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,0x03,0x08,0x0E,0x04,0x09, 0x0D, 0x05, 0x0A, 0x03, 0x08, 0x01, 0x0A, 0x09});
         keyGen.init(128, secureRandom); // for example
         SecretKey secretKey = keyGen.generateKey();
         byte[] keyBytes = secretKey.getEncoded();
@@ -113,6 +116,31 @@ public class UploadShares {
         }
 
         return shares;
+    }
+
+    public static void uploadEncryptedMessages(String username) throws GeneralSecurityException, IOException {
+        DropBox db = new DropBox();
+        GoogleDrive gd = new GoogleDrive();
+        //GitHub gh = new GitHub();
+
+
+        Set<String> fileList;
+        try (Stream<Path> stream = Files.list(Paths.get("chatsMessages/" + username))) {
+            fileList = stream
+                    .filter(file -> !Files.isDirectory(file))
+                    .map(Path::getFileName)
+                    .map(Path::toString)
+                    .collect(Collectors.toSet());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (String fileName : fileList) {
+            db.UploadFile("chatsMessages/" + username + "/"+fileName);
+            gd.UploadFile("chatsMessages/" + username + "/"+fileName);
+            //gh.UploadFile(fileName);
+        }
     }
 
     private static String bytesToHex(byte[] bytes) {

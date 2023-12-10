@@ -8,6 +8,7 @@ import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 public class DownloadShares {
@@ -16,13 +17,17 @@ public class DownloadShares {
     private static final String CIPHER = "AES/CBC/PKCS5Padding";
     private static final byte[] IV = new byte[16]; // TODO: Use a random IV and store it for decryption
     String[] messages = {"test1", "test2", "test3"};
-    /*public static void main(String[] args) throws Exception {
-        encryptMessage("chatsMessages/Bob.txt", List.of("elllaahhh"));
-    }*/
 
-    public static void encryptMessage(String fileName, List<String> messages) throws Exception {
+    public static BigInteger getSecret(){
         DropBox db = new DropBox();
-        GoogleDrive gd = new GoogleDrive();
+        GoogleDrive gd = null;
+        try {
+            gd = new GoogleDrive();
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         //GitHub gh = new GitHub();
         db.GetShare("share_dropbox.txt");
         gd.GetShare("share_googledrive.txt");
@@ -35,7 +40,6 @@ public class DownloadShares {
         File folder = new File(folderPath);
         int shareHolder = 1;
         // Check if the specified path is a directory
-
         if (folder.isDirectory()) {
             // Get all files in the directory
             File[] files = folder.listFiles();
@@ -46,90 +50,45 @@ public class DownloadShares {
                 // Check if the file is a text file
                 if (file.isFile() && file.getName().toLowerCase().endsWith(".txt")) {
                     // Read and print the content of the text file
-                    System.out.println("Reading share: " + file.getName());
+                    //System.out.println("Reading share: " + file.getName());
                     shares[index++] = readTextFileAsShare(file);
                 }
             }
-
-            /*for(Share s : shares){
-                System.out.printf("\t(%s, %s)\n", s.getShareholder(), s.getShare());
-            }*/
-
             BigInteger recoveredSecret = combine(shares);
-            byte[] recoveredKeyBytes = recoveredSecret.toByteArray();
-
-
-            // Convert the byte array back to a SecretKey
-            SecretKey recoveredAesKey = new SecretKeySpec(recoveredKeyBytes, "AES");
-
-
-            //new FileEncryptor(recoveredAesKey,"StorageMessages/Alice_messages.txt");
-            //boolean seila = whenEncryptingIntoFile_andDecryptingFileAgain_thenOriginalStringIsReturned(recoveredAesKey);
-            //System.out.println(seila);
-            FileEncrypterDecrypter xd = new FileEncrypterDecrypter(recoveredAesKey, "AES/CBC/PKCS5Padding");
-            List<String> oldMessages = xd.decrypt(fileName);
-            System.out.println("Current old messages:"  + oldMessages);
-            //oldMessages.add("uma mensagem4 do ze");
-            //oldMessages.add("uma mensagem5 do ze");
-            oldMessages.addAll(messages);
-            xd.encrypt(oldMessages,fileName);
+            return recoveredSecret;
         } else {
             System.out.println("Specified path is not a directory.");
+            return null;
         }
-
     }
-    public static List<String> decryptMessages(String fileName) throws Exception {
-        DropBox db = new DropBox();
-        GoogleDrive gd = new GoogleDrive();
-        System.out.println(fileName);
-        //GitHub gh = new GitHub();
-        db.GetShare("share_dropbox.txt");
-        gd.GetShare("share_googledrive.txt");
-        //gh.GetShare("share_github.txt");
+    public static void encryptMessage(String fileName, List<String> messages, BigInteger recoveredSecret) throws Exception {
 
-        // Specify the folder path
-        String folderPath = "shares";
-        Share[] shares;
-        // Create a File object for the folder
-        File folder = new File(folderPath);
-        int shareHolder = 1;
-        // Check if the specified path is a directory
-
-        if (folder.isDirectory()) {
-            // Get all files in the directory
-            File[] files = folder.listFiles();
-            shares = new Share[files.length];
-            int index = 0;
-            // Iterate through each file
-            for (File file : files) {
-                // Check if the file is a text file
-                if (file.isFile() && file.getName().toLowerCase().endsWith(".txt")) {
-                    // Read and print the content of the text file
-                    System.out.println("Reading share: " + file.getName());
-                    shares[index++] = readTextFileAsShare(file);
-                }
-            }
-
-            /*for (Share s : shares) {
-                System.out.printf("\t(%s, %s)\n", s.getShareholder(), s.getShare());
-            }*/
-
-            BigInteger recoveredSecret = combine(shares);
             byte[] recoveredKeyBytes = recoveredSecret.toByteArray();
 
 
             // Convert the byte array back to a SecretKey
             SecretKey recoveredAesKey = new SecretKeySpec(recoveredKeyBytes, "AES");
-            System.out.println(bytesToHex(recoveredAesKey.getEncoded()));
 
-            //new FileEncryptor(recoveredAesKey,"StorageMessages/Alice_messages.txt");
-            //boolean seila = whenEncryptingIntoFile_andDecryptingFileAgain_thenOriginalStringIsReturned(recoveredAesKey);
-            //System.out.println(seila);
+
             FileEncrypterDecrypter xd = new FileEncrypterDecrypter(recoveredAesKey, "AES/CBC/PKCS5Padding");
             List<String> oldMessages = xd.decrypt(fileName);
-            System.out.println("Current old messages:" + oldMessages);
-            //oldMessages.add("uma mensagem4 do ze");
-            //oldMessages.add("uma mensagem5 do ze");
+            oldMessages.addAll(messages);
+            xd.encrypt(oldMessages,fileName);
+
+
+    }
+    public static List<String> decryptMessages(String fileName, BigInteger recoveredSecret) throws Exception {
+
+
+            byte[] recoveredKeyBytes = recoveredSecret.toByteArray();
+
+
+            // Convert the byte array back to a SecretKey
+            SecretKey recoveredAesKey = new SecretKeySpec(recoveredKeyBytes, "AES");
+            //System.out.println(bytesToHex(recoveredAesKey.getEncoded()));
+
+            FileEncrypterDecrypter xd = new FileEncrypterDecrypter(recoveredAesKey, "AES/CBC/PKCS5Padding");
+            List<String> oldMessages = xd.decrypt(fileName);
             xd.encrypt(oldMessages, fileName);
             String[] filesToRemove = {"shares/share_dropbox.txt", "shares/share_googledrive.txt", "shares/share_github.txt"};
 
@@ -153,12 +112,6 @@ public class DownloadShares {
                 e.printStackTrace();
             }
             return oldMessages;
-        } else {
-            System.out.println("Specified path is not a directory.");
-            return null;
-        }
-
-
     }
 
     private static String bytesToHex(byte[] bytes) {

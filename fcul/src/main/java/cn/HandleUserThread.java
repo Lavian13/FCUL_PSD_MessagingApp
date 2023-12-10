@@ -2,9 +2,8 @@ package cn;
 
 import cn.edu.buaa.crypto.algebra.serparams.PairingKeySerParameter;
 
-import javax.crypto.SecretKey;
+import javax.net.ssl.SSLSocket;
 import java.io.*;
-import java.util.Base64;
 
 public class HandleUserThread extends Thread {
 
@@ -13,12 +12,14 @@ public class HandleUserThread extends Thread {
     BufferedReader reader;
     PrintWriter writer;
     ObjectOutputStream ob;
+    SSLSocket sslSocket;
 
-    public HandleUserThread(String username, String clientIp, BufferedReader reader, PrintWriter writer, ObjectOutputStream obj){
+    public HandleUserThread(String username, String clientIp, BufferedReader reader, PrintWriter writer, ObjectOutputStream obj, SSLSocket sslSocket){
         this.username = username;
         this.reader=reader;
         this.writer=writer;
         this.clientIp = clientIp;
+        this.sslSocket=sslSocket;
         ob=obj;
     }
 
@@ -27,7 +28,10 @@ public class HandleUserThread extends Thread {
             try {
                 String read = reader.readLine();
                 System.out.println("Message received:"+ read);
-                if(read.equals("close")) break;
+                if(read.equals("close")) {
+                    sslSocket.close();
+                    break;
+                }
                 String[] splited= read.replace(" ","").split(":");
                 if(splited[0].equals("register")){
                     if(splited[1].equals("attribute")) {

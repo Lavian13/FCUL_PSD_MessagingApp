@@ -64,8 +64,6 @@ public class FileEncrypterDecrypter {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     tmp.add(line);
-                    System.out.println("---");
-                    System.out.println(line);
                 }
             }
         } catch (IOException | InvalidKeyException | InvalidAlgorithmParameterException e) {

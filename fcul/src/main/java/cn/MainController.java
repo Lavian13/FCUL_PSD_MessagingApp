@@ -58,7 +58,7 @@ public class MainController {
                     controller.setData(file.getName().split("_")[1].split("\\.")[0]);
                 else controller.setData(file.getName().split("\\.")[0]);
                 controller.setFilename(file.getName().split("\\.")[0]);
-                System.out.println(controller.getFilename());
+                //System.out.println(controller.getFilename());
 
                 contact.setOnMouseClicked(event -> {
                     if(!controller.getData().equals(chatName)) {
@@ -90,7 +90,7 @@ public class MainController {
                             usernames.add(filename);
                         }
                         for (String username : usernames) {
-                            System.out.println(username);
+                            //System.out.println(username);
                         }
                         boolean oneUserOffline=false;
                         for (String user : usernames){
@@ -112,7 +112,6 @@ public class MainController {
                                     throw new RuntimeException(e);
                                 }
                             }
-                            contact.setStyle("-fx-background-color: red;");
                             try {
                                 threadToRead();
                             } catch (IOException e) {
@@ -129,9 +128,9 @@ public class MainController {
 
     private void loadChat(String filename) throws IOException {
         for (File f : Peer.listOfFiles){
-            if (f.getName().equals(filename)){
+            if (f.getName().equals(filename + ".txt")){
                 try {
-                    for (String message: DownloadShares.decryptMessages("chatsMessages/" + Peer.userName +"/"+ f.getName())){
+                    for (String message: DownloadShares.decryptMessages("chatsMessages/" + Peer.userName +"/"+ f.getName(), DownloadShares.getSecret())){
                         String[] messageAttributes = message.split(",");
                         if(messageAttributes[0].equals("false")) receiveMessage(messageAttributes[1]);
                         else loadMessageUI(messageAttributes[1]);
@@ -165,19 +164,17 @@ public class MainController {
             @Override
             protected Void call() throws Exception {
                 String aux = chatName;
-                System.out.println("Threadreading" + chatName);
+                System.out.println("Reading messages from chat" + chatName);
                 Peer.notificationQueue.clear();
                 while (true) {
                     // Wait for a notification
                     Peer.notificationQueue.take();
-                    System.out.println("aftertake");
                     if (chatName==null){
-                        System.out.println("Mensagem recebida de null" + Peer.lastMessageReceived.getFileName());
+                        //System.out.println("Mensagem recebida de" + Peer.lastMessageReceived.getFileName());
                         notiMessage(Peer.lastMessageReceived.getFileName());
                     }
                     else if(aux==null&&chatName!=null){
                         Peer.notificationQueue.put(true);
-                        System.out.println("onbreaknull");
                         break;
                     }
                     else if (aux.equals(chatName)) {
@@ -190,8 +187,8 @@ public class MainController {
                                     throw new RuntimeException(e);
                                 }
                             });
-                            System.out.println("chatname: " + chatName);
-                            System.out.println("Receivedmaincontroller: " + receivedMessage);
+                            //System.out.println("chatname: " + chatName);
+                            //System.out.println("Receivedmaincontroller: " + receivedMessage);
                         }else{
                             System.out.println("Mensagem recebida de" + Peer.lastMessageReceived.getFileName());
                             notiMessage(Peer.lastMessageReceived.getFileName());
@@ -200,13 +197,9 @@ public class MainController {
 
                     } else {
                         Peer.notificationQueue.put(true);
-                        System.out.println("onbreak");
-
                         break;
                     }
                 }
-                System.out.println("afterbreak");
-
                 return null;
             }
         };
@@ -232,7 +225,7 @@ public class MainController {
             }
         }
         else {
-            App.defineAccessPolicyString("40 and (200 or 430 or 30)");
+            //App.defineAccessPolicyString("40 and (200 or 430 or 30)");
             Peer.messages.get(filename).add(new Message(true, filename, Peer.userName, text));
             String enctext= App.encryptStringPublic(text, Peer.group_accessstring.get(filename),Peer.attribute_publickey.get(chatName));
             for (PrintWriter writer : writers){
