@@ -22,17 +22,11 @@ public class LoadFXMLDave extends Application{
         Peer peer = new Peer(username);
         peer.start();
         launch(args);
-        //RetrieveIPThread ip_thread = new RetrieveIPThread("127.0.0.1", 3456);
-        //ip_thread.start();
-
     }
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //FXMLLoader loader = new FXMLLoader();
-        //loader.setLocation(new URL("MessageAppUI.fxml"));
-        //VBox vbox = loader.<VBox>load();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MessageAppUI.fxml"));
         Parent vbox = loader.load();
 
@@ -41,7 +35,6 @@ public class LoadFXMLDave extends Application{
         primaryStage.show();
         primaryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
         primaryStage.setTitle(username);
-
     }
 
     private void closeWindowEvent(WindowEvent windowEvent) {

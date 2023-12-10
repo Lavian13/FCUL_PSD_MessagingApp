@@ -9,6 +9,9 @@ import javafx.stage.WindowEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
+import javax.net.ssl.SSLSocket;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 
@@ -22,17 +25,12 @@ public class LoadFXMLAlice extends Application{
         Peer peer = new Peer(username);
         peer.start();
         launch(args);
-        //RetrieveIPThread ip_thread = new RetrieveIPThread("127.0.0.1", 3456);
-        //ip_thread.start();
 
     }
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //FXMLLoader loader = new FXMLLoader();
-        //loader.setLocation(new URL("MessageAppUI.fxml"));
-        //VBox vbox = loader.<VBox>load();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MessageAppUI.fxml"));
         Parent vbox = loader.load();
 
@@ -64,6 +62,16 @@ public class LoadFXMLAlice extends Application{
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+            /*PrintWriter writer;
+            for (String s : Peer.sslSocketUsers.keySet()){
+                SSLSocket socket = Peer.sslSocketUsers.get(s);
+                try {
+                    writer = new PrintWriter(socket.getOutputStream(), true);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                writer.println("close");
+            }*/
         }
     }
 }

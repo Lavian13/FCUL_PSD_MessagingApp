@@ -4,13 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1cb4553a-007f-441c-8477-25e52c1998a6" name="Changes" comment="dencryption of attribute based working FINALLY">
+    <list default="true" id="1cb4553a-007f-441c-8477-25e52c1998a6" name="Changes" comment="decryption of attribute based working for different keys(public and secret) FINAL FEATURES">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Alice/Bob.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Alice/Bob.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Alice/Group_Sports.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Alice/Group_Sports.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Bob/Alice.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Bob/Alice.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Bob/Charlie.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Bob/Charlie.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Bob/Dave.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Bob/Dave.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Bob/Group_Movies.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Bob/Group_Movies.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Bob/Group_Sports.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Bob/Group_Sports.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Charlie/Alice.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Charlie/Alice.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Charlie/Bob.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Charlie/Bob.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Charlie/Dave.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Charlie/Dave.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatsMessages/Charlie/Group_Movies.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Charlie/Group_Movies.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/DropBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/DropBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/HandleUserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/HandleUserThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/LoadFXMLAlice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/LoadFXMLAlice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cn/LoadFXMLDave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/LoadFXMLDave.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/Peer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/Peer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tokens/StoredCredential" beforeDir="false" afterPath="$PROJECT_DIR$/tokens/StoredCredential" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +113,7 @@
       <recent name="cn" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.LoadFXMLDave">
+  <component name="RunManager" selected="Application.LoadFXMLCharlie">
     <configuration name="LoadFXMLAlice" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="cn.LoadFXMLAlice" />
       <module name="fcul" />
@@ -166,11 +181,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LoadFXMLDave" />
         <item itemvalue="Application.LoadFXMLCharlie" />
         <item itemvalue="Application.LoadFXMLBob" />
         <item itemvalue="Application.LoadFXMLAlice" />
         <item itemvalue="Application.Server" />
+        <item itemvalue="Application.LoadFXMLDave" />
       </list>
     </recent_temporary>
   </component>
@@ -183,7 +198,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701982533750</updated>
       <workItem from="1701982535147" duration="205000" />
-      <workItem from="1701982747843" duration="80972000" />
+      <workItem from="1701982747843" duration="88243000" />
     </task>
     <task id="LOCAL-00001" summary="group message looks ok">
       <option name="closed" value="true" />
@@ -233,7 +248,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702217459689</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="decryption of attribute based working for different keys(public and secret) FINAL FEATURES">
+      <option name="closed" value="true" />
+      <created>1702223433872</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1702223433872</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -246,6 +269,7 @@
     <MESSAGE value="dencryption of attribute based missing" />
     <MESSAGE value="dencryption of attribute based still wrong" />
     <MESSAGE value="dencryption of attribute based working FINALLY" />
-    <option name="LAST_COMMIT_MESSAGE" value="dencryption of attribute based working FINALLY" />
+    <MESSAGE value="decryption of attribute based working for different keys(public and secret) FINAL FEATURES" />
+    <option name="LAST_COMMIT_MESSAGE" value="decryption of attribute based working for different keys(public and secret) FINAL FEATURES" />
   </component>
 </project>

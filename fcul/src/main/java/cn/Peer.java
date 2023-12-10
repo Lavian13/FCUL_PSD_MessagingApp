@@ -22,46 +22,28 @@ public class Peer extends Thread  {
     public static String usernameReceiver;
     public static Set<String> ipsReceived = new HashSet<>();
     public static HashMap<String, List<String>> groupUsers = new HashMap<>();
-    //public static String messageToServer;
     private static BufferedReader serverReader;
     private static PrintWriter serverWriter;
     private static ObjectInputStream serverInput;
     private static SSLSocket sslSocket = null;
-    public static HashMap<String, SSLSocket> sslSocketUsers = new HashMap<>();//connections of evryone i have a chat with
-    public static HashMap<String, List<SSLSocket>> sslSocketAttribute = new HashMap<>();
+    public static HashMap<String, SSLSocket> sslSocketUsers = new HashMap<>();
     public static HashMap<String, BufferedReader> usersReaders = new HashMap<>();
     public static String userName;
     public static final BlockingQueue<Boolean> notificationQueue = new LinkedBlockingQueue<>();
     public static HashMap<String, List<Message>> messages = new HashMap<>();
     public static Message lastMessageReceived;
     public static List<File> listOfFiles = new ArrayList<>();
-    public static HashMap<int[][], String[]> listOfAccessPolicies = new HashMap<>();
     public static HashMap<String, String> group_accessstring = new HashMap<>();
     public static PairingKeySerParameter secretKey;
-    //public static PairingKeySerParameter publicKey;
     public static HashMap<String, PairingKeySerParameter> attribute_publickey = new HashMap<>();
 
 
     public Peer(String userName){
         Peer.userName =userName;
-        /*if(user==1){
-            System.setProperty("javax.net.ssl.keyStore", "src/main/java/cn/Luis_cert/luiskeystore.jks");
-            System.setProperty("javax.net.ssl.trustStore", "src/main/java/cn/Luis_cert/luistruststore.jks");
-            System.setProperty("javax.net.ssl.keyStorePassword", "luispass");
-            System.setProperty("javax.net.ssl.trustStorePassword", "luispass");
-        }else if(user==2){
-            System.setProperty("javax.net.ssl.keyStore", "src/main/java/cn/David_cert/davidkeystore.jks");
-            System.setProperty("javax.net.ssl.trustStore", "src/main/java/cn/David_cert/davidtruststore.jks");
-            System.setProperty("javax.net.ssl.keyStorePassword", "davidpass");
-            System.setProperty("javax.net.ssl.trustStorePassword", "davidpass");
-        }*/
         System.setProperty("javax.net.ssl.keyStore", "certs/"+userName+"/"+userName+"keystore.jks");
         System.setProperty("javax.net.ssl.trustStore", "certs/"+userName+"/"+userName+"truststore.jks");
         System.setProperty("javax.net.ssl.keyStorePassword", "123456");
         System.setProperty("javax.net.ssl.trustStorePassword", "123456");
-
-
-
     }
 
     @Override
@@ -83,22 +65,10 @@ public class Peer extends Thread  {
             sslServerSocket.setNeedClientAuth(true);
 
             ConnectToServer("localhost", 9090, usernameReceiver);
-            System.out.println("port:" + (2344+userName.length()));
             serverWriter.println("port:" + (2344+userName.length()));
-            //String line= serverReader.readLine();
             Object ob = serverInput.readObject();
             secretKey= (PairingKeySerParameter) ob;
             attribute_publickey = (HashMap<String, PairingKeySerParameter>) serverInput.readObject();
-            System.out.println(secretKey.getParameters());
-            //System.out.println("line read:" + line);
-            //secretKey = deserializeSecretKey();
-            System.out.println("Secretkey:" + secretKey);
-            System.out.println("Secretkey param:" +secretKey.getParameters());
-
-
-            System.out.println("Waiting for client connection...");
-        //for all users i have a group chat with ask the ip to the server
-
 
             for(File file : Peer.listOfFiles) {
                 String fileName = file.getName().split("\\.")[0];
@@ -107,18 +77,14 @@ public class Peer extends Thread  {
                     name = fileName.split("_")[1];
                 }else name = fileName;
                 messages.put(fileName,new ArrayList<>());
-                System.out.println("messages:"+fileName);
-
                 if (fileName.split("_")[0].equals("Group")) {
                     sendMessageToServerAttribute(name);
                 } else{
                     sendMessageToServerUsername(name);
                 }
-                //if ipReceiver==null continue for
-                //endoffor
+
             }
             for (String str : ipsReceived){
-                System.out.println(str + " meh " + ipsReceived.size());
                 if (str.split(":").length == 2) {
                     String subjectCN="";
                     try {
@@ -126,14 +92,13 @@ public class Peer extends Thread  {
                         SSLContext sslContext_ = SSLContext.getDefault();
                         SSLSocketFactory sslSocketFactory = sslContext_.getSocketFactory();
                         String[] ip_port = str.split(":");
-                        System.out.println("hey" + ip_port[0] + " " + Integer.parseInt(ip_port[1]));
                         sslSocket = (SSLSocket) sslSocketFactory.createSocket(ip_port[0], Integer.parseInt(ip_port[1]));
                         sslSocket.setNeedClientAuth(true);
                         X509Certificate[] serverCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
                         if (serverCertificates.length > 0) {
                             X509Certificate clientCertificate = serverCertificates[0]; // Assuming the client provides a certificate
                             subjectCN = extractSubjectCommonName(clientCertificate);
-                            System.out.println("The first name of the person's certificate -> " + subjectCN);
+                            //System.out.println("The first name of the person's certificate -> " + subjectCN);
                             sslSocketUsers.put(subjectCN, sslSocket);
                         }
 
@@ -144,8 +109,6 @@ public class Peer extends Thread  {
                     } catch (NoSuchAlgorithmException e) {
                         throw new RuntimeException(e);
                     }
-                    //messages.put(subjectCN, new ArrayList<>());
-
                 }
 
                 if (sslSocket != null) {
@@ -168,12 +131,8 @@ public class Peer extends Thread  {
 
     private void sendMessageToServerAttribute(String attribute) throws IOException {
         String messageToServer="request:attribute:" + attribute;
-        System.out.println(messageToServer);
-        //messages.put(attribute,new ArrayList<>());
-        //usernameReceiver=username;
         serverWriter.println(messageToServer);
         String read = serverReader.readLine();
-        System.out.println("fromserverattribute:"+read);
         groupUsers.put(attribute, new ArrayList<>());
         if(read.isEmpty())return;
         for (String user : read.split(",")){
@@ -185,35 +144,18 @@ public class Peer extends Thread  {
 
         String messageToServer2="request:policy:" + attribute;
         serverWriter.println(messageToServer2);
-        /*String read2 = serverReader.readLine();
-        String read3 = serverReader.readLine();
-        listOfAccessPolicies.put(stringToMatrix(read2), stringToArray(read3));
-        System.out.println("policy:"+read2);
-        System.out.println("rhos:"+read3);*/
         String read2 = serverReader.readLine();
         group_accessstring.put("Group_"+attribute,read2);
-        System.out.println("policystring:"+read2);
     }
-
-    /*public static void sendMessageToServer(String message) throws IOException {
-        serverWriter.println(message);
-        serverReader.readLine();
-        messageToServer="request:username:" + usernameReceiver;
-
-    }*/
 
     public static void sendMessageToServerUsername(String username) throws IOException {
         String messageToServer="request:username:" + username;
-        System.out.println(messageToServer);
         usernameReceiver=username;
         serverWriter.println(messageToServer);
         String read = serverReader.readLine();
         if(read.isEmpty())return;
         ipsReceived.add(read);
-        System.out.println(usernameReceiver + " " + read);
-
     }
-
 
     private static String extractSubjectCommonName(X509Certificate certificate) {
         String subjectDN = certificate.getSubjectX500Principal().getName();
@@ -237,7 +179,6 @@ public class Peer extends Thread  {
         public void run() {
             try {
                 while (true) {
-                    System.out.println("got here");
                     SSLSocket sslSocket = (SSLSocket) socket.accept();
                     System.out.println("New connection accepted: " + sslSocket);
 
@@ -258,12 +199,11 @@ public class Peer extends Thread  {
                 SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
                 sslSocket = (SSLSocket) sslSocketFactory.createSocket(serverAddress, serverPort);
                 sslSocket.setNeedClientAuth(true);
-                System.out.println("Connected to server!");
                 X509Certificate[] serverCertificates = (X509Certificate[]) sslSocket.getSession().getPeerCertificates();
                 if (serverCertificates.length > 0) {
                     X509Certificate clientCertificate = serverCertificates[0]; // Assuming the client provides a certificate
                     String subjectCN = extractSubjectCommonName(clientCertificate);
-                    System.out.println("The first name of the person's certificate -> " + subjectCN);
+                    //System.out.println("The first name of the person's certificate -> " + subjectCN);
                 }
 
                 System.out.println("Connected to server: " + sslSocket);
@@ -289,7 +229,6 @@ public class Peer extends Thread  {
         }
 
         public void run() {
-            System.out.println("Client connected!");
             X509Certificate[] clientCertificates = new X509Certificate[0];
             String subjectCN=null;
             try {
@@ -300,8 +239,8 @@ public class Peer extends Thread  {
             if (clientCertificates.length > 0) {
                 X509Certificate clientCertificate = clientCertificates[0]; // Assuming the client provides a certificate
                 subjectCN = extractSubjectCommonName(clientCertificate);
-                System.out.println("The first name of the person's certificate -> " + subjectCN);
-                sslSocketUsers.put(subjectCN,sslSocket); //N É SÓ ISTO
+                //System.out.println("The first name of the person's certificate -> " + subjectCN);
+                sslSocketUsers.put(subjectCN,sslSocket);
             }
 
             BufferedReader reader = null;
@@ -312,70 +251,50 @@ public class Peer extends Thread  {
                 throw new RuntimeException(e);
             }
             String serverCipherSuite = sslSocket.getSession().getCipherSuite();
-            System.out.println("Server Cipher Suite: " + serverCipherSuite);
+            //System.out.println("Server Cipher Suite: " + serverCipherSuite);
             String serverTLSVersion = sslSocket.getSession().getProtocol();
-            System.out.println("Server TLS Version: " + serverTLSVersion);
-            // Create a PrintWriter to send a message to the client
+            //System.out.println("Server TLS Version: " + serverTLSVersion);
             try {
                 while (true) {
                     String receivedMessage = reader.readLine();
 
                     if (!receivedMessage.equals("close")){
                         if(subjectCN!=null){
-                            //System.out.println(subjectCN + " username" + MainController.otherUsername);
-                            /*if (username_Messages.containsKey(subjectCN))
-                                username_Messages.get(subjectCN).add(receivedMessage);
-                            else {
-                                username_Messages.put(subjectCN, new ArrayList<>());
-                                username_Messages.get(subjectCN).add(receivedMessage);
-                            }*/
                             if (receivedMessage.contains(",")){
                                 String[] sections = receivedMessage.split(",");
                                 if(!sections[0].contains("Group")){
-                                    System.out.println(receivedMessage);
-                                    System.out.println(messages.keySet().toString());
-                                    System.out.println(messages.get(receivedMessage.split(",")[0]));
                                     Message m = new Message(false, receivedMessage.split(",")[0],subjectCN, receivedMessage.split(",")[1]);
-                                    messages.get(receivedMessage.split(",")[0]).add(m); //get wont be subjectCN
+                                    messages.get(receivedMessage.split(",")[0]).add(m);
                                     lastMessageReceived=m;
                                     notificationQueue.offer(true);
                                     System.out.println("Received: " + receivedMessage);
                                 }else{
                                     String encryptedMessage = sections[1];
-                                    String decryptedMessage="teste";
-                                    System.out.println(encryptedMessage);
-                                    System.out.println("secretkey"+secretKey);
-                                    System.out.println("accessstring"+group_accessstring.get(sections[0]));
-                                    //for (int[][] key :listOfAccessPolicies.keySet()){
-                                        //System.out.println(Arrays.deepToString(key) + ":" + Arrays.toString(listOfAccessPolicies.get(key)));
+                                    String decryptedMessage = App.decryptStringPublic(encryptedMessage,secretKey, group_accessstring.get(sections[0]), attribute_publickey.get(sections[0].split("_")[1]));
 
-                                        decryptedMessage = App.decryptStringPublic(encryptedMessage,secretKey, group_accessstring.get(sections[0]), attribute_publickey.get(sections[0].split("_")[1]));
-                                        //decryptedMessage = App.decryptString(encryptedMessage,App.keyGen(), key, listOfAccessPolicies.get(key));
-                                        //if(decryptedMessage!= null) break;
-                                    //}
-                                    //String decryptedMessage = App.decryptString(encryptedMessage,App.keyGen());
                                     Message m = new Message(false, receivedMessage.split(",")[0],subjectCN, decryptedMessage);
-                                    messages.get(receivedMessage.split(",")[0]).add(m); //get wont be subjectCN
+                                    messages.get(receivedMessage.split(",")[0]).add(m);
                                     lastMessageReceived=m;
                                     notificationQueue.offer(true);
                                     System.out.println("ReceivedGroup: " + decryptedMessage);
 
                                 }
 
-                            }/*else{
-                                Message m =new Message(false, receivedMessage.split(",")[0],subjectCN, receivedMessage.split(",")[1]);
-                                messages.get(subjectCN).add(m); //get wont be subjectCN
-                                lastMessageReceived=m;
-                                notificationQueue.offer(true);
-                                System.out.println("Received: " + receivedMessage);
-                            }*/
-
+                            }
                         }
 
-                    }else{
-                        sslSocket.close();//maybe check on sslsocketusers
-                        break; // Connection closed
-                    }
+                    }/*else{
+                        System.out.println(receivedMessage);
+                        for (Map.Entry<String, SSLSocket> entry : sslSocketUsers.entrySet()) {
+                            if (entry.getValue().equals(sslSocket)) {
+                                sslSocketUsers.remove(entry.getKey());
+                                break; // Exit loop after the first occurrence is removed
+                            }
+                        }
+                        System.out.println("got here");
+                        sslSocket.close();
+                        break;
+                    }*/
 
                 }
             } catch (IOException e) {
@@ -390,37 +309,6 @@ public class Peer extends Thread  {
 
 
         }
-    }
-
-    private String[] stringToArray(String m){
-        String str2 = m.trim();
-        String[] arraystr = str2.split(",");
-        return arraystr;
-    }
-
-    private int[][] stringToMatrix(String m){
-        String[] rows = m.split(";");
-        int[][] matrix = new int[rows.length][];
-
-        for (int i = 0; i < rows.length; i++) {
-            String[] elements = rows[i].split(",");
-            matrix[i] = new int[elements.length];
-            for (int j = 0; j < elements.length; j++) {
-                matrix[i][j] = Integer.parseInt(elements[j]);
-            }
-        }
-        return matrix;
-
-    }
-
-    public static PairingKeySerParameter deserializeSecretKey(String serializedSecretKey) throws IOException, ClassNotFoundException {
-        byte[] byteArray = Base64.getDecoder().decode(serializedSecretKey);
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
-        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-        PairingKeySerParameter secretKey = (PairingKeySerParameter) objectInputStream.readObject();
-        objectInputStream.close();
-        byteArrayInputStream.close();
-        return secretKey;
     }
 
 
