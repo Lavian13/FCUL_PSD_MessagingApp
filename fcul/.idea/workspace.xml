@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1cb4553a-007f-441c-8477-25e52c1998a6" name="Changes" comment="cleaned code">
+    <list default="true" id="1cb4553a-007f-441c-8477-25e52c1998a6" name="Changes" comment="Last version probably">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bob.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/chatsMessages/Alice/Bob.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Alice/Bob.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chatsMessages/Alice/Charlie.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Alice/Charlie.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chatsMessages/Alice/Dave.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Alice/Dave.txt" afterDir="false" />
@@ -24,26 +25,10 @@
       <change beforePath="$PROJECT_DIR$/chatsMessages/Dave/Bob.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Dave/Bob.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chatsMessages/Dave/Charlie.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Dave/Charlie.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chatsMessages/Dave/Group_Sports.txt" beforeDir="false" afterPath="$PROJECT_DIR$/chatsMessages/Dave/Group_Sports.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shares/share_googledrive.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Client.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/DownloadShares.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/DownloadShares.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/DropBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/DropBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/FileEncrypterDecrypter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/FileEncrypterDecrypter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/GitHub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/GitHub.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/GoogleDrive.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/GoogleDrive.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/HandleUserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/HandleUserThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/HelloApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/HelloController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/LoadFXMLAlice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/LoadFXMLAlice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/LoadFXMLBob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/LoadFXMLBob.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/LoadFXMLCharlie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/LoadFXMLCharlie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/LoadFXMLDave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/LoadFXMLDave.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/cn/Peer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/Peer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Peer2.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/cn/UploadShares.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/cn/UploadShares.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tokens/StoredCredential" beforeDir="false" afterPath="$PROJECT_DIR$/tokens/StoredCredential" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -132,7 +117,7 @@
       <recent name="cn" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.LoadFXMLBob">
+  <component name="RunManager" selected="Application.LoadFXMLDave">
     <configuration name="LoadFXMLAlice" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="cn.LoadFXMLAlice" />
       <module name="fcul" />
@@ -200,10 +185,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LoadFXMLBob" />
-        <item itemvalue="Application.LoadFXMLAlice" />
         <item itemvalue="Application.LoadFXMLDave" />
         <item itemvalue="Application.LoadFXMLCharlie" />
+        <item itemvalue="Application.LoadFXMLBob" />
+        <item itemvalue="Application.LoadFXMLAlice" />
         <item itemvalue="Application.Server" />
       </list>
     </recent_temporary>
@@ -217,7 +202,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701982533750</updated>
       <workItem from="1701982535147" duration="205000" />
-      <workItem from="1701982747843" duration="96498000" />
+      <workItem from="1701982747843" duration="100299000" />
     </task>
     <task id="LOCAL-00001" summary="group message looks ok">
       <option name="closed" value="true" />
@@ -283,7 +268,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702237379197</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Last version probably">
+      <option name="closed" value="true" />
+      <created>1702246138321</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1702246138321</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,6 +291,7 @@
     <MESSAGE value="dencryption of attribute based working FINALLY" />
     <MESSAGE value="decryption of attribute based working for different keys(public and secret) FINAL FEATURES" />
     <MESSAGE value="cleaned code" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleaned code" />
+    <MESSAGE value="Last version probably" />
+    <option name="LAST_COMMIT_MESSAGE" value="Last version probably" />
   </component>
 </project>

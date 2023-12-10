@@ -46,55 +46,43 @@ public class LoadFXMLAlice extends Application{
 
     private void closeWindowEvent(WindowEvent windowEvent) {
         ObjectMapper objectMapper = new ObjectMapper();
-        //long start = System.nanoTime();
         BigInteger recoveredSecret = DownloadShares.getSecret();
-        //long end = System.nanoTime();
-        //System.out.println(end-start);
         for (String chatName : Peer.messages.keySet()){
-            //File file = new File("chatsMessages/" + chatName + ".txt");
             String fileName= "chatsMessages/" +username +"/"+ chatName + ".txt";
             List<String> messages = new ArrayList<>();
             for (Message message : Peer.messages.get(chatName)){
                 messages.add(message.toString());
             }
-
             try {
                 DownloadShares.encryptMessage(fileName,messages, recoveredSecret);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+        }
 
+        try {
+            UploadShares.uploadEncryptedMessages(username);
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        PrintWriter writer;
+        for (String s : Peer.sslSocketUsers.keySet()){
+            SSLSocket socket = Peer.sslSocketUsers.get(s);
             try {
-                UploadShares.uploadEncryptedMessages(username);
-            } catch (GeneralSecurityException e) {
-                throw new RuntimeException(e);
+                writer = new PrintWriter(socket.getOutputStream(), true);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-
-            PrintWriter writer;
-            for (String s : Peer.sslSocketUsers.keySet()){
-                SSLSocket socket = Peer.sslSocketUsers.get(s);
-                try {
-                    writer = new PrintWriter(socket.getOutputStream(), true);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                writer.println("close");
-                writer.flush();
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+            writer.println("close");
+            try {
+                socket.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            System.exit(0);
         }
+        System.exit(0);
     }
 }

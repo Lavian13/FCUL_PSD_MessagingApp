@@ -57,6 +57,7 @@ public class Peer extends Thread  {
                     listOfFiles.add(file);
                 }
             }
+            System.out.println(listOfFiles.size());
 
             SSLContext sslContext = SSLContext.getDefault();
             SSLServerSocketFactory sslServerSocketFactory = sslContext.getServerSocketFactory();
@@ -71,6 +72,7 @@ public class Peer extends Thread  {
             attribute_publickey = (HashMap<String, PairingKeySerParameter>) serverInput.readObject();
 
             for(File file : Peer.listOfFiles) {
+                System.out.println("File"+file.getName());
                 String fileName = file.getName().split("\\.")[0];
                 String name="";
                 if (fileName.contains("_")){
@@ -84,6 +86,7 @@ public class Peer extends Thread  {
                 }
 
             }
+            System.out.println("message size" + Peer.messages.size());
             serverWriter.println("close");
             sslSocket.close();
             for (String str : ipsReceived){

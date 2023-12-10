@@ -50,7 +50,6 @@ public class LoadFXMLBob extends Application{
     private void closeWindowEvent(WindowEvent windowEvent) {
         ObjectMapper objectMapper = new ObjectMapper();
         BigInteger recoveredSecret = DownloadShares.getSecret();
-
         for (String chatName : Peer.messages.keySet()){
             String fileName= "chatsMessages/" +username +"/"+ chatName + ".txt";
             List<String> messages = new ArrayList<>();

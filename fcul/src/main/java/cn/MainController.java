@@ -131,6 +131,7 @@ public class MainController {
             if (f.getName().equals(filename + ".txt")){
                 try {
                     for (String message: DownloadShares.decryptMessages("chatsMessages/" + Peer.userName +"/"+ f.getName(), DownloadShares.getSecret())){
+                        System.out.println(message);
                         String[] messageAttributes = message.split(",");
                         if(messageAttributes[0].equals("false")) receiveMessage(messageAttributes[1]);
                         else loadMessageUI(messageAttributes[1]);
